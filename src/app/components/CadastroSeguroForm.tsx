@@ -106,21 +106,25 @@ const CadastroSeguroForm: React.FC = () => {
 
       {/* Campo Tipo do Segurado */}
       <div className="mb-4">
-        <label htmlFor="tipoSegurado" className="block text-gray-700 text-sm font-bold mb-2">
-          Tipo do Segurado
-        </label>
-        <input
-          {...register('tipoSegurado')}
-          type="text"
-          id="tipoSegurado"
-          className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-            errors.tipoSegurado ? 'border-red-500' : ''
-          }`}
-        />
-        {errors.tipoSegurado && (
-          <p className="text-red-500 text-xs italic">{errors.tipoSegurado.message}</p>
-        )}
-      </div>
+          <label htmlFor="tipoSegurado" className="block text-gray-700 text-sm font-bold mb-2">
+            Tipo do Segurado
+          </label>
+          <select
+            {...register('tipoSegurado')}
+            id="tipoSegurado"
+            className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+              errors.tipoSegurado ? 'border-red-500' : ''
+            }`}
+          >
+            <option value="">Selecione...</option>
+            <option value="segurado">Titular</option>
+            <option value="seguradora">Dependente</option>
+          </select>
+          {errors.tipoSegurado && (
+            <p className="text-red-500 text-xs italic">{errors.tipoSegurado.message}</p>
+          )}
+        </div>
+
 
       {/* Campo Status do Segurado */}
       <div className="mb-4">
@@ -250,39 +254,47 @@ const CadastroSeguroForm: React.FC = () => {
 
       {/* Campo Sexo */}
       <div className="mb-4">
-        <label htmlFor="sexo" className="block text-gray-700 text-sm font-bold mb-2">
-          Sexo
-        </label>
-        <input
-          {...register('sexo')}
-          type="text"
-          id="sexo"
-          className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-            errors.sexo ? 'border-red-500' : ''
-          }`}
-        />
-        {errors.sexo && (
-          <p className="text-red-500 text-xs italic">{errors.sexo.message}</p>
-        )}
-      </div>
+          <label htmlFor="sexo" className="block text-gray-700 text-sm font-bold mb-2">
+            Sexo
+          </label>
+          <select
+            {...register('sexo')}
+            id="sexo"
+            className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+              errors.sexo ? 'border-red-500' : ''
+            }`}
+          >
+            <option value="">Selecione...</option>
+            <option value="masculino">Masculino</option>
+            <option value="feminino">Feminino</option>
+          </select>
+          {errors.sexo && (
+            <p className="text-red-500 text-xs italic">{errors.sexo.message}</p>
+          )}
+        </div>
 
-      {/* Campo Estado Civil */}
-      <div className="mb-4">
-        <label htmlFor="estadoCivil" className="block text-gray-700 text-sm font-bold mb-2">
-          Estado Civil
-        </label>
-        <input
-          {...register('estadoCivil')}
-          type="text"
-          id="estadoCivil"
-          className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-            errors.estadoCivil ? 'border-red-500' : ''
-          }`}
-        />
-        {errors.estadoCivil && (
-          <p className="text-red-500 text-xs italic">{errors.estadoCivil.message}</p>
-        )}
-      </div>
+        {/* Campo Estado Civil */}
+        <div className="mb-4">
+          <label htmlFor="estadoCivil" className="block text-gray-700 text-sm font-bold mb-2">
+            Estado Civil
+          </label>
+          <select
+            {...register('estadoCivil')}
+            id="estadoCivil"
+            className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+              errors.estadoCivil ? 'border-red-500' : ''
+            }`}
+          >
+            <option value="">Selecione...</option>
+            <option value="solteiro">Solteiro</option>
+            <option value="casado">Casado</option>
+            <option value="divorciado">Divorciado</option>
+            <option value="viuvo">Viúvo</option>
+          </select>
+          {errors.estadoCivil && (
+            <p className="text-red-500 text-xs italic">{errors.estadoCivil.message}</p>
+          )}
+        </div>
 
       {/* Campo CPF */}
       <div className="mb-4">
