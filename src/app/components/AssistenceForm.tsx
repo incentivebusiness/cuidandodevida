@@ -75,7 +75,7 @@ const CadastroSeguroForm: React.FC = () => {
                 throw new Error('Erro ao enviar os dados.');
             }
 
-            console.log('Dados enviados com sucesso.');
+            alert('Dados enviados com sucesso.');
             // Limpar formulário ou exibir mensagem de sucesso, se necessário
         } catch (error) {
             console.error('Erro ao enviar os dados:', error.message);
@@ -91,48 +91,31 @@ const CadastroSeguroForm: React.FC = () => {
                     <label htmlFor="numeroContrato" className="block text-gray-700 text-sm font-bold mb-2">
                         Número do Contrato
                     </label>
-                    <input
-                        {...register('numeroContrato')}
-                        type="text"
-                        id="numeroContrato"
-                        className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.numeroContrato ? 'border-red-500' : ''
-                            }`}
-                    />
-                    {errors.numeroContrato && (
-                        <p className="text-red-500 text-xs italic">{errors.numeroContrato.message}</p>
-                    )}
+                    <p id="numeroContrato" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-gray-100">
+                        {/* Supondo que o número do contrato venha do estado ou props */}
+                        {/* Exemplo de valor fixo: "123456789" */}
+                        123456789
+                    </p>
                 </div>
 
                 <div className="mb-4">
                     <label htmlFor="numeroVersaoContrato" className="block text-gray-700 text-sm font-bold mb-2">
                         Número de Versão do Contrato
                     </label>
-                    <input
-                        {...register('numeroVersaoContrato')}
-                        type="text"
-                        id="numeroVersaoContrato"
-                        className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.numeroVersaoContrato ? 'border-red-500' : ''
-                            }`}
-                    />
-                    {errors.numeroVersaoContrato && (
-                        <p className="text-red-500 text-xs italic">{errors.numeroVersaoContrato.message}</p>
-                    )}
+                    <p id="numeroVersaoContrato" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-gray-100">
+                        {/* Exemplo de valor fixo: "1.0" */}
+                        1.0
+                    </p>
                 </div>
 
                 <div className="mb-4">
                     <label htmlFor="chaveRegistro" className="block text-gray-700 text-sm font-bold mb-2">
                         Chave de Registro
                     </label>
-                    <input
-                        {...register('chaveRegistro')}
-                        type="text"
-                        id="chaveRegistro"
-                        className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.chaveRegistro ? 'border-red-500' : ''
-                            }`}
-                    />
-                    {errors.chaveRegistro && (
-                        <p className="text-red-500 text-xs italic">{errors.chaveRegistro.message}</p>
-                    )}
+                    <p id="chaveRegistro" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-gray-100">
+                        {/* Exemplo de valor fixo: "ABCD1234" */}
+                        ABCD1234
+                    </p>
                 </div>
 
                 {/* Campos preenchidos pelo usuário */}
@@ -378,7 +361,7 @@ const CadastroSeguroForm: React.FC = () => {
 
                 <div className="mb-4">
                     <label htmlFor="valorLimiteFuneral" className="block text-gray-700 text-sm font-bold mb-2">
-                        Valor Limite para Funeral
+                        Valor Limite Funeral
                     </label>
                     <input
                         {...register('valorLimiteFuneral')}
@@ -394,7 +377,7 @@ const CadastroSeguroForm: React.FC = () => {
 
                 <div className="mb-4">
                     <label htmlFor="valorLimiteDespesaMedica" className="block text-gray-700 text-sm font-bold mb-2">
-                        Valor Limite para Despesa Médica
+                        Valor Limite Despesa Médica
                     </label>
                     <input
                         {...register('valorLimiteDespesaMedica')}
@@ -407,10 +390,19 @@ const CadastroSeguroForm: React.FC = () => {
                         <p className="text-red-500 text-xs italic">{errors.valorLimiteDespesaMedica.message}</p>
                     )}
                 </div>
-            </div>
+
+                <div className="flex items-center justify-between">
+                    <button
+                        type="submit"
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    >
+                        Enviar
+                    </button>
+                </div>
+            
+        </div>
         </form>
     );
-}
+};
 
-    export default CadastroSeguroForm;
-
+export default CadastroSeguroForm;

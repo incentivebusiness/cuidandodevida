@@ -1,12 +1,11 @@
 'use client'
-// components/LoginForm.tsx
 
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { signIn } from "next-auth/react";
-import { Router, useRouter } from "next/router";
+import { useRouter } from "next/navigation"; // Ajuste para a versão mais recente
+import { useAuth } from "../contexts/AuthContext"; // Ajuste o caminho conforme necessário
 import Link from "next/link";
 
 const schema = z.object({
@@ -23,31 +22,17 @@ type LoginFormInputs = {
 };
 
 const LoginForm: React.FC = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<LoginFormInputs>({
+  const { register, handleSubmit, formState: { errors } } = useForm<LoginFormInputs>({
     resolver: zodResolver(schema),
   });
 
+  const { signIn } = useAuth(); // Use o hook de autenticação
+  const router = useRouter();
+
   const onSubmit: SubmitHandler<LoginFormInputs> = async (data) => {
     try {
-      const response = await fetch('/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-
-      if (response.ok) {
-        alert('Login bem-sucedido!');
-        router.push("/");
-      } else {
-        console.error('Erro ao fazer login:', await response.text());
-      }
-      
+      await signIn(data.email, data.password);
+      router.push("/");
     } catch (error) {
       console.error('Erro ao fazer login:', error);
     }
@@ -102,18 +87,14 @@ const LoginForm: React.FC = () => {
         >
           Entrar
         </button>
-
-        <button
-          type="submit"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-        >
-          Criar conta
-        </button>
         <Link href="/CreateAccount">
-        
-          <button>Ir</button>
-        
-      </Link>
+          <button
+            type="button"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          >
+            Criar conta
+          </button>
+        </Link>
       </div>
     </form>
   );
