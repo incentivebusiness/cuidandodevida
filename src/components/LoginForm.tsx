@@ -5,7 +5,6 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useRouter } from "next/navigation"; // Ajuste para a versão mais recente
-import { useAuth } from "../app/contexts/AuthContext"; // Ajuste o caminho conforme necessário
 import Link from "next/link";
 
 const schema = z.object({
@@ -51,9 +50,8 @@ const LoginForm: React.FC = () => {
           {...register("email")}
           type="email"
           id="email"
-          className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-            errors.email ? "border-red-500" : ""
-          }`}
+          className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.email ? "border-red-500" : ""
+            }`}
         />
         {errors.email && (
           <p className="text-red-500 text-xs italic">{errors.email.message}</p>
@@ -70,9 +68,8 @@ const LoginForm: React.FC = () => {
           {...register("password")}
           type="password"
           id="password"
-          className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-            errors.password ? "border-red-500" : ""
-          }`}
+          className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.password ? "border-red-500" : ""
+            }`}
         />
         {errors.password && (
           <p className="text-red-500 text-xs italic">
