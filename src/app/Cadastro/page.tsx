@@ -1,5 +1,5 @@
 import React from 'react'
-import AssistenceForm from '../components/AssistenceForm'
+import AssistenceForm from '../../components/AssistenceForm'
 
 const page = () => {
   return (

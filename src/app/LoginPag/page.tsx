@@ -9,7 +9,6 @@ import AuthActions from "../api/actions/auth-actions";
 import Link from "next/link";
 
 const schema = z.object({
-  name: z.string().min(1, "Nome é obrigatório"),
   email: z
     .string()
     .email("Digite um e-mail válido")
@@ -17,22 +16,21 @@ const schema = z.object({
   password: z.string().min(6, "A senha deve ter pelo menos 6 caracteres"),
 });
 
-type CreateAccountInputs = {
-  name: string;
+type LoginFormInputs = {
   email: string;
   password: string;
 };
 
-const CreateAccountForm: React.FC = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<CreateAccountInputs>({
+const LoginForm: React.FC = () => {
+  const { register, handleSubmit, formState: { errors } } = useForm<LoginFormInputs>({
     resolver: zodResolver(schema),
   });
 
   const router = useRouter();
 
-  const onSubmit: SubmitHandler<CreateAccountInputs> = async (data) => {
+  const onSubmit: SubmitHandler<LoginFormInputs> = async (data) => {
     try {
-      await fetch('/api/auth/create-account', {
+      await fetch('/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -40,33 +38,14 @@ const CreateAccountForm: React.FC = () => {
         body: JSON.stringify(data),
       });
 
-      router.push("/login");
+      router.push("/");
     } catch (error) {
-      console.error('Erro ao criar conta:', error);
+      console.error('Erro ao fazer login:', error);
     }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="max-w-md mx-auto mt-8">
-      <div className="mb-4">
-        <label
-          htmlFor="name"
-          className="block text-gray-700 text-sm font-bold mb-2"
-        >
-          Nome
-        </label>
-        <input
-          {...register("name")}
-          type="text"
-          id="name"
-          className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-            errors.name ? "border-red-500" : ""
-          }`}
-        />
-        {errors.name && (
-          <p className="text-red-500 text-xs italic">{errors.name.message}</p>
-        )}
-      </div>
       <div className="mb-4">
         <label
           htmlFor="email"
@@ -110,14 +89,14 @@ const CreateAccountForm: React.FC = () => {
           type="submit"
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
         >
-          Criar Conta
+          Entrar
         </button>
-        <Link href="/login">
+        <Link href="/create-account">
           <button
             type="button"
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
-            Voltar ao Login
+            Criar Conta
           </button>
         </Link>
       </div>
@@ -125,4 +104,4 @@ const CreateAccountForm: React.FC = () => {
   );
 };
 
-export default CreateAccountForm;
+export default LoginForm;

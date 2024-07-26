@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react';
-import CadastroSeguroForm from '../components/CadastroSeguroForm';
+import CadastroSeguroForm from '../../components/CadastroSeguroForm';
 
 const CadastroSeguroPage: React.FC = () => {
   return (
