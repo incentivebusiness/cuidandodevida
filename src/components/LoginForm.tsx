@@ -5,6 +5,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useRouter } from "next/navigation"; // Ajuste para a versão mais recente
+// Ajuste o caminho conforme necessário
 import Link from "next/link";
 
 const schema = z.object({

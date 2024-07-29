@@ -1,5 +1,3 @@
-
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,7 +9,158 @@ datasource db {
 }
 
 model User {
-  id    Int    @id @default(autoincrement()) 
-  name  String
-  email String @unique
+  id             Int       @id @default(autoincrement())
+  code           String    @unique @default(cuid())
+  name           String
+  socialName     String?
+  email          String    @unique
+  hashedPassword String
+  birthday       DateTime?
+  document       String? @unique
+  address        String?
+  state          String?
+  city           String?
+  cep            String?
+  neighboard     String?
+  phone          String?
+
+  created      DateTime        @default(now())
+  updated      DateTime        @updatedAt
+  contractUser ContractUsers[]
 }
+
+model Contract {
+  id          Int    @id @default(autoincrement())
+  number      String
+  version     String
+  keyRegistre String
+
+  created      DateTime        @default(now())
+  updated      DateTime        @updatedAt
+  contractUser ContractUsers[]
+}
+
+model ContractUsers {
+  id         Int @id @default(autoincrement())
+  userId     Int
+  contractId Int
+
+  user     User     @relation(fields: [userId], references: [id])
+  contract Contract @relation(fields: [contractId], references: [id])
+
+  @@unique([userId, contractId])
+}
+
+model Vehicle {
+  id      Int    @id @default(autoincrement())
+  plate   String
+  color   String
+  chassis String
+  year    Int
+  model   String
+  brand   String
+
+  created DateTime @default(now())
+  updated DateTime @updatedAt
+}
+
+// valorLimiteFuneral: string;
+// valorLimiteDespesaMedica: string;
+model Service {
+  id         Int    @id @default(autoincrement())
+  name       String
+  limitValue Int
+
+  created DateTime @default(now())
+  updated DateTime @updatedAt
+}
+
+// model Product {
+//   id                 Int      @id @default(autoincrement())
+//   code               String   @unique @default(cuid())
+//   name               String
+//   slug               String?
+//   description        String?
+//   basePrice          Decimal? @db.Decimal(8, 2)
+//   imageUrls          String[]
+//   categoryId         Int
+//   sku                String?
+//   promotion          Boolean? @default(false)
+//   discountPercentage Int      @default(0)
+//   wholesaleValue     Decimal? @db.Decimal(8, 2)
+//   minPrice           Decimal? @db.Decimal(8, 2)
+//   maxPrice           Decimal? @db.Decimal(8, 2)
+//   created            DateTime @default(now())
+//   updated            DateTime @updatedAt
+
+//   category      Category             @relation(fields: [categoryId], references: [id])
+//   subcategories ProductSubcategory[]
+
+//   descriptions Description[]
+// }
+
+// model Category {
+//   id       Int      @id @default(autoincrement())
+//   name     String
+//   slug     String?
+//   emoji    String?
+//   imageUrl String?
+//   created  DateTime @default(now())
+//   updated  DateTime @updatedAt
+
+//   products Product[]
+// }
+
+// model Description {
+//   id        Int      @id @default(autoincrement())
+//   title     String
+//   content   String
+//   productId Int
+//   created   DateTime @default(now())
+//   updated   DateTime @updatedAt
+
+//   product Product @relation(fields: [productId], references: [id])
+// }
+
+// model Banner {
+//   id         Int      @id @default(autoincrement())
+//   imageUrl   String
+//   imageUrl2  String?
+//   link       String?
+//   type       String?
+//   imagesUrls String[] @default([])
+//   active     Boolean  @default(true)
+//   created    DateTime @default(now())
+//   updated    DateTime @updatedAt
+// }
+
+// model Message {
+//   id      Int      @id @default(autoincrement())
+//   name    String
+//   email   String
+//   text    String
+//   created DateTime @default(now())
+//   updated DateTime @updatedAt
+// }
+
+// model Subcategory {
+//   id       Int      @id @default(autoincrement())
+//   name     String
+//   slug     String?
+//   emoji    String?
+//   imageUrl String?
+//   created  DateTime @default(now())
+//   updated  DateTime @updatedAt
+
+//   products ProductSubcategory[]
+// }
+
+// model ProductSubcategory {
+//   productId     Int
+//   subcategoryId Int
+
+//   product     Product     @relation(fields: [productId], references: [id])
+//   subcategory Subcategory @relation(fields: [subcategoryId], references: [id])
+
+//   @@unique([productId, subcategoryId])
+// }

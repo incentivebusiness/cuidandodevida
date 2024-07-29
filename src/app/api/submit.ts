@@ -33,3 +33,10 @@
 //     res.status(405).end(`Método ${req.method} não permitido`);
 //   }
 // }
+import React from 'react'
+
+export default function submit() {
+  return (
+    <div>submit</div>
+  )
+}
