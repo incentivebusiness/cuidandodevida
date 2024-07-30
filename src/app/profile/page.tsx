@@ -12,7 +12,7 @@ const Profile: React.FC = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
-      router.push('/login');
+      router.push('/');
     } else {
       const decodedToken: any = jwtDecode(token);
       setUser({ id: decodedToken.id, email: decodedToken.email });
