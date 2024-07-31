@@ -1,34 +1,22 @@
-// Em /pages/profile.tsx
 'use client';
+import React from 'react';
+import { useSession } from 'next-auth/react';
 
-import React, { useEffect, useState } from "react";
-import jwtDecode from "jwt-decode";
-import { useRouter } from "next/navigation";
-
-const Profile: React.FC = () => {
-  const [user, setUser] = useState<{ id: string, email: string } | null>(null);
-  const router = useRouter();
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      router.push('/');
-    } else {
-      const decodedToken: any = jwtDecode(token);
-      setUser({ id: decodedToken.id, email: decodedToken.email });
-      console.log(user);
-    }
-  }, [router]);
-
-  if (!user) {
-    return <p>Carregando...</p>;
-  }
+const Profile = () => {
+  const { data: session } = useSession();
 
   return (
     <div className="max-w-md mx-auto mt-8">
       <h1 className="text-2xl font-bold mb-4">Perfil</h1>
-      <p><strong>ID:</strong> {user.id}</p>
-      <p><strong>Email:</strong> {user.email}</p>
+      {session ? (
+        <>
+          <p><strong>Nome:</strong> {session.user.name}</p>
+          <p><strong>Email:</strong> {session.user.email}</p>
+          <p><strong>Senha:</strong> {session.user.password}</p>
+        </>
+      ) : (
+        <p>Nenhum usuário logado.</p>
+      )}
     </div>
   );
 };
