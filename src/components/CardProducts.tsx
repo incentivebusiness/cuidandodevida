@@ -6,40 +6,67 @@ type Description = {
   text: string;
   icon?: any;
   iconColor?: string;
+  maxInsurancePrice?: string;
+  hasWaitingPeriod: boolean | string;
 };
 
-const CardProducts = ({ title, descriptions, value, type }) => {
+type Description = {
+  text: string;
+  icon?: any;
+  iconColor?: string;
+  maxInsurancePrice?: string;
+  hasWaitingPeriod: boolean | string;
+};
+
+type CardProductsProps = {
+  title: string;
+  descriptions: Description[];
+  value: string;
+  type: string;
+};
+
+const CardProducts: React.FC<CardProductsProps> = ({ title, descriptions, value, type }) => {
   return (
-    <div className="border rounded-md p-4 mb-4 hover:bg-green-100">
+    <div className="border text-xs rounded-md p-4 mb-4 hover:bg-green-100">
       <h2 className="text-xl font-bold text-center pb-10 text-gray-600">{title}</h2>
-      {descriptions.map((desc, index) => (
-        <div key={index} className="flex items-center text-gray-600">
-          {desc.icon && <FontAwesomeIcon icon={desc.icon} className="mr-2" style={{ color: desc.iconColor }} />}
-          <p>{desc.text}</p>
+      <span className="text-blue-600 text-xl font-bold">{value}</span>
+
+      <div className="mt-4">
+        <div className="grid grid-cols-3 gap-4 text-gray-800 font-semibold">
+          <div>Serviço</div>
+          <div className="text-center">Preço Máximo de Seguro</div>
+          <div className="text-center">Carência</div>
         </div>
-      ))}
-      <div className="mt-2 flex justify-between items-center">
-        <span className="text-blue-600 font-bold">{value}</span>
-        <span className="text-sm text-gray-500">{type}</span>
+        {descriptions.map((desc, index) => (
+          <div key={index} className="grid grid-cols-3 gap-4 items-center border-t pt-2 text-gray-600">
+            <div className="flex items-center">
+              {desc.icon && <FontAwesomeIcon icon={desc.icon} className="mr-2" style={{ color: desc.iconColor }} />}
+              <p>{desc.text}</p>
+            </div>
+            <div className="text-center">{desc.maxInsurancePrice || 'N/A'}</div>
+            <div className="text-center">
+              {typeof desc.hasWaitingPeriod === 'boolean' ? (desc.hasWaitingPeriod ? 'Sim' : 'Não') : desc.hasWaitingPeriod}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
 };
-
-const MockData = [
+const MockData: CardProductsProps[] = [
   {
     title: 'Plano Básico',
     descriptions: [
-      { text: 'Rede de Parcerias', icon: faCheck, iconColor: 'green' },
-      { text: 'Morte Acidental', icon: faCheck, iconColor: 'green' },
-      { text: 'Invalidez Permanente e Total por Acidente - IPTA', icon: faCheck, iconColor: 'green' },
-      { text: 'Diária de Internação Hospitalar por Acidente', icon: faCheck, iconColor: 'green' },
-      { text: 'Despesas Médicas Hospitalares e Odontológicas', icon: faCheck, iconColor: 'green' },
-      { text: 'Decessos', icon: faCheck, iconColor: 'green' },
-      { text: 'Sorteios - 4 sorteios mensais, série aberta, valor líquido', icon: faCheck, iconColor: 'green' },
-      { text: 'Assistência Domiciliar Completa', icon: faCheck, iconColor: 'green' },
-      { text: 'Programa - MAPFRE Cuidando de Você', icon: faCheck, iconColor: 'green' },
-      { text: 'Assistência Affinity PET', icon: faCheck, iconColor: 'green' }
+      { text: 'Rede de Parcerias', icon: faCheck, iconColor: 'green', hasWaitingPeriod: false },
+      { text: 'Morte Acidental', icon: faCheck, iconColor: 'green', maxInsurancePrice: '$10.000,00', hasWaitingPeriod: false },
+      { text: 'Invalidez Permanente e Total por Acidente - IPTA', icon: faCheck, iconColor: 'green', maxInsurancePrice: '$10.000,00', hasWaitingPeriod: false },
+      { text: 'Diária de Internação Hospitalar por Acidente', icon: faTimes, iconColor: 'red', maxInsurancePrice: "Não há", hasWaitingPeriod: false },
+      { text: 'Despesas Médicas Hospitalares e Odontológicas', icon: faTimes, iconColor: 'red',maxInsurancePrice: "Não há", hasWaitingPeriod: true },
+      { text: 'Decessos', icon: faCheck, iconColor: 'green', maxInsurancePrice: '(familiar, Titular, Cônjuge ou Filhos - $5.000,00)', hasWaitingPeriod: '30 dias' },
+      { text: 'Sorteios - 4 sorteios mensais, série aberta, valor líquido', icon: faCheck, iconColor: 'green', hasWaitingPeriod: false, maxInsurancePrice: '$5.000,00' },
+      { text: 'Assistência Domiciliar Completa', icon: faTimes, iconColor: 'red',maxInsurancePrice: "Não há", hasWaitingPeriod: '72hrs' },
+      { text: 'Programa - MAPFRE Cuidando de Você', icon: faCheck, iconColor: 'green', maxInsurancePrice: 'Rede TEM + Descontos em Farmácias + Telemedicina Familiar(com pagamento de consulta)', hasWaitingPeriod: '72hrs' },
+      { text: 'Assistência Affinity PET', icon: faTimes, iconColor: 'red',maxInsurancePrice: "Não há", hasWaitingPeriod: '72hrs' }
     ],
     value: '$49,90',
     type: 'Type A'
@@ -47,16 +74,16 @@ const MockData = [
   {
     title: 'Plano Médio',
     descriptions: [
-      { text: 'Rede de Parcerias', icon: faCheck, iconColor: 'green' },
-      { text: 'Morte Acidental', icon: faTimes, iconColor: 'red' },
-      { text: 'Invalidez Permanente e Total por Acidente - IPTA', icon: faCheck, iconColor: 'green' },
-      { text: 'Diária de Internação Hospitalar por Acidente', icon: faTimes, iconColor: 'red' },
-      { text: 'Despesas Médicas Hospitalares e Odontológicas', icon: faCheck, iconColor: 'green' },
-      { text: 'Decessos', icon: faTimes, iconColor: 'red' },
-      { text: 'Sorteios - 4 sorteios mensais, série aberta, valor líquido', icon: faCheck, iconColor: 'green' },
-      { text: 'Assistência Domiciliar Completa', icon: faTimes, iconColor: 'red' },
-      { text: 'Programa - MAPFRE Cuidando de Você', icon: faCheck, iconColor: 'green' },
-      { text: 'Assistência Affinity PET', icon: faTimes, iconColor: 'red' }
+      { text: 'Rede de Parcerias', icon: faCheck, iconColor: 'green', hasWaitingPeriod: false },
+      { text: 'Morte Acidental', icon: faCheck, iconColor: 'green', maxInsurancePrice: '$10.000,00', hasWaitingPeriod: false },
+      { text: 'Invalidez Permanente e Total por Acidente - IPTA', icon: faCheck, iconColor: 'green', maxInsurancePrice: '$10.000,00', hasWaitingPeriod: false },
+      { text: 'Diária de Internação Hospitalar por Acidente', icon: faCheck, iconColor: 'green', maxInsurancePrice: "Até 15 diárias de 1500,00 cada, limitado a R$2.250,00", hasWaitingPeriod: false },
+      { text: 'Despesas Médicas Hospitalares e Odontológicas', icon: faCheck, iconColor: 'green', maxInsurancePrice: "$3.000,00", hasWaitingPeriod: true },
+      { text: 'Decessos', icon: faCheck, iconColor: 'green', maxInsurancePrice: '(familiar, Titular, Cônjuge ou Filhos - $5.000,00)', hasWaitingPeriod: '30 dias' },
+      { text: 'Sorteios - 4 sorteios mensais, série aberta, valor líquido', icon: faCheck, iconColor: 'green', maxInsurancePrice: '$5.000,00', hasWaitingPeriod: false },
+      { text: 'Assistência Domiciliar Completa', icon: faTimes, iconColor: 'red', hasWaitingPeriod: '72hrs' },
+      { text: 'Programa - MAPFRE Cuidando de Você', icon: faCheck, iconColor: 'green', maxInsurancePrice: 'Rede TEM + Descontos em Farmácias + Telemedicina Familiar(com pagamento de consulta)', hasWaitingPeriod: '72hrs' },
+      { text: 'Assistência Affinity PET', icon: faTimes, iconColor: 'red', hasWaitingPeriod: '72hrs' }
     ],
     value: '$69,90',
     type: 'Type B'
@@ -64,25 +91,25 @@ const MockData = [
   {
     title: 'Plano Plus',
     descriptions: [
-      { text: 'Rede de Parcerias', icon: faTimes, iconColor: 'red' },
-      { text: 'Morte Acidental', icon: faTimes, iconColor: 'red' },
-      { text: 'Invalidez Permanente e Total por Acidente - IPTA', icon: faTimes, iconColor: 'red' },
-      { text: 'Diária de Internação Hospitalar por Acidente', icon: faTimes, iconColor: 'red' },
-      { text: 'Despesas Médicas Hospitalares e Odontológicas', icon: faTimes, iconColor: 'red' },
-      { text: 'Decessos', icon: faTimes, iconColor: 'red' },
-      { text: 'Sorteios - 4 sorteios mensais, série aberta, valor líquido', icon: faTimes, iconColor: 'red' },
-      { text: 'Assistência Domiciliar Completa', icon: faTimes, iconColor: 'red' },
-      { text: 'Programa - MAPFRE Cuidando de Você', icon: faTimes, iconColor: 'red' },
-      { text: 'Assistência Affinity PET', icon: faTimes, iconColor: 'red' }
+      { text: 'Rede de Parcerias', icon: faCheck, iconColor: 'green', hasWaitingPeriod: false },
+      { text: 'Morte Acidental', icon: faCheck, iconColor: 'green', maxInsurancePrice: '$10.000,00', hasWaitingPeriod: false },
+      { text: 'Invalidez Permanente e Total por Acidente - IPTA', icon: faCheck, iconColor: 'green', maxInsurancePrice: '$10.000,00', hasWaitingPeriod: false },
+      { text: 'Diária de Internação Hospitalar por Acidente', icon: faCheck, iconColor: 'green', maxInsurancePrice: "Até 15 diárias de 1500,00 cada, limitado a R$2.250,00", hasWaitingPeriod: false },
+      { text: 'Despesas Médicas Hospitalares e Odontológicas', icon: faCheck, iconColor: 'green', maxInsurancePrice: "$3.000,00", hasWaitingPeriod: true },
+      { text: 'Decessos', icon: faCheck, iconColor: 'green', maxInsurancePrice: '(familiar, Titular, Cônjuge ou Filhos - $5.000,00)', hasWaitingPeriod: '30 dias' },
+      { text: 'Sorteios - 4 sorteios mensais, série aberta, valor líquido', icon: faCheck, iconColor: 'green',maxInsurancePrice: '$5.000,00', hasWaitingPeriod: false },
+      { text: 'Assistência Domiciliar Completa', icon: faCheck, iconColor: 'green', hasWaitingPeriod: '72hrs' },
+      { text: 'Programa - MAPFRE Cuidando de Você', icon: faCheck, iconColor: 'green', maxInsurancePrice: 'Rede TEM + Descontos em Farmácias + Telemedicina Familiar(com pagamento de consulta)', hasWaitingPeriod: '72hrs' },
+      { text: 'Assistência Affinity PET', icon: faCheck, iconColor: 'green', hasWaitingPeriod: '72hrs' }
     ],
     value: '$89,90',
     type: 'Type C'
   }
 ];
 
-const ProductsList = () => {
+const ProductsList: React.FC = () => {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="flex flex-col gap-4">
       {MockData.map((product, index) => (
         <CardProducts
           key={index}
@@ -96,10 +123,10 @@ const ProductsList = () => {
   );
 };
 
-const App = () => {
+const App: React.FC = () => {
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Products</h1>
+      <h1 className="text-4xl text-center text-gray-800 font-bold py-10">Nossos Planos</h1>
       <ProductsList />
     </div>
   );
