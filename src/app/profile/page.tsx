@@ -20,7 +20,7 @@ const Profile = () => {
             <strong>Email:</strong> {session.user.email}
           </p>
           <p>
-            <strong>Senha:</strong> {session.user.password}
+            <strong>Senha:</strong> {session.user.Password}
           </p>
         </>
       ) : (

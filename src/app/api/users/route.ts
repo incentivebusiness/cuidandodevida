@@ -3,9 +3,9 @@ import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 
 export async function POST(request: Request) {
-  const {name, email, password, confirmPassword } = await request.json();
+  const { name, email, password, confirmPassword, socialName } = await request.json();
 
-  if (!email || !password || !confirmPassword) {
+  if (!email || !password || !confirmPassword || !socialName) {
     return NextResponse.json({
       success: false,
       message: "Preencha todos os campos!",
@@ -40,6 +40,7 @@ export async function POST(request: Request) {
         name,
         email,
         hashedPassword,
+        socialName, // Adiciona o campo socialName aqui
       },
     });
 
