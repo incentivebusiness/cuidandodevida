@@ -1,5 +1,5 @@
 // lib/docusignConfig.js
-import docusignConfigJson from './docusignConfig.json';
+// import docusignConfigJson from './docusignConfig.json';
 
 export const docusignConfig = {
   dsJWTClientId: process.env.DS_JWT_CLIENT_ID || docusignConfigJson.dsJWTClientId,
