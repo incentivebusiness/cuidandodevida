@@ -35,7 +35,7 @@ const SendDocumentButton = () => {
   };
 
   return (
-    <div>
+    <div className='bg-green-200 p-4'>
       <button onClick={sendDocumentForSignature} disabled={loading}>
         {loading ? 'Enviando...' : 'Enviar Documento para Assinatura'}
       </button>

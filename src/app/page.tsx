@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import LoginForm from "../components/LoginForm";
+// import LoginForm from "../components/LoginForm";
 import CardProducts from "../components/CardProducts";
 import Faq from "../components/Faq";
 import Header from "../components/Header";

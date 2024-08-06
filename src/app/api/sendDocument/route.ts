@@ -1,6 +1,6 @@
 // pages/api/sendDocument.js
 import { NextApiRequest, NextApiResponse } from 'next';
-import docusign from 'docusign-esign';
+import * as docusign from 'docusign-esign';
 import { docusignConfig } from '@/lib/docusignConfig';
 import { getAccessToken } from '@/lib/getAccessToken';
 
