@@ -1,10 +1,10 @@
-// components/SendDocumentButton.js
+"use client";
 import React, { useState } from 'react';
 
 const SendDocumentButton = () => {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(null);
+  const [error, setError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   const sendDocumentForSignature = async () => {
     setLoading(true);

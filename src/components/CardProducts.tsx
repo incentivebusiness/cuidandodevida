@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -10,13 +11,6 @@ type Description = {
   hasWaitingPeriod: boolean | string;
 };
 
-type Description = {
-  text: string;
-  icon?: any;
-  iconColor?: string;
-  maxInsurancePrice?: string;
-  hasWaitingPeriod: boolean | string;
-};
 
 type CardProductsProps = {
   title: string;

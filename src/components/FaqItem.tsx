@@ -1,6 +1,12 @@
-import React, { useState } from 'react';
+"use client";
+import React, { useState, FC } from 'react';
 
-const FaqItem = ({ question, answer }) => {
+interface FaqItemProps {
+  question: string;
+  answer: string;
+}
+
+const FaqItem: FC<FaqItemProps> = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleOpen = () => {

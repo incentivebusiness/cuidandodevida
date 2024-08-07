@@ -10,12 +10,18 @@ import SubHero from "../components/SubHero";
 import StripePricingTable from "@/components/StripePricingTable";
 import Footer from "@/components/Footer";
 import SendDocumentButton from "@/components/sendDocumentButton";
+import FormPetAssistence from "@/components/FormPetAssistence";
+import FormFuneralAssistance from "@/components/FormFuneralAssistence";
+import FormContrato from "@/components/FormContrato";
 
 const HomePage: React.FC = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
       <Header />
       <Hero />
+      <FormPetAssistence/>
+      <FormFuneralAssistance/>
+      <FormContrato/>
       <SendDocumentButton/>
       <SubHero />
       <CardProducts />

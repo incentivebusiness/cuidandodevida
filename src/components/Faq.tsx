@@ -1,3 +1,4 @@
+"use client";
 import React from 'react';
 import FaqItem from './FaqItem'; // Importe o componente FAQItem
 
