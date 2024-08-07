@@ -97,43 +97,6 @@ model RacaEspecie {
 
   animais AnimalEstimacao[]
 }
-
-model Veiculo {
-  id            Int     @id @default(autoincrement())
-  placa         String  @db.VarChar(10)
-  chassi        String  @db.VarChar(20)
-  cor           String? @db.VarChar(10)
-  anoFabricacao Int
-  modeloId      Int
-
-  created DateTime @default(now())
-  updated DateTime @updatedAt
-
-  modelo ModeloVeiculo @relation(fields: [modeloId], references: [id])
-}
-
-model ModeloVeiculo {
-  id        Int    @id @default(autoincrement())
-  descricao String @db.VarChar(40)
-  marcaId   Int
-
-  created DateTime @default(now())
-  updated DateTime @updatedAt
-
-  marca    MarcaVeiculo @relation(fields: [marcaId], references: [id])
-  veiculos Veiculo[]
-}
-
-model MarcaVeiculo {
-  id        Int    @id @default(autoincrement())
-  descricao String @db.VarChar(40)
-
-  created DateTime @default(now())
-  updated DateTime @updatedAt
-
-  modelos ModeloVeiculo[]
-}
-
 model Dependente {
   id        Int    @id @default(autoincrement())
   nome      String @db.VarChar(80)

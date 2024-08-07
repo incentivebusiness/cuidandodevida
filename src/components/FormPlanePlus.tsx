@@ -115,9 +115,8 @@ const AssistanceForm: React.FC = () => {
       <div className="mb-4">
         <label
           htmlFor="policyHolderName"
-          className="block text-red-700 hover:scale-150 text-xl font- mb-2"
+          className="block text-gray-700 text-sm font-bold mb-2"
         >
-          <img src="./images/logo.png"></img>
           Nome do Estipulante da Apólice
         </label>
         <input
@@ -265,7 +264,7 @@ const AssistanceForm: React.FC = () => {
           htmlFor="livesQuantity"
           className="block text-gray-700 text-sm font-bold mb-2"
         >
-          Quantidade de Vidas
+          Quantidade de Vidas (número de usuários cobertos pela assistência)
         </label>
         <input
           {...register("livesQuantity", { valueAsNumber: true })}
@@ -286,11 +285,11 @@ const AssistanceForm: React.FC = () => {
           htmlFor="phone2"
           className="block text-gray-700 text-sm font-bold mb-2"
         >
-          Telefone do Usuário da Assistência 2
+          Telefone 2
         </label>
         <input
           {...register("phone2")}
-          type="text"
+          type="tel"
           id="phone2"
           className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
             errors.phone2 ? "border-red-500" : ""
@@ -305,11 +304,11 @@ const AssistanceForm: React.FC = () => {
           htmlFor="phone3"
           className="block text-gray-700 text-sm font-bold mb-2"
         >
-          Telefone do Usuário da Assistência 3
+          Telefone 3
         </label>
         <input
           {...register("phone3")}
-          type="text"
+          type="tel"
           id="phone3"
           className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
             errors.phone3 ? "border-red-500" : ""
@@ -324,11 +323,11 @@ const AssistanceForm: React.FC = () => {
           htmlFor="phone4"
           className="block text-gray-700 text-sm font-bold mb-2"
         >
-          Telefone do Usuário da Assistência 4
+          Telefone 4
         </label>
         <input
           {...register("phone4")}
-          type="text"
+          type="tel"
           id="phone4"
           className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
             errors.phone4 ? "border-red-500" : ""
@@ -345,13 +344,10 @@ const AssistanceForm: React.FC = () => {
         >
           Enviar
         </button>
-        <Link href="/">
-          <button
-            type="button"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          >
+        <Link href="/"
+          className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
             Voltar
-          </button>
+          
         </Link>
       </div>
     </form>

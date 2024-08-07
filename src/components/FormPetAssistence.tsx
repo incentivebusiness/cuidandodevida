@@ -78,7 +78,7 @@ const PetForm: React.FC = () => {
           htmlFor="gender"
           className="block text-gray-700 text-sm font-bold mb-2"
         >
-          Sexo do Usuário
+          Genero do Usuário
         </label>
         <select
           {...register("gender")}

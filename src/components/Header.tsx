@@ -12,7 +12,7 @@ const Header = () => {
   };
 
   return (
-    <div className="relative bg-gray-100 w-full py-4 px-6 flex justify-between items-center sticky top-0 z-10 rounded-b-xl">
+    <div className=" bg-gray-100 w-full py-4 px-6 flex justify-between items-center sticky top-0 z-10 rounded-b-xl">
       <div className="logo">
         {/* Aqui você pode inserir seu logo */}
         <img src="./images/logo.png" alt="Logo" className="h-12" />
