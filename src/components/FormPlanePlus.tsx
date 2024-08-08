@@ -1,65 +1,78 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { getSession } from "next-auth/react";
+
+// Default values
+const funeralLimitValue = 100000;
+const medicalExpenseLimitValue = 50000;
+const defaultRelationshipOptions = [
+  "Select",
+  "Family",
+  "Child",
+  "Spouse"
+];
 
 const schema = z.object({
   policyHolderName: z
     .string()
     .regex(
       /^[A-Za-zÀ-ÿ\s]+$/,
-      "Nome do estipulante deve conter apenas letras e espaços"
+      "Policy holder's name must contain only letters and spaces"
     )
-    .min(1, "Nome do estipulante é obrigatório")
-    .max(60, "Nome do estipulante deve ter no máximo 60 caracteres"),
-  relationship: z.string().min(1, "Relação de parentesco é obrigatória"),
+    .min(1, "Policy holder's name is required")
+    .max(60, "Policy holder's name must be at most 60 characters"),
+  relationship: z
+    .string()
+    .min(1, "Relationship is required")
+    .refine((val) => val !== "Select", "Select a valid option"),
   funeralLimit: z
     .number()
-    .min(1, "Valor do limite funeral é obrigatório")
-    .positive("O valor deve ser positivo"),
+    .min(1, "Funeral limit value is required")
+    .positive("The value must be positive"),
   medicalExpenseLimit: z
     .number()
-    .min(1, "Valor do limite de despesa médica é obrigatório")
-    .positive("O valor deve ser positivo"),
-  basketQuantity: z
-    .number()
-    .min(1, "Quantidade de cestas é obrigatória")
-    .positive("O valor deve ser positivo"),
-  basketValue: z
-    .number()
-    .min(1, "Valor da cesta é obrigatório")
-    .positive("O valor deve ser positivo"),
+    .min(1, "Medical expense limit value is required")
+    .positive("The value must be positive"),
   userBirthdate: z
     .string()
     .regex(
       /^\d{4}-\d{2}-\d{2}$/,
-      "Data de nascimento deve estar no formato AAAA-MM-DD"
+      "Birthdate must be in the format YYYY-MM-DD"
     ),
   livesQuantity: z
     .number()
-    .min(1, "Quantidade de vidas é obrigatória")
-    .positive("O valor deve ser positivo"),
+    .min(1, "Lives quantity is required")
+    .positive("The value must be positive"),
+  phone: z
+    .string()
+    .regex(
+      /^\d{10,11}$/,
+      "Phone number must be in the format DDD + Number (digits only)"
+    ),
   phone2: z
     .string()
     .regex(
       /^\d{10,11}$/,
-      "Telefone deve estar no formato DDD + Número (apenas números)"
-    ),
-  phone3: z
+      "Phone number must be in the format DDD + Number (digits only)"
+    ).optional(),
+
+  address: z.string().min(1, "Address is required"),
+  postalCode: z
     .string()
-    .regex(
-      /^\d{10,11}$/,
-      "Telefone deve estar no formato DDD + Número (apenas números)"
-    ),
-  phone4: z
+    .regex(/^\d{5}-\d{3}$/, "Postal Code must be in the format XXXXX-XXX")
+    .min(1, "Postal Code is required"),
+  city: z.string().min(1, "City is required"),
+  state: z
     .string()
-    .regex(
-      /^\d{10,11}$/,
-      "Telefone deve estar no formato DDD + Número (apenas números)"
-    ),
+    .length(2, "State must be 2 characters")
+    .regex(/^[A-Z]{2}$/, "State must be represented by two uppercase letters")
+    .min(1, "State is required"),
+  neighborhood: z.string().min(1, "Neighborhood is required"),
 });
 
 type FormInputs = {
@@ -67,13 +80,17 @@ type FormInputs = {
   relationship: string;
   funeralLimit: number;
   medicalExpenseLimit: number;
-  basketQuantity: number;
-  basketValue: number;
-  userBirthdate: string;
   livesQuantity: number;
-  phone2: string;
-  phone3: string;
-  phone4: string;
+  userBirthdate: string;
+  phone: string;
+  phone2?: string;
+  userId?: string;
+  email: string;
+  address: string;
+  postalCode: string;
+  city: string;
+  state: string;
+  neighborhood: string;
 };
 
 const AssistanceForm: React.FC = () => {
@@ -83,14 +100,34 @@ const AssistanceForm: React.FC = () => {
     formState: { errors },
   } = useForm<FormInputs>({
     resolver: zodResolver(schema),
+    defaultValues: {
+      funeralLimit: funeralLimitValue,
+      medicalExpenseLimit: medicalExpenseLimitValue,
+    },
   });
 
   const router = useRouter();
+  const [userId, setUserId] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Fetch user ID from session
+    const fetchUserId = async () => {
+      const session = await getSession(); // Example using next-auth
+      if (session?.user?.id) {
+        setUserId(session.user.id);
+      }
+    };
+
+    fetchUserId();
+  }, []);
 
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
+    if (userId) {
+      data.userId = userId; // Add logged-in user ID to data object
+    }
     try {
-      console.log("Enviando dados:", data);
-      const response = await fetch("/api/submit-funeral-assistence-form", {
+      console.log("Sending data:", data);
+      const response = await fetch("/api/assistanceForm", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -106,18 +143,18 @@ const AssistanceForm: React.FC = () => {
         console.error(result.message);
       }
     } catch (error) {
-      console.error("Erro ao enviar formulário:", error);
+      console.error("Error submitting form:", error);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="max-w-md mx-auto mt-8">
-      <div className="mb-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="max-w-md mx-auto mt-8 space-y-4">
+      <div>
         <label
           htmlFor="policyHolderName"
           className="block text-gray-700 text-sm font-bold mb-2"
         >
-          Nome do Estipulante da Apólice
+          Policy Holder's Name
         </label>
         <input
           {...register("policyHolderName")}
@@ -133,38 +170,46 @@ const AssistanceForm: React.FC = () => {
           </p>
         )}
       </div>
-      <div className="mb-4">
+
+      <div>
         <label
           htmlFor="relationship"
           className="block text-gray-700 text-sm font-bold mb-2"
         >
-          Relação de Parentesco do Beneficiário da Apólice
+          Relationship to Policy Holder
         </label>
-        <input
+        <select
           {...register("relationship")}
-          type="text"
           id="relationship"
-          className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+          className={`shadow appearance-none border rounded w-[80%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
             errors.relationship ? "border-red-500" : ""
           }`}
-        />
+        >
+          {defaultRelationshipOptions.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
         {errors.relationship && (
           <p className="text-red-500 text-xs italic">
             {errors.relationship.message}
           </p>
         )}
       </div>
-      <div className="mb-4">
+
+      <div>
         <label
           htmlFor="funeralLimit"
           className="block text-gray-700 text-sm font-bold mb-2"
         >
-          Valor do Limite Funeral
+          Funeral Limit Value
         </label>
-        <input
+        <input disabled
           {...register("funeralLimit", { valueAsNumber: true })}
           type="number"
           id="funeralLimit"
+          defaultValue={funeralLimitValue}
           className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
             errors.funeralLimit ? "border-red-500" : ""
           }`}
@@ -175,17 +220,19 @@ const AssistanceForm: React.FC = () => {
           </p>
         )}
       </div>
-      <div className="mb-4">
+
+      <div>
         <label
           htmlFor="medicalExpenseLimit"
           className="block text-gray-700 text-sm font-bold mb-2"
         >
-          Valor do Limite de Despesa Médica Hospitalar
+          Medical Expense Limit Value
         </label>
-        <input
+        <input disabled
           {...register("medicalExpenseLimit", { valueAsNumber: true })}
           type="number"
           id="medicalExpenseLimit"
+          defaultValue={medicalExpenseLimitValue}
           className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
             errors.medicalExpenseLimit ? "border-red-500" : ""
           }`}
@@ -196,54 +243,13 @@ const AssistanceForm: React.FC = () => {
           </p>
         )}
       </div>
-      <div className="mb-4">
-        <label
-          htmlFor="basketQuantity"
-          className="block text-gray-700 text-sm font-bold mb-2"
-        >
-          Quantidade de Cestas
-        </label>
-        <input
-          {...register("basketQuantity", { valueAsNumber: true })}
-          type="number"
-          id="basketQuantity"
-          className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-            errors.basketQuantity ? "border-red-500" : ""
-          }`}
-        />
-        {errors.basketQuantity && (
-          <p className="text-red-500 text-xs italic">
-            {errors.basketQuantity.message}
-          </p>
-        )}
-      </div>
-      <div className="mb-4">
-        <label
-          htmlFor="basketValue"
-          className="block text-gray-700 text-sm font-bold mb-2"
-        >
-          Valor da Cesta
-        </label>
-        <input
-          {...register("basketValue", { valueAsNumber: true })}
-          type="number"
-          id="basketValue"
-          className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-            errors.basketValue ? "border-red-500" : ""
-          }`}
-        />
-        {errors.basketValue && (
-          <p className="text-red-500 text-xs italic">
-            {errors.basketValue.message}
-          </p>
-        )}
-      </div>
-      <div className="mb-4">
+
+      <div>
         <label
           htmlFor="userBirthdate"
           className="block text-gray-700 text-sm font-bold mb-2"
         >
-          Data de Nascimento do Usuário da Assistência
+          Assistance User's Birthdate
         </label>
         <input
           {...register("userBirthdate")}
@@ -259,12 +265,13 @@ const AssistanceForm: React.FC = () => {
           </p>
         )}
       </div>
-      <div className="mb-4">
+
+      <div>
         <label
           htmlFor="livesQuantity"
           className="block text-gray-700 text-sm font-bold mb-2"
         >
-          Quantidade de Vidas (número de usuários cobertos pela assistência)
+          Number of Lives (number of users covered by assistance)
         </label>
         <input
           {...register("livesQuantity", { valueAsNumber: true })}
@@ -280,74 +287,172 @@ const AssistanceForm: React.FC = () => {
           </p>
         )}
       </div>
-      <div className="mb-4">
+
+      <div>
+        <label
+          htmlFor="phone"
+          className="block text-gray-700 text-sm font-bold mb-2"
+        >
+          Phone
+        </label>
+        <input
+          {...register("phone")}
+          type="text"
+          id="phone"
+          className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+            errors.phone ? "border-red-500" : ""
+          }`}
+        />
+        {errors.phone && (
+          <p className="text-red-500 text-xs italic">
+            {errors.phone.message}
+          </p>
+        )}
+      </div>
+
+      <div>
         <label
           htmlFor="phone2"
           className="block text-gray-700 text-sm font-bold mb-2"
         >
-          Telefone 2
+          Phone 2 (optional)
         </label>
         <input
           {...register("phone2")}
-          type="tel"
+          type="text"
           id="phone2"
           className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
             errors.phone2 ? "border-red-500" : ""
           }`}
         />
         {errors.phone2 && (
-          <p className="text-red-500 text-xs italic">{errors.phone2.message}</p>
+          <p className="text-red-500 text-xs italic">
+            {errors.phone2.message}
+          </p>
         )}
       </div>
-      <div className="mb-4">
+
+      <div>
         <label
-          htmlFor="phone3"
+          htmlFor="address"
           className="block text-gray-700 text-sm font-bold mb-2"
         >
-          Telefone 3
+          Address
         </label>
         <input
-          {...register("phone3")}
-          type="tel"
-          id="phone3"
+          {...register("address")}
+          type="text"
+          id="address"
           className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-            errors.phone3 ? "border-red-500" : ""
+            errors.address ? "border-red-500" : ""
           }`}
         />
-        {errors.phone3 && (
-          <p className="text-red-500 text-xs italic">{errors.phone3.message}</p>
+        {errors.address && (
+          <p className="text-red-500 text-xs italic">
+            {errors.address.message}
+          </p>
         )}
       </div>
-      <div className="mb-4">
+
+      <div>
         <label
-          htmlFor="phone4"
+          htmlFor="postalCode"
           className="block text-gray-700 text-sm font-bold mb-2"
         >
-          Telefone 4
+          Postal Code
         </label>
         <input
-          {...register("phone4")}
-          type="tel"
-          id="phone4"
+          {...register("postalCode")}
+          type="text"
+          id="postalCode"
+          placeholder="XXXXX-XXX"
           className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-            errors.phone4 ? "border-red-500" : ""
+            errors.postalCode ? "border-red-500" : ""
           }`}
         />
-        {errors.phone4 && (
-          <p className="text-red-500 text-xs italic">{errors.phone4.message}</p>
+        {errors.postalCode && (
+          <p className="text-red-500 text-xs italic">
+            {errors.postalCode.message}
+          </p>
         )}
       </div>
-      <div className="flex items-center justify-between">
+
+      <div>
+        <label
+          htmlFor="city"
+          className="block text-gray-700 text-sm font-bold mb-2"
+        >
+          City
+        </label>
+        <input
+          {...register("city")}
+          type="text"
+          id="city"
+          className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+            errors.city ? "border-red-500" : ""
+          }`}
+        />
+        {errors.city && (
+          <p className="text-red-500 text-xs italic">
+            {errors.city.message}
+          </p>
+        )}
+      </div>
+
+      <div>
+        <label
+          htmlFor="state"
+          className="block text-gray-700 text-sm font-bold mb-2"
+        >
+          State
+        </label>
+        <input
+          {...register("state")}
+          type="text"
+          id="state"
+          placeholder="UF"
+          className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+            errors.state ? "border-red-500" : ""
+          }`}
+        />
+        {errors.state && (
+          <p className="text-red-500 text-xs italic">
+            {errors.state.message}
+          </p>
+        )}
+      </div>
+
+      <div>
+        <label
+          htmlFor="neighborhood"
+          className="block text-gray-700 text-sm font-bold mb-2"
+        >
+          Neighborhood
+        </label>
+        <input
+          {...register("neighborhood")}
+          type="text"
+          id="neighborhood"
+          className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+            errors.neighborhood ? "border-red-500" : ""
+          }`}
+        />
+        {errors.neighborhood && (
+          <p className="text-red-500 text-xs italic">
+            {errors.neighborhood.message}
+          </p>
+        )}
+      </div>
+
+      <div className="flex justify-between items-center mt-4">
         <button
           type="submit"
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
         >
-          Enviar
+          Save Changes
         </button>
-        <Link href="/"
-          className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
-            Voltar
-          
+        <Link href="/" className="text-blue-500 hover:text-blue-700">
+          Cancel
         </Link>
       </div>
     </form>

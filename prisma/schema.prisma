@@ -19,147 +19,145 @@ model User {
   created DateTime @default(now())
   updated DateTime @updatedAt
 
-  usuarioAssistencia UsuarioAssistencia[]
+  userAssistance UserAssistance[]
 }
 
-model Registro {
+model Record {
   id         Int @id @default(autoincrement())
   contractId Int
   serviceId  Int
 
-  contract        Contrato        @relation(fields: [contractId], references: [id])
-  serviceContract ServicoContrato @relation(fields: [serviceId], references: [id])
+  contract        Contract        @relation(fields: [contractId], references: [id])
+  serviceContract ServiceContract @relation(fields: [serviceId], references: [id])
 
   created DateTime @default(now())
   updated DateTime @updatedAt
 }
 
-model UsuarioAssistencia {
+model UserAssistance {
   id             Int      @id @default(autoincrement())
-  nome           String   @db.VarChar(80)
+  name           String   @db.VarChar(80)
   cpf            String?  @db.VarChar(11)
   cnpj           String?  @db.VarChar(14)
-  dataNascimento DateTime @db.Date
-  genero         String?  @db.VarChar(1)
+  birthDate      DateTime @db.Date
+  gender         String?  @db.VarChar(1)
   email          String?  @db.VarChar(60)
-  telefone1      String   @db.VarChar(20)
-  telefone2      String?  @db.VarChar(20)
-  telefone3      String?  @db.VarChar(20)
-  telefone4      String?  @db.VarChar(20)
+  phone1         String   @db.VarChar(20)
+  phone2         String?  @db.VarChar(20)
   userId         Int?
 
   created DateTime @default(now())
   updated DateTime @updatedAt
 
-  endereco        Endereco[]
-  contrato        Contrato[]
-  animalEstimacao AnimalEstimacao[]
-  dependente      Dependente[]
-  User            User?             @relation(fields: [userId], references: [id])
+  address        Address[]
+  contract       Contract[]
+  pets           Pet[]
+  dependents     Dependent[]
+  User           User?             @relation(fields: [userId], references: [id])
 }
 
-model Endereco {
+model Address {
   id        Int    @id @default(autoincrement())
-  endereco  String @db.VarChar(80)
-  uf        String @db.VarChar(2)
-  cidade    String @db.VarChar(35)
-  bairro    String @db.VarChar(35)
-  cep       String @db.VarChar(10)
-  telefone  String @db.VarChar(20)
-  usuarioId Int
+  address   String @db.VarChar(80)
+  state     String @db.VarChar(2)
+  city      String @db.VarChar(35)
+  neighborhood String @db.VarChar(35)
+  zipCode   String @db.VarChar(10)
+  phone     String @db.VarChar(20)
+  userId    Int
 
   created DateTime @default(now())
   updated DateTime @updatedAt
 
-  usuario UsuarioAssistencia @relation(fields: [usuarioId], references: [id])
+  user UserAssistance @relation(fields: [userId], references: [id])
 }
 
-model AnimalEstimacao {
+model Pet {
   id        Int       @id @default(autoincrement())
-  nome      String?   @db.VarChar(25)
-  dataNasc  DateTime? @db.Date
-  racaId    Int
-  usuarioId Int
+  name      String?   @db.VarChar(25)
+  birthDate DateTime? @db.Date
+  breedId   Int
+  userId    Int
 
   created DateTime @default(now())
   updated DateTime @updatedAt
 
-  raca    RacaEspecie        @relation(fields: [racaId], references: [id])
-  usuario UsuarioAssistencia @relation(fields: [usuarioId], references: [id])
+  breed  Breed    @relation(fields: [breedId], references: [id])
+  user   UserAssistance @relation(fields: [userId], references: [id])
 }
 
-model RacaEspecie {
+model Breed {
   id        Int     @id @default(autoincrement())
-  descricao String? @db.VarChar(25)
+  description String? @db.VarChar(25)
 
   created DateTime @default(now())
   updated DateTime @updatedAt
 
-  animais AnimalEstimacao[]
+  pets Pet[]
 }
-model Dependente {
+
+model Dependent {
   id        Int    @id @default(autoincrement())
-  nome      String @db.VarChar(80)
-  usuarioId Int
-  tipoId    Int
+  name      String @db.VarChar(80)
+  userId    Int
+  typeId    Int
 
   created DateTime @default(now())
   updated DateTime @updatedAt
 
-  usuario UsuarioAssistencia @relation(fields: [usuarioId], references: [id])
-  tipo    TipoDependente     @relation(fields: [tipoId], references: [id])
+  user UserAssistance @relation(fields: [userId], references: [id])
+  type  DependentType  @relation(fields: [typeId], references: [id])
 }
 
-model TipoDependente {
+model DependentType {
   id        Int    @id @default(autoincrement())
-  descricao String @db.VarChar(80)
+  description String @db.VarChar(80)
 
   created DateTime @default(now())
   updated DateTime @updatedAt
 
-  dependentes Dependente[]
+  dependents Dependent[]
 }
 
-model Contrato {
+model Contract {
   id             Int      @id @default(autoincrement())
-  numero         String   @db.VarChar(18)
-  versao         Int
-  chave          String   @db.VarChar(30)
-  subChave       String   @db.VarChar(15)
-  tipoMovimento  String   @db.VarChar(1)
-  inicioVigencia DateTime @db.Date
-  fimVigencia    DateTime @db.Date
-  usuarioId      Int
+  number         String   @db.VarChar(18)
+  version        Int
+  key            String   @db.VarChar(30)
+  subKey         String   @db.VarChar(15)
+  movementType   String   @db.VarChar(1)
+  startDate      DateTime @db.Date
+  endDate        DateTime @db.Date
+  userId         Int
 
   created DateTime @default(now())
   updated DateTime @updatedAt
 
-  usuario         UsuarioAssistencia @relation(fields: [usuarioId], references: [id])
-  servicoContrato ServicoContrato[]
-  Registro        Registro[]
+  user            UserAssistance @relation(fields: [userId], references: [id])
+  serviceContracts ServiceContract[]
+  records         Record[]
 }
 
-model ServicoContrato {
+model ServiceContract {
   id         Int @id @default(autoincrement())
-  servicoId  Int
-  contratoId Int
+  serviceId  Int
+  contractId Int
 
   created DateTime @default(now())
   updated DateTime @updatedAt
 
-  servico  Servico    @relation(fields: [servicoId], references: [id])
-  contrato Contrato   @relation(fields: [contratoId], references: [id])
-  Registro Registro[]
+  service  Service @relation(fields: [serviceId], references: [id])
+  contract Contract @relation(fields: [contractId], references: [id])
+  records  Record[]
 }
 
-model Servico {
+model Service {
   id        Int    @id @default(autoincrement())
-  descricao String @db.VarChar(100)
-
+  description String @db.VarChar(100)
   limitValue Int
 
   created DateTime @default(now())
   updated DateTime @updatedAt
 
-  servicoContratos ServicoContrato[]
+  serviceContracts ServiceContract[]
 }
