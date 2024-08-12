@@ -1,3 +1,4 @@
+
 // 'use client';
 
 // import React from "react";
@@ -7,8 +8,10 @@
 // import { useRouter } from "next/navigation";
 // import Link from "next/link";
 
+// // Atualizar o schema para incluir socialName
 // const schema = z.object({
 //   name: z.string().min(1, "Nome é obrigatório"),
+//   socialName: z.string().optional(),
 //   email: z
 //     .string()
 //     .email("Digite um e-mail válido")
@@ -22,6 +25,7 @@
 
 // type CreateAccountInputs = {
 //   name: string;
+//   socialName?: string;
 //   email: string;
 //   password: string;
 //   confirmPassword: string;
@@ -70,12 +74,27 @@
 //           {...register("name")}
 //           type="text"
 //           id="name"
-//           className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-//             errors.name ? "border-red-500" : ""
-//           }`}
+//           className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.name ? "border-red-500" : ""}`}
 //         />
 //         {errors.name && (
 //           <p className="text-red-500 text-xs italic">{errors.name.message}</p>
+//         )}
+//       </div>
+//       <div className="mb-4">
+//         <label
+//           htmlFor="socialName"
+//           className="block text-gray-700 text-sm font-bold mb-2"
+//         >
+//           Nome Social
+//         </label>
+//         <input
+//           {...register("socialName")}
+//           type="text"
+//           id="socialName"
+//           className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.socialName ? "border-red-500" : ""}`}
+//         />
+//         {errors.socialName && (
+//           <p className="text-red-500 text-xs italic">{errors.socialName.message}</p>
 //         )}
 //       </div>
 //       <div className="mb-4">
@@ -89,9 +108,7 @@
 //           {...register("email")}
 //           type="email"
 //           id="email"
-//           className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-//             errors.email ? "border-red-500" : ""
-//           }`}
+//           className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.email ? "border-red-500" : ""}`}
 //         />
 //         {errors.email && (
 //           <p className="text-red-500 text-xs italic">{errors.email.message}</p>
@@ -108,9 +125,7 @@
 //           {...register("password")}
 //           type="password"
 //           id="password"
-//           className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-//             errors.password ? "border-red-500" : ""
-//           }`}
+//           className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.password ? "border-red-500" : ""}`}
 //         />
 //         {errors.password && (
 //           <p className="text-red-500 text-xs italic">{errors.password.message}</p>
@@ -127,9 +142,7 @@
 //           {...register("confirmPassword")}
 //           type="password"
 //           id="confirmPassword"
-//           className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-//             errors.confirmPassword ? "border-red-500" : ""
-//           }`}
+//           className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.confirmPassword ? "border-red-500" : ""}`}
 //         />
 //         {errors.confirmPassword && (
 //           <p className="text-red-500 text-xs italic">{errors.confirmPassword.message}</p>
@@ -165,7 +178,7 @@ import { z } from "zod";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-// Atualizar o schema para incluir socialName
+// Atualizar o schema para incluir todos os campos necessários
 const schema = z.object({
   name: z.string().min(1, "Nome é obrigatório"),
   socialName: z.string().optional(),
@@ -175,6 +188,10 @@ const schema = z.object({
     .min(1, "Campo obrigatório"),
   password: z.string().min(6, "A senha deve ter pelo menos 6 caracteres"),
   confirmPassword: z.string().min(6, "A confirmação de senha deve ter pelo menos 6 caracteres"),
+  cpf: z.string().length(11, "O CPF deve ter 11 caracteres"),
+  gender: z.string().optional(),
+  birthDate: z.string().min(1, "Data de nascimento é obrigatória"),
+  cel: z.string().min(1, "Celular é obrigatório"),
 }).refine(data => data.password === data.confirmPassword, {
   message: "As senhas não coincidem",
   path: ["confirmPassword"], // path of error
@@ -186,6 +203,10 @@ type CreateAccountInputs = {
   email: string;
   password: string;
   confirmPassword: string;
+  cpf: string;
+  gender?: string;
+  birthDate: string; // Use a string for the date input
+  cel: string;
 };
 
 const CreateAccountForm: React.FC = () => {
@@ -269,6 +290,75 @@ const CreateAccountForm: React.FC = () => {
         />
         {errors.email && (
           <p className="text-red-500 text-xs italic">{errors.email.message}</p>
+        )}
+      </div>
+      <div className="mb-4">
+        <label
+          htmlFor="cpf"
+          className="block text-gray-700 text-sm font-bold mb-2"
+        >
+          CPF
+        </label>
+        <input
+          {...register("cpf")}
+          type="text"
+          id="cpf"
+          maxLength={11}
+          className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.cpf ? "border-red-500" : ""}`}
+        />
+        {errors.cpf && (
+          <p className="text-red-500 text-xs italic">{errors.cpf.message}</p>
+        )}
+      </div>
+      <div className="mb-4">
+        <label
+          htmlFor="gender"
+          className="block text-gray-700 text-sm font-bold mb-2"
+        >
+          Gênero
+        </label>
+        <input
+          {...register("gender")}
+          type="text"
+          id="gender"
+          className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.gender ? "border-red-500" : ""}`}
+        />
+        {errors.gender && (
+          <p className="text-red-500 text-xs italic">{errors.gender.message}</p>
+        )}
+      </div>
+      <div className="mb-4">
+        <label
+          htmlFor="birthDate"
+          className="block text-gray-700 text-sm font-bold mb-2"
+        >
+          Data de Nascimento
+        </label>
+        <input
+          {...register("birthDate")}
+          type="date"
+          id="birthDate"
+          className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.birthDate ? "border-red-500" : ""}`}
+        />
+        {errors.birthDate && (
+          <p className="text-red-500 text-xs italic">{errors.birthDate.message}</p>
+        )}
+      </div>
+      <div className="mb-4">
+        <label
+          htmlFor="cel"
+          className="block text-gray-700 text-sm font-bold mb-2"
+        >
+          Celular
+        </label>
+        <input
+          {...register("cel")}
+          type="text"
+          id="cel"
+          className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.cel ? "border-red-500" : ""}`}
+        />
+        {errors.cel && (
+          <p className="text-red-500 text-xs italic">{errors.cel.message}</p>
         )}
       </div>
       <div className="mb-4">
