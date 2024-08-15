@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -11,7 +10,6 @@ type Description = {
   hasWaitingPeriod: boolean | string;
 };
 
-
 type CardProductsProps = {
   title: string;
   descriptions: Description[];
@@ -20,26 +18,45 @@ type CardProductsProps = {
 };
 
 const CardProducts: React.FC<CardProductsProps> = ({ title, descriptions, value, type }) => {
+  const isHighlighted = type === 'Type C'; // Altere para o tipo que você deseja destacar
+
   return (
-    <div className="border text-xs rounded-md p-4 mb-4 hover:bg-green-100">
-      <h2 className="text-xl font-bold text-center pb-10 text-gray-600">{title}</h2>
-      <span className="text-blue-600 text-xl font-bold">{value}</span>
+    <div
+      className={`border text-xs rounded-md p-4 mb-4 hover:bg-green-100 ${
+        isHighlighted ? 'bg-[rgb(1,24,74)] text-white' : 'bg-white text-[rgb(1,24,74)]'
+      }`}
+    >
+      <h2 className={`text-xl font-bold text-center pb-10 ${isHighlighted ? 'text-white' : 'text-[rgb(1,24,74)]'}`}>
+        {title}
+      </h2>
+      <span className={`text-xl font-bold ${isHighlighted ? 'text-white' : 'text-blue-600'}`}>{value}</span>
 
       <div className="mt-4">
-        <div className="grid grid-cols-3 gap-4 text-gray-800 font-semibold">
+        <div className={`grid grid-cols-3 gap-4 font-semibold ${isHighlighted ? 'text-white' : 'text-[rgb(1,24,74)]'}`}>
           <div>Serviço</div>
           <div className="text-center">Preço Máximo de Seguro</div>
           <div className="text-center">Carência</div>
         </div>
         {descriptions.map((desc, index) => (
-          <div key={index} className="grid grid-cols-3 gap-4 items-center border-t pt-2 text-gray-600">
+          <div
+            key={index}
+            className={`grid grid-cols-3 gap-4 items-center border-t pt-2 ${
+              isHighlighted ? 'text-white' : 'text-gray-600'
+            }`}
+          >
             <div className="flex items-center">
-              {desc.icon && <FontAwesomeIcon icon={desc.icon} className="mr-2" style={{ color: desc.iconColor }} />}
+              {desc.icon && (
+                <FontAwesomeIcon icon={desc.icon} className="mr-2" style={{ color: desc.iconColor }} />
+              )}
               <p>{desc.text}</p>
             </div>
             <div className="text-center">{desc.maxInsurancePrice || 'N/A'}</div>
             <div className="text-center">
-              {typeof desc.hasWaitingPeriod === 'boolean' ? (desc.hasWaitingPeriod ? 'Sim' : 'Não') : desc.hasWaitingPeriod}
+              {typeof desc.hasWaitingPeriod === 'boolean'
+                ? desc.hasWaitingPeriod
+                  ? 'Sim'
+                  : 'Não'
+                : desc.hasWaitingPeriod}
             </div>
           </div>
         ))}
@@ -103,7 +120,7 @@ const MockData: CardProductsProps[] = [
 
 const ProductsList: React.FC = () => {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       {MockData.map((product, index) => (
         <CardProducts
           key={index}
@@ -120,7 +137,7 @@ const ProductsList: React.FC = () => {
 const App: React.FC = () => {
   return (
     <div className="p-4">
-      <h1 className="text-4xl text-center text-gray-800 font-bold py-10">Nossos Planos</h1>
+      <h1 className="text-4xl text-center text-[rgb(1,24,74)] font-bold py-10">Nossos Planos</h1>
       <ProductsList />
     </div>
   );
