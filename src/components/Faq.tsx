@@ -19,7 +19,7 @@ const Faq = () => {
   ];
 
   return (
-    <div>
+    <div className='py-10 md:pt-20 px-10 md:px-20'>
       {faqData.map((item, index) => (
         <FaqItem key={index} question={item.question} answer={item.answer} />
       ))}

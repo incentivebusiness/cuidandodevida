@@ -14,7 +14,8 @@ const FaqItem: FC<FaqItemProps> = ({ question, answer }) => {
   };
 
   return (
-    <div className="border rounded-md p-4 mb-4">
+    <div className="p-[1px] mb-4 rounded-full bg-gradient-to-r from-[rgb(21,154,194)] to-[rgb(131,189,87)]">
+  <div className="p-6 bg-white rounded-full">
       <button
         className="flex justify-between items-center w-full mb-2 focus:outline-none"
         onClick={toggleOpen}
@@ -39,6 +40,7 @@ const FaqItem: FC<FaqItemProps> = ({ question, answer }) => {
       {isOpen && (
         <div className="mt-2 text-gray-600">{answer}</div>
       )}
+    </div>
     </div>
   );
 };
