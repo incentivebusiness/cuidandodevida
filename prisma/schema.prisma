@@ -38,3 +38,11 @@ model UserAssistance {
 
   @@index([userId]) // Adicione um índice para otimizar consultas
 }
+
+model LuckyNumber  {
+  id Int @id @default(autoincrement())
+  number String
+  series String
+  loteClient String
+  qnty String
+}
