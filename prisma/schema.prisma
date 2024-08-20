@@ -21,6 +21,7 @@ model User {
   hashedPassword String
   birthDate      DateTime           @db.Date
   cel            String             @db.VarChar(20)
+  role           String   @default("USER")
 
   created        DateTime           @default(now())
   updated        DateTime           @updatedAt

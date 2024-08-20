@@ -1,3 +1,4 @@
+
 import {prisma} from "./prisma";
 import { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -37,18 +38,18 @@ export const authOptions: AuthOptions = {
         }
 
         const userPassword = user.hashedPassword;
-
         const isValidPassword = bcrypt.compareSync(password, userPassword);
 
         if (!isValidPassword) {
           return null;
         }
 
-        //return user;
+        // Include role in the returned object
         return {
           id: user.id,
           email: user.email,
           name: user.name,
+          role: user.role, // Assuming "role" is a column in your "user" table
         };
       },
     }),
@@ -61,4 +62,21 @@ export const authOptions: AuthOptions = {
     signOut: "/autenticacao/signout",
   },
   secret: process.env.NEXTAUTH_SECRET,
+
+  callbacks: {
+    // Include the role in the JWT token
+    async jwt({ token, user }) {
+      if (user) {
+        token.role = user.role;
+      }
+      return token;
+    },
+    // Make the role available in the session
+    async session({ session, token }) {
+      if (token?.role) {
+        session.user.role = token.role;
+      }
+      return session;
+    },
+  },
 };

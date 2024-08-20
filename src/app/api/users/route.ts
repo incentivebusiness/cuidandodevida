@@ -4,6 +4,11 @@ import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 
+function isValidEmail(email: string) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
 export async function POST(request: NextRequest) {
   try {
     // Obtém os dados do corpo da requisição
@@ -24,6 +29,14 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({
         success: false,
         message: "Preencha todos os campos obrigatórios!",
+      });
+    }
+
+    // Valida o formato do e-mail
+    if (!isValidEmail(email)) {
+      return NextResponse.json({
+        success: false,
+        message: "E-mail inválido!",
       });
     }
 
@@ -63,6 +76,7 @@ export async function POST(request: NextRequest) {
         gender,
         birthDate: new Date(birthDate), // Certifique-se de converter a string para Date
         cel,
+        role: "USER",
       },
     });
 

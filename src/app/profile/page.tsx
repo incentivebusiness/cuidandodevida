@@ -7,6 +7,7 @@ import Link from 'next/link';
 interface User {
   name?: string;
   email?: string;
+  role?: string;
 }
 
 interface Session {
@@ -23,7 +24,7 @@ const Profile: React.FC = () => {
   if (status === 'loading') {
     return <p>Carregando...</p>;
   }
-
+console.log(session)
   return (
     <div className="max-w-md mx-auto mt-8">
       <h1 className="text-2xl font-bold mb-4">Perfil</h1>
@@ -34,6 +35,9 @@ const Profile: React.FC = () => {
           </p>
           <p>
             <strong>Email:</strong> {session.user.email ?? 'Email não disponível'}
+          </p>
+          <p>
+            <strong>TYPE:</strong> {session.user.role ?? 'role e não disponível'}
           </p>
           <button
             onClick={() => signOut({ callbackUrl: '/' })}

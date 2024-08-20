@@ -1,71 +1,60 @@
+
 'use client';
-
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 
-export default function UploadPage() {
-  const [file, setFile] = useState(null);
-  const [uploading, setUploading] = useState(false);
-  const router = useRouter();
+const Home = () => {
+  const [fileContent, setFileContent] = useState<string | null>(null);
 
-  const handleChange = (e) => {
-    setFile(e.target.files[0]);
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = event.target.files?.[0];
+    if (selectedFile && selectedFile.type === 'text/plain') {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const content = e.target?.result as string;
+        setFileContent(content);
+      };
+      reader.readAsText(selectedFile);
+    }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
+    if (!fileContent) return;
 
-    if (!file) {
-      alert('Please select a file to upload');
-      return;
-    }
-
-    setUploading(true);
-
-    const formData = new FormData();
-    formData.append('file', file);
+    const numbers = fileContent.split('\n').map(line => line.trim()).filter(line => line);
 
     try {
       const response = await fetch('/api/upload', {
         method: 'POST',
-        body: formData,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ numbers }),
       });
 
       const result = await response.json();
-      
       if (response.ok) {
         alert(result.message);
-        router.push('/success'); // Redireciona para uma página de sucesso
       } else {
-        alert(result.error || 'An error occurred during the upload');
+        alert(result.error);
       }
     } catch (error) {
-      alert('An unexpected error occurred');
-    } finally {
-      setUploading(false);
+      alert('An error occurred while saving the numbers');
     }
   };
 
   return (
-    <div className="max-w-md mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Upload File</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="file"
-          onChange={handleChange}
-          className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none"
-          accept=".txt" // Opcional: define tipos de arquivos aceitos
-        />
-        <button
-          type="submit"
-          className={`w-full text-white font-bold py-2 px-4 rounded ${
-            uploading ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-700'
-          }`}
-          disabled={uploading}
-        >
-          {uploading ? 'Uploading...' : 'Upload'}
-        </button>
-      </form>
+    <div style={{ padding: '20px' }}>
+      <h1>Ler e Salvar Números da Sorte</h1>
+      <input type="file" accept=".txt" onChange={handleFileChange} />
+      {fileContent && (
+        <div>
+          <h2>Conteúdo do Arquivo:</h2>
+          <pre>{fileContent}</pre>
+          <button onClick={handleSubmit}>Salvar Números</button>
+        </div>
+      )}
     </div>
   );
-}
+};
+
+export default Home;

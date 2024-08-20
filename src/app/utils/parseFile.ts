@@ -13,17 +13,16 @@ export async function parseFile(filePath) {
 
     for await (const line of rl) {
       if (line.startsWith('D')) {
-        // Ignorar linhas que começam com 'D'
-        continue;
-      }
+        // Extrair os dados relevantes da linha
+        const lote = line.substring(1, 6).trim();            // 5 dígitos após o 'D'
+        const series = line.substring(31, 34).trim();        // 3 dígitos após os 25 zeros
+        const luckyNumber = line.substring(34, 42).trim();   // 8 dígitos após a série
+        const sequence = line.substring(42, 51).trim();      // 9 dígitos finais
 
-      // Extrair dados relevantes da linha
-      const series = line.substring(30, 33).trim(); // Lote de distribuição
-      const luckyNumber = line.substring(33, 41).trim(); // Número de Sorte
-
-      // Validar se os dados extraídos são válidos
-      if (series && luckyNumber) {
-        results.push({ series, luckyNumber });
+        // Validar se os dados extraídos são válidos
+        if (lote && series && luckyNumber && sequence) {
+          results.push({ lote, series, luckyNumber, sequence });
+        }
       }
     }
 
