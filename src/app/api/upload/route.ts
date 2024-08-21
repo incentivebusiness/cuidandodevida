@@ -1,138 +1,153 @@
-// import { NextResponse } from 'next/server';
-// import { PrismaClient } from '@prisma/client';
-// import { parseFile } from '../../utils/parseFile';
-// import { promises as fsPromises } from 'fs';
-// import path from 'path';
-// import multer from 'multer';
 
-// const prisma = new PrismaClient();
-
-// const upload = multer({
-//   storage: multer.memoryStorage(),
-//   fileFilter: (req, file, cb) => {
-//     if (file.mimetype !== 'text/plain') {
-//       return cb(new Error('Apenas arquivos .txt são permitidos'));
-//     }
-//     cb(null, true);
-//   },
-// });
-
-// // Desativar o parsing do body padrão do Next.js para lidar com FormData
-// export const config = {
-//   api: {
-//     bodyParser: false,
-//   },
-// };
-
-// export default async function handler(req, res) {
-//   // Aplicar multer manualmente no middleware
-//   upload.single('file')(req, res, async function (err) {
-//     if (err) {
-//       console.error('Erro no upload:', err);
-//       return res.status(400).json({ error: err.message });
-//     }
-
-//     try {
-//       const file = req.file;
-//       console.log('Requisição recebida. Arquivo:', file); // Verifica se o arquivo foi recebido
-
-//       if (!file) {
-//         console.log('Nenhum arquivo foi enviado'); // Log se o arquivo estiver ausente
-//         return res.status(400).json({ error: 'Nenhum arquivo foi enviado' });
-//       }
-
-//       const tmpDir = path.join(process.cwd(), 'tmp');
-//       await fsPromises.mkdir(tmpDir, { recursive: true });
-//       console.log('Diretório temporário criado:', tmpDir); // Log para verificar a criação do diretório
-
-//       const tempPath = path.join(tmpDir, file.originalname);
-//       await fsPromises.writeFile(tempPath, file.buffer);
-//       console.log('Arquivo temporário salvo:', tempPath); // Log para verificar o salvamento do arquivo
-
-//       const records = await parseFile(tempPath);
-//       console.log('Registros extraídos:', records); // Log para verificar os registros extraídos
-
-//       await prisma.luckyNumber.createMany({ data: records });
-//       console.log('Dados salvos no banco de dados'); // Log para confirmar a inserção no banco de dados
-
-//       await fsPromises.unlink(tempPath);
-//       console.log('Arquivo temporário excluído:', tempPath); // Log para confirmar a exclusão do arquivo
-
-//       return res.status(200).json({ message: 'Arquivo processado e dados salvos com sucesso!' });
-//     } catch (error) {
-//       console.error('Erro ao processar a requisição:', error); // Log para capturar e mostrar qualquer erro
-//       return res.status(500).json({ error: 'Erro ao processar o arquivo' });
-//     }
-//   });
-// }
-// pages/api/upload.ts
 // import { NextApiRequest, NextApiResponse } from 'next';
-// import multer from 'multer';
-// import { PrismaClient } from '@prisma/client';
+// import { prisma } from '@/lib/prisma';
 
-// const prisma = new PrismaClient();
-// const upload = multer({ storage: multer.memoryStorage() }); // Armazenamento em memória
+// export async function POST(req: NextApiRequest, res: NextApiResponse) {
+//   const { numbers } = req.body;
 
-// const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-//   if (req.method === 'POST') {
-//     upload.single('file')(req, res, async (err) => {
-//       if (err) {
-//         return res.status(400).json({ error: err.message });
-//       }
-
-//       if (!req.file) {
-//         return res.status(400).json({ error: 'Nenhum arquivo foi enviado' });
-//       }
-
-//       try {
-//         const fileContent = req.file.buffer.toString(); // Lê o conteúdo do arquivo como string
-//         const records = processFileContent(fileContent); // Processa o conteúdo
-
-//         await prisma.luckyNumber.createMany({ data: records }); // Insere os dados no banco
-//         return res.status(200).json({ message: 'Dados salvos com sucesso!' });
-//       } catch (error) {
-//         console.error(error);
-//         return res.status(500).json({ error: 'Erro ao processar o arquivo' });
-//       }
-//     });
-//   } else {
-//     return res.status(405).json({ error: 'Método não permitido' });
+//   if (!numbers || !Array.isArray(numbers) || numbers.some((num: string) => typeof num !== 'string')) {
+//     return res.status(400).json({ error: 'Invalid data' });
 //   }
-// };
 
-// // Função para processar o conteúdo do arquivo
-// const processFileContent = (content: string) => {
-//   const lines = content.split('\n'); // Separa as linhas
-//   const records = lines.map((line) => ({
-//     number: line.trim(), // Adiciona o número da sorte
-//   })).filter(record => record.number); // Remove linhas vazias
+//   try {
+//     const createdNumbers = await prisma.luckyNumber.createMany({
+//       data: numbers.map((number: string) => ({ number })),
+//     });
 
-//   return records;
-// };
+//     return res.status(200).json({ message: 'Numbers saved successfully', count: createdNumbers.count });
+//   } catch (error) {
+//     console.error(error);
+//     return res.status(500).json({ error: 'Failed to save numbers' });
+//   }
+// }
+// import { prisma } from '@/lib/prisma';
 
-// export default handler;
-// pages/api/luckyNumbers.ts
-import { NextApiRequest, NextApiResponse } from 'next';
-import {prisma} from '@/lib/prisma'; // Ajuste o caminho conforme sua estrutura
+// export async function POST(req: Request) {
+//   try {
+//     const { numbers } = await req.json(); // Obtenha os dados do corpo da requisição
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'POST') {
-    const { numbers } = req.body;
+//     if (!numbers || !Array.isArray(numbers) || numbers.some((num: string) => typeof num !== 'string')) {
+//       return new Response(JSON.stringify({ error: 'Invalid data' }), { status: 400 });
+//     }
 
-    if (!numbers || !Array.isArray(numbers)) {
-      return res.status(400).json({ error: 'Invalid data' });
+//     const createdNumbers = await prisma.luckyNumber.createMany({
+//       data: numbers.map((number: string) => 
+//         ({ 
+//           number,
+//           series: '123',
+//           loteClient: '123',
+//           qnty: '123',
+//          })),
+//     });
+
+//     return new Response(JSON.stringify({ message: 'Numbers saved successfully', count: createdNumbers.count }), { status: 200 });
+//   } catch (error) {
+//     console.error(error);
+//     return new Response(JSON.stringify({ error: 'Failed to save numbers' }), { status: 500 });
+//   }
+// }
+
+
+
+// import { prisma } from '@/lib/prisma';
+
+// export async function POST(req: Request) {
+//   try {
+//     const { fileContent } = await req.json(); // Obtenha os dados do corpo da requisição
+
+//     if (!fileContent || typeof fileContent !== 'string') {
+//       return new Response(JSON.stringify({ error: 'Invalid data' }), { status: 400 });
+//     }
+
+//     const lines = fileContent.split('\n').map(line => line.trim()).filter(line => line);
+    
+//     // Verifica se há pelo menos 3 linhas (para ignorar a primeira e a última)
+//     if (lines.length < 3) {
+//       return new Response(JSON.stringify({ error: 'File must have at least 3 lines' }), { status: 400 });
+//     }
+
+//     // Ignorar a primeira e a última linha
+//     const relevantLines = lines.slice(1, lines.length - 1);
+    
+//     const luckyNumbersData = relevantLines.map(line => {
+//       // Verifica se a linha começa com 'D' e processa
+//       if (line.startsWith('D')) {
+//         // Lote: os próximos 5 caracteres
+//         const loteClient = line.substring(1, 6); // Pega os 5 caracteres após o 'D'
+//         // Ignora os 25 zeros e pega os próximos 25 caracteres fixos
+//         const serie = line.substring(6, 31).padEnd(25, '0'); // Preencher com zeros se necessário
+//         // Série: os próximos 3 caracteres
+//         const series = line.substring(31, 34);
+//         // Número de sorte: os próximos 8 caracteres
+//         const number = line.substring(34, 42);
+//         // Quantidade: os próximos 9 caracteres
+//         const qnty = line.substring(42, 51);
+        
+//         return { number, series, loteClient, qnty };
+//       }
+//       return null; // Se a linha não começa com 'D', retorna nulo
+//     }).filter(Boolean); // Remove linhas que não são válidas
+
+//     // Insere todos os números da sorte no banco de dados
+//     const createdNumbers = await prisma.luckyNumber.createMany({
+//       data: luckyNumbersData,
+//     });
+
+//     return new Response(JSON.stringify({ message: 'Numbers saved successfully', count: createdNumbers.count }), { status: 200 });
+//   } catch (error) {
+//     console.error(error);
+//     return new Response(JSON.stringify({ error: 'Failed to save numbers' }), { status: 500 });
+//   }
+// }
+import { prisma } from '@/lib/prisma';
+
+export async function POST(req: Request) {
+  try {
+    const { fileContent } = await req.json();
+
+    if (!fileContent || typeof fileContent !== 'string') {
+      return new Response(JSON.stringify({ error: 'Invalid data' }), { status: 400 });
     }
 
-    try {
-      const createdNumbers = await prisma.luckyNumber.createMany({
-        data: numbers.map((number: string) => ({ number })),
-      });
-      return res.status(200).json({ message: 'Numbers saved successfully', createdNumbers });
-    } catch (error) {
-      return res.status(500).json({ error: 'Failed to save numbers' });
+    const lines = fileContent.split('\n').map(line => line.trim()).filter(line => line);
+
+    // Verifica se há pelo menos 3 linhas (para ignorar a primeira e a última)
+    if (lines.length < 3) {
+      return new Response(JSON.stringify({ error: 'File must have at least 3 lines' }), { status: 400 });
     }
-  } else {
-    res.setHeader('Allow', ['POST']);
-    res.status(405).end(`Method ${req.method} Not Allowed`);
+
+    // Ignorar a primeira e a última linha
+    const relevantLines = lines.slice(1, lines.length - 1);
+
+    const luckyNumbersData = relevantLines.map(line => {
+      if (line.startsWith('D')) {
+        // Lote de envio do cliente: 5 caracteres após o 'D'
+        const loteClient = line.substring(1, 6);
+
+        // Ignora os 25 zeros
+        // Série de distribuição: 3 caracteres após os 25 zeros (posição 31-34)
+        const series = line.substring(31, 34);
+
+        // Número de Sorte: 8 caracteres após a série (posição 34-42)
+        const number = line.substring(34, 42);
+
+        // Quantidade: 9 caracteres após o número de sorte (posição 42-51)
+        const qnty = line.substring(42, 51);
+
+        return { number, series, loteClient, qnty };
+      }
+      return null;
+    }).filter(Boolean); // Remove quaisquer nulos do array
+
+    // Insere todos os números da sorte no banco de dados
+    const createdNumbers = await prisma.luckyNumber.createMany({
+      data: luckyNumbersData,
+      
+    });
+    console.log(luckyNumbersData);
+    return new Response(JSON.stringify({ message: 'Numbers saved successfully', count: createdNumbers.count }), { status: 200 });
+  } catch (error) {
+    console.error(error);
+    return new Response(JSON.stringify({ error: 'Failed to save numbers' }), { status: 500 });
   }
 }

@@ -1,5 +1,3 @@
-// schema.prisma
-
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
@@ -15,18 +13,33 @@ model User {
   code           String             @unique @default(cuid())
   name           String             @db.VarChar(80)
   cpf            String             @unique @db.VarChar(11) // CPF deve ser único e não nulo
-  gender         String?            @db.VarChar(1) // Se você quiser que seja obrigatório, remova o `?`
+  gender         String             @db.VarChar(1) 
   socialName     String?
   email          String             @unique @db.VarChar(255) // Email deve ser único e não nulo
   hashedPassword String
   birthDate      DateTime           @db.Date
   cel            String             @db.VarChar(20)
-  role           String   @default("USER")
+  role           String             @default("USER")
 
   created        DateTime           @default(now())
   updated        DateTime           @updatedAt
 
   userAssistance UserAssistance[]
+  address        Address?           @relation(fields: [addressId], references: [id])
+  addressId      Int?               @unique // O campo addressId deve ser único para garantir a relação 1:1
+}
+
+model Address {
+  id          Int     @id @default(autoincrement())
+  street      String  @db.VarChar(255)
+  number      String  @db.VarChar(20)
+  complement  String? @db.VarChar(255)
+  neighborhood String @db.VarChar(255)
+  city        String  @db.VarChar(255)
+  state       String  @db.VarChar(2)  // Pode ser uma sigla como 'SP', 'RJ', etc.
+  zipCode     String  @db.VarChar(8)  // Formato de CEP no Brasil
+
+  user        User?   @relation
 }
 
 model UserAssistance {
@@ -43,7 +56,7 @@ model UserAssistance {
 model LuckyNumber  {
   id Int @id @default(autoincrement())
   number String
-  series String
-  loteClient String
-  qnty String
+  series String?
+  loteClient String?
+  qnty String?
 }
