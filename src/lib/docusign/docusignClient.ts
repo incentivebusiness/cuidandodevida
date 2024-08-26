@@ -1,10 +1,10 @@
-import * as docusign from "docusign-esign";
+import { ApiClient } from "docusign-esign";
 
-const oAuth = docusign.ApiClient.OAuth;
-const restApi = docusign.ApiClient.RestApi;
+const oAuth = ApiClient.OAuth;
+const restApi = ApiClient.RestApi;
 
 export const getDocusignClient = async () => {
-  const apiClient = new docusign.ApiClient();
+  const apiClient = new ApiClient();
   apiClient.setBasePath(restApi.BasePath.DEMO);
   apiClient.setOAuthBasePath(oAuth.BasePath.DEMO);
 

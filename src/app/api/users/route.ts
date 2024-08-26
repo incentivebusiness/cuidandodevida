@@ -21,11 +21,12 @@ export async function POST(request: NextRequest) {
       cpf, 
       gender, 
       birthDate, 
-      cel 
+      cel,
+      address,
     } = await request.json();
 
     // Valida se todos os campos obrigatórios estão presentes
-    if (!name || !email || !password || !confirmPassword || !cpf || !birthDate || !cel) {
+    if (!name || !email || !password || !confirmPassword || !cpf || !birthDate || !cel || !address) {
       return NextResponse.json({
         success: false,
         message: "Preencha todos os campos obrigatórios!",
@@ -76,6 +77,7 @@ export async function POST(request: NextRequest) {
         gender,
         birthDate: new Date(birthDate), // Certifique-se de converter a string para Date
         cel,
+        address,
         role: "USER",
       },
     });

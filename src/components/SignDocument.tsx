@@ -1,3 +1,4 @@
+'use client';
 import { createEmbeddedFormFromTemplate } from "@/lib/docusign/template";
 
 export async function SignDocument() {

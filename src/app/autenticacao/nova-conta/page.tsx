@@ -1,3 +1,4 @@
+
 // 'use client';
 
 // import React from "react";
@@ -6,8 +7,10 @@
 // import { z } from "zod";
 // import { useRouter } from "next/navigation";
 // import Link from "next/link";
+// import { format, parseISO, isBefore, subYears } from 'date-fns';
 
-// // Atualizar o schema para incluir todos os campos necessários
+// const eighteenYearsAgo = subYears(new Date(), 18);
+
 // const schema = z.object({
 //   name: z.string().min(1, "Nome é obrigatório"),
 //   socialName: z.string().optional(),
@@ -19,11 +22,24 @@
 //   confirmPassword: z.string().min(6, "A confirmação de senha deve ter pelo menos 6 caracteres"),
 //   cpf: z.string().length(11, "O CPF deve ter 11 caracteres"),
 //   gender: z.enum(["M", "F"], "Selecione um gênero"),
-//   birthDate: z.string().min(1, "Data de nascimento é obrigatória"),
+//   birthDate: z
+//     .string()
+//     .refine((date) => isBefore(parseISO(date), eighteenYearsAgo), {
+//       message: "Você deve ter pelo menos 18 anos",
+//     }),
 //   cel: z.string().min(1, "Celular é obrigatório"),
+//   address: z.object({
+//     street: z.string().min(1, "Rua é obrigatória"),
+//     number: z.string().min(1, "Número é obrigatório"),
+//     complement: z.string().optional(),
+//     neighborhood: z.string().min(1, "Bairro é obrigatório"),
+//     city: z.string().min(1, "Cidade é obrigatória"),
+//     state: z.string().min(1, "Estado é obrigatório"),
+//     zipCode: z.string().min(8, "CEP deve ter 8 caracteres").max(8, "CEP deve ter 8 caracteres"),
+//   }),
 // }).refine(data => data.password === data.confirmPassword, {
 //   message: "As senhas não coincidem",
-//   path: ["confirmPassword"], // path of error
+//   path: ["confirmPassword"],
 // });
 
 // type CreateAccountInputs = {
@@ -34,8 +50,17 @@
 //   confirmPassword: string;
 //   cpf: string;
 //   gender: "M" | "F";
-//   birthDate: string; // Use a string for the date input
+//   birthDate: string;
 //   cel: string;
+//   address: {
+//     street: string;
+//     number: string;
+//     complement?: string;
+//     neighborhood: string;
+//     city: string;
+//     state: string;
+//     zipCode: string;
+//   };
 // };
 
 // const CreateAccountForm: React.FC = () => {
@@ -72,13 +97,12 @@
 //     <>
 //       <div className="py-10 md:py-20 w-full ">
 //         <img src="/images/logo3.png" alt="background" className="absolute top-10 left-10 object-cover" />
-//         {/* style={{background:"url('/images/back.png') no-repeat center"}}  */}
 //         <div>
 //           <h1 className="text-4xl font-bold text-center text-[rgb(1,24,74)]">Crie sua conta</h1>
 //         </div>
 
 //         <form onSubmit={handleSubmit(onSubmit)} className="text-[rgb(1,24,74)] max-w-md mx-auto mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
-//           <div className="mb-4">
+//         <div className="mb-4">
 //             <label
 //               htmlFor="name"
 //               className="block  text-sm font-bold mb-2"
@@ -169,12 +193,90 @@
 //           </div>
 
 //           <div className="mb-4">
-//             <label
-//               htmlFor="birthDate"
-//               className="block text-sm font-bold mb-2"
-//             >
-//               Data de Nascimento
-//             </label>
+//             <label htmlFor="street" className="block text-sm font-bold mb-2">Rua</label>
+//             <input
+//               {...register("address.street")}
+//               id="street"
+//               className={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${errors.address?.street ? "border-red-500" : ""}`}
+//             />
+//             {errors.address?.street && (
+//               <p className="text-red-500 text-xs italic">{errors.address.street.message}</p>
+//             )}
+//           </div>
+
+//           <div className="mb-4">
+//             <label htmlFor="number" className="block text-sm font-bold mb-2">Número</label>
+//             <input
+//               {...register("address.number")}
+//               id="number"
+//               className={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${errors.address?.number ? "border-red-500" : ""}`}
+//             />
+//             {errors.address?.number && (
+//               <p className="text-red-500 text-xs italic">{errors.address.number.message}</p>
+//             )}
+//           </div>
+
+//           <div className="mb-4">
+//             <label htmlFor="complement" className="block text-sm font-bold mb-2">Complemento</label>
+//             <input
+//               {...register("address.complement")}
+//               id="complement"
+//               className={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline`}
+//             />
+//           </div>
+
+//           <div className="mb-4">
+//             <label htmlFor="neighborhood" className="block text-sm font-bold mb-2">Bairro</label>
+//             <input
+//               {...register("address.neighborhood")}
+//               id="neighborhood"
+//               className={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${errors.address?.neighborhood ? "border-red-500" : ""}`}
+//             />
+//             {errors.address?.neighborhood && (
+//               <p className="text-red-500 text-xs italic">{errors.address.neighborhood.message}</p>
+//             )}
+//           </div>
+
+//           <div className="mb-4">
+//             <label htmlFor="city" className="block text-sm font-bold mb-2">Cidade</label>
+//             <input
+//               {...register("address.city")}
+//               id="city"
+//               className={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${errors.address?.city ? "border-red-500" : ""}`}
+//             />
+//             {errors.address?.city && (
+//               <p className="text-red-500 text-xs italic">{errors.address.city.message}</p>
+//             )}
+//           </div>
+
+//           <div className="mb-4">
+//             <label htmlFor="state" className="block text-sm font-bold mb-2">Estado</label>
+//             <input
+//               {...register("address.state")}
+//               id="state"
+//               className={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${errors.address?.state ? "border-red-500" : ""}`}
+//             />
+//             {errors.address?.state && (
+//               <p className="text-red-500 text-xs italic">{errors.address.state.message}</p>
+//             )}
+//           </div>
+
+//           <div className="mb-4">
+//             <label htmlFor="zipCode" className="block text-sm font-bold mb-2">CEP</label>
+//             <input
+//               {...register("address.zipCode")}
+//               id="zipCode"
+//               className={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${errors.address?.zipCode ? "border-red-500" : ""}`}
+//             />
+//             {errors.address?.zipCode && (
+//               <p className="text-red-500 text-xs italic">{errors.address.zipCode.message}</p>
+//             )}
+//           </div>
+
+//           {/* Campos de Gênero, Data de Nascimento, Celular */}
+
+//           <div className="mb-4">
+//             <label htmlFor="birthDate" className="block text-sm font-bold mb-2">Data de Nascimento</label>
 //             <input
 //               {...register("birthDate")}
 //               type="date"
@@ -185,8 +287,9 @@
 //               <p className="text-red-500 text-xs italic">{errors.birthDate.message}</p>
 //             )}
 //           </div>
+
 //           <div className="mb-4">
-//             <label
+//              <label
 //               htmlFor="cel"
 //               className="block text-sm font-bold mb-2"
 //             >
@@ -253,16 +356,21 @@
 //             </Link>
 //           </div>
 //         </form>
-
-//       </div >
+//       </div>
 //     </>
 //   );
 // };
 
 // export default CreateAccountForm;
-'use client';
 
-import React from "react";
+
+
+
+
+
+
+'use client';
+import React, { useState } from 'react';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -281,14 +389,14 @@ const schema = z.object({
     .min(1, "Campo obrigatório"),
   password: z.string().min(6, "A senha deve ter pelo menos 6 caracteres"),
   confirmPassword: z.string().min(6, "A confirmação de senha deve ter pelo menos 6 caracteres"),
-  cpf: z.string().length(11, "O CPF deve ter 11 caracteres"),
+  cpf: z.string().length(11, "O CPF deve ter 11 caracteres").regex(/^\d{11}$/, "O CPF deve conter apenas números"),
   gender: z.enum(["M", "F"], "Selecione um gênero"),
   birthDate: z
     .string()
     .refine((date) => isBefore(parseISO(date), eighteenYearsAgo), {
       message: "Você deve ter pelo menos 18 anos",
     }),
-  cel: z.string().min(1, "Celular é obrigatório"),
+  cel: z.string().length(11, "O celular deve ter 11 caracteres").regex(/^\d{11}$/, "O celular deve conter apenas números"),
   address: z.object({
     street: z.string().min(1, "Rua é obrigatória"),
     number: z.string().min(1, "Número é obrigatório"),
@@ -296,7 +404,7 @@ const schema = z.object({
     neighborhood: z.string().min(1, "Bairro é obrigatório"),
     city: z.string().min(1, "Cidade é obrigatória"),
     state: z.string().min(1, "Estado é obrigatório"),
-    zipCode: z.string().min(8, "CEP deve ter 8 caracteres").max(8, "CEP deve ter 8 caracteres"),
+    zipCode: z.string().length(8, "CEP deve ter 8 caracteres"),
   }),
 }).refine(data => data.password === data.confirmPassword, {
   message: "As senhas não coincidem",
@@ -324,12 +432,39 @@ type CreateAccountInputs = {
   };
 };
 
+const states = [
+  "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS",
+  "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC",
+  "SP", "SE", "TO"
+];
+
 const CreateAccountForm: React.FC = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<CreateAccountInputs>({
+  const [addressError, setAddressError] = useState<string | null>(null);
+  const { register, handleSubmit, formState: { errors }, setValue } = useForm<CreateAccountInputs>({
     resolver: zodResolver(schema),
   });
 
   const router = useRouter();
+
+  const handleCepChange = async (cep: string) => {
+    if (cep.length === 8) {
+      try {
+        const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+        const data = await response.json();
+        if (data.erro) {
+          setAddressError("CEP não encontrado.");
+        } else {
+          setAddressError(null);
+          setValue('address.street', data.logradouro || '');
+          setValue('address.neighborhood', data.bairro || '');
+          setValue('address.city', data.localidade || '');
+          setValue('address.state', data.uf || '');
+        }
+      } catch (error) {
+        setAddressError("Erro ao buscar endereço.");
+      }
+    }
+  };
 
   const onSubmit: SubmitHandler<CreateAccountInputs> = async (data) => {
     try {
@@ -363,7 +498,7 @@ const CreateAccountForm: React.FC = () => {
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="text-[rgb(1,24,74)] max-w-md mx-auto mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="mb-4">
+          <div className="mb-4">
             <label
               htmlFor="name"
               className="block  text-sm font-bold mb-2"
@@ -426,8 +561,10 @@ const CreateAccountForm: React.FC = () => {
               type="text"
               id="cpf"
               maxLength={11}
+              pattern="\d{11}"
               className={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${errors.cpf ? "border-red-500" : ""}`}
             />
+
             {errors.cpf && (
               <p className="text-red-500 text-xs italic">{errors.cpf.message}</p>
             )}
@@ -511,18 +648,40 @@ const CreateAccountForm: React.FC = () => {
           </div>
 
           <div className="mb-4">
-            <label htmlFor="state" className="block text-sm font-bold mb-2">Estado</label>
+            <label htmlFor="zipCode" className="block text-sm font-bold mb-2">CEP</label>
             <input
+              {...register("address.zipCode")}
+              id="zipCode"
+              maxLength={8}
+              onChange={(e) => handleCepChange(e.target.value)}
+              className={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${errors.address?.zipCode ? "border-red-500" : ""}`}
+            />
+            {errors.address?.zipCode && (
+              <p className="text-red-500 text-xs italic">{errors.address.zipCode.message}</p>
+            )}
+            {addressError && (
+              <p className="text-red-500 text-xs italic">{addressError}</p>
+            )}
+          </div>
+
+          <div className="mb-4">
+            <label htmlFor="state" className="block text-sm font-bold mb-2">Estado</label>
+            <select
               {...register("address.state")}
               id="state"
               className={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${errors.address?.state ? "border-red-500" : ""}`}
-            />
+            >
+              <option value="">SELECIONE</option>
+              {states.map(state => (
+                <option key={state} value={state}>{state}</option>
+              ))}
+            </select>
             {errors.address?.state && (
               <p className="text-red-500 text-xs italic">{errors.address.state.message}</p>
             )}
           </div>
 
-          <div className="mb-4">
+          {/* <div className="mb-4">
             <label htmlFor="zipCode" className="block text-sm font-bold mb-2">CEP</label>
             <input
               {...register("address.zipCode")}
@@ -532,9 +691,9 @@ const CreateAccountForm: React.FC = () => {
             {errors.address?.zipCode && (
               <p className="text-red-500 text-xs italic">{errors.address.zipCode.message}</p>
             )}
-          </div>
+          </div> */}
 
-          {/* Campos de Gênero, Data de Nascimento, Celular */}
+        
 
           <div className="mb-4">
             <label htmlFor="birthDate" className="block text-sm font-bold mb-2">Data de Nascimento</label>
@@ -550,7 +709,7 @@ const CreateAccountForm: React.FC = () => {
           </div>
 
           <div className="mb-4">
-             <label
+            <label
               htmlFor="cel"
               className="block text-sm font-bold mb-2"
             >
@@ -560,8 +719,11 @@ const CreateAccountForm: React.FC = () => {
               {...register("cel")}
               type="text"
               id="cel"
-              className={`shadow appearance-none border rounded w-full py-2 px-3leading-tight focus:outline-none focus:shadow-outline ${errors.cel ? "border-red-500" : ""}`}
+              maxLength={11}
+              pattern="\d{11}"
+              className={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${errors.cel ? "border-red-500" : ""}`}
             />
+
             {errors.cel && (
               <p className="text-red-500 text-xs italic">{errors.cel.message}</p>
             )}
@@ -616,10 +778,11 @@ const CreateAccountForm: React.FC = () => {
               </button>
             </Link>
           </div>
+
         </form>
       </div>
     </>
   );
-};
+}
 
 export default CreateAccountForm;

@@ -1,7 +1,6 @@
 import * as docusign from "docusign-esign";
 import { getDocusignClient } from "./docusignClient";
 
-
 type CreateEnvelopeParams = {
   signerEmail: string;
   signerName: string;
