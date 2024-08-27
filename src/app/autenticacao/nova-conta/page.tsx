@@ -477,6 +477,12 @@ const CreateAccountForm: React.FC = () => {
         body: JSON.stringify(data),
       });
 
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Erro no servidor:', errorData);
+        throw new Error(errorData.message || 'Erro ao criar usuário. Tente novamente mais tarde.');
+      }
+
       const result = await response.json();
 
       if (result.success) {
