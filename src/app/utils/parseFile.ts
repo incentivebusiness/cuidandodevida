@@ -1,7 +1,16 @@
 import fs from 'fs';
 import readline from 'readline';
 
-export async function parseFile(filePath) {
+// Definir o tipo dos resultados que serão retornados
+interface ParsedLine {
+  lote: string;
+  series: string;
+  luckyNumber: string;
+  sequence: string;
+}
+
+// Tipar a função parseFile
+export async function parseFile(filePath: string): Promise<ParsedLine[]> {
   try {
     const fileStream = fs.createReadStream(filePath);
     const rl = readline.createInterface({
@@ -9,7 +18,7 @@ export async function parseFile(filePath) {
       crlfDelay: Infinity,
     });
 
-    const results = [];
+    const results: ParsedLine[] = [];
 
     for await (const line of rl) {
       if (line.startsWith('D')) {
@@ -28,7 +37,12 @@ export async function parseFile(filePath) {
 
     return results;
   } catch (error) {
-    console.error(`Erro ao processar o arquivo: ${error.message}`);
+    // Verificar se o erro é uma instância de Error
+    if (error instanceof Error) {
+      console.error(`Erro ao processar o arquivo: ${error.message}`);
+    } else {
+      console.error('Erro desconhecido ao processar o arquivo');
+    }
     throw new Error('Erro ao processar o arquivo');
   }
 }

@@ -20,3 +20,13 @@ export type CadastroSeguroFormInputs = {
   valorLimiteFuneral: string;
   valorLimiteDespesaMedica: string;
 };
+
+// user.d.ts (ou onde você define o tipo de User)
+
+export interface User {
+  id: string;
+  email: string;
+  name: string;
+  role?: string; // Inclua a propriedade role aqui
+  hashedPassword?: string;
+}

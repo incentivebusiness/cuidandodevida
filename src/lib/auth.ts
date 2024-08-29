@@ -72,11 +72,11 @@ export const authOptions: AuthOptions = {
       return token;
     },
     // Make the role available in the session
-    async session({ session, token }) {
+    async session({ session, token }: { session: any; token: any }) {
       if (token?.role) {
         session.user.role = token.role;
       }
       return session;
-    },
+  },
   },
 };
