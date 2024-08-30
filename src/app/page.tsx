@@ -13,14 +13,14 @@ import Aboult from "@/components/Aboult";
 const HomePage: React.FC = () => {
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
-      <Hero />
+    <>      <Hero />
       <SubHero />
       <CardProducts />
       <Aboult/>
       <Faq />
       <Footer />
-    </div>
+      </>
+
   );
 };
 

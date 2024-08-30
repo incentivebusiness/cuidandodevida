@@ -14,6 +14,19 @@ const Hero = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const handleClick = () => {
+    const element = document.getElementById('target-section');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+  const handleServices = () => {
+    const element = document.getElementById('target-services');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <>
       <div className="relative w-full h-screen bg-cover bg-center sm:bg-left bg-no-repeat" style={{ backgroundImage: "url('/images/hero.png')" }}>
@@ -22,17 +35,17 @@ const Hero = () => {
           <img src="./images/logo3.png" alt="Logo" className="p-2 h-14 sm:h-[80px] sm:w-60 md:h-20 md:w-30 " />
         </div>
 
-        <button className="block md:hidden absolute top-10 right-10" onClick={toggleMenu}>
+        <button className="block lg:hidden absolute top-10 right-10" onClick={toggleMenu}>
           <FontAwesomeIcon icon={isMenuOpen ? faTimes : faBars} className="text-[rgb(1,24,74)] text-2xl" />
         </button>
 
         {/* Menu */}
-        <div className="hidden absolute top-10  lg:flex  right-10 space-x-4 lg:right-20 xl:space-x-8 ">
-          <Link href="/page1" className="relative group text-white transition-transform transform hover:scale-105 focus:outline-none focus:shadow-outline">
+        <div className="hidden md:absolute top-10  lg:flex  right-10 space-x-4 lg:right-17 xl:space-x-8 ">
+          <Link href="/" onClick={handleServices} className="relative group text-white transition-transform transform hover:scale-105 focus:outline-none focus:shadow-outline">
             Nossos Serviços
             <span className="block absolute bottom-[-2px] left-0 w-full h-[2px] bg-[rgb(1,24,74)] scale-x-0 group-hover:scale-x-100 transition-transform transform origin-left duration-700"></span>
           </Link>
-          <Link href="/page2" className="relative group text-white transition-transform transform hover:scale-105  focus:outline-none focus:shadow-outline ">
+          <Link href="/" onClick={handleClick} className="relative group text-white transition-transform transform hover:scale-105  focus:outline-none focus:shadow-outline ">
             Sobre Nós
             <span className="block absolute bottom-[-2px] left-0 w-full h-[2px] bg-[rgb(1,24,74)] scale-x-0 group-hover:scale-x-100 transition-transform transform origin-left duration-700"></span>
           </Link>
@@ -61,7 +74,7 @@ const Hero = () => {
                   <span className="block absolute bottom-[-2px] left-0 w-full h-[2px] bg-[rgb(1,24,74)] scale-x-0 group-hover:scale-x-100 transition-transform transform origin-left duration-700"></span>
 
                 </Link>
-                <Link href="/autenticacao/login" className="relative group bg-[rgb(1,24,74)] hover:bg-[rgb(26,55,112)] text-white font-bold py-2 px-4 rounded-3xl transition-transform transform hover:scale-105 focus:outline-none focus:shadow-outline">
+                <Link href="/autenticacao/login" className="relative mx-9 group bg-[rgb(1,24,74)] hover:bg-[rgb(26,55,112)] text-white font-bold py-2 px-4 rounded-3xl transition-transform transform hover:scale-105 focus:outline-none focus:shadow-outline">
                   Entrar
                 </Link>
               </div>
@@ -77,7 +90,7 @@ const Hero = () => {
         </Link> */}
         </div>
         {isMenuOpen && (
-          <div className="fixed inset-0  z-20 flex flex-col items-center justify-center" style={{ background: "url('./images/sub.jpg'), no-repeat", backgroundSize: "cover", backgroundPosition: "center" }}>
+          <div className="fixed inset-0  z-20 flex flex-col items-center justify-center bg-white" >
             <div className='bg-white w-full py-4 absolute top-0  '>
               <img src="./images/logo3.png" alt="Logo" className="p-2 h-14 sm:h-[80px] sm:w-60  md:w-200" />
             </div>
@@ -107,13 +120,16 @@ const Hero = () => {
           <h1 className="text-xl sm:text-3xl md:text-3xl font-bold mb-2">
             @MAPFRE
           </h1>
-          <h2 className='text-2xl md:text-4xl font-extrabold pb-2'>Cuidando de Vida</h2>
-          <p className="text-md sm:text-lg md:text-xl pb-4 sm:pb-6">
+          <h2 className='text-2xl md:text-4xl lg:text-6xl font-extrabold pb-2'>Cuidando de Vida</h2>
+          <p className="text-md sm:text-lg md:text-xl lg:text-3xl pb-4 sm:pb-6">
             Incentivando uma vida saudável e sustentável<br />
             com planos que abrangem diversos serviços<br />
             visando fazer da sua vida a ideal.
           </p>
-          <button className='bg-[rgb(1,24,74)] hover:bg-[rgb(26,55,112)] text-white font-bold py-2 px-4 rounded-3xl transition-transform transform hover:scale-105 focus:outline-none focus:shadow-outline'>Saiba mais!</button>
+          <button
+        className='bg-[rgb(1,24,74)] hover:bg-[rgb(26,55,112)] text-white font-bold py-2 px-4 rounded-3xl transition-transform transform hover:scale-105 focus:outline-none focus:shadow-outline'
+        onClick={handleClick}
+      >Saiba mais!</button>
         </div>
 
       </div>

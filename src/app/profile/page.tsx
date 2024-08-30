@@ -2,6 +2,8 @@
 import React from 'react';
 import { useSession, signOut } from 'next-auth/react';
 import Link from 'next/link';
+import Footer from '@/components/Footer';
+import Image from 'next/image';
 
 // Tipagem para o usuário da sessão
 interface User {
@@ -12,13 +14,11 @@ interface User {
 
 interface Session {
   user?: User;
+  // LuckNumber?: string;
 }
 
 const Profile: React.FC = () => {
   const { data: session, status } = useSession();
-
-  // URL do Stripe
-  const stripeClient = "https://billing.stripe.com/p/login/aEU5nE9TWaVJ8tWbII";
 
   // Exibir carregando enquanto a sessão está carregando
   if (status === 'loading') {
@@ -26,8 +26,22 @@ const Profile: React.FC = () => {
   }
 console.log(session)
   return (
-    <div className="max-w-md mx-auto mt-8">
-      <h1 className="text-2xl font-bold mb-4">Perfil</h1>
+    <>
+    <Image src="/images/logo3.png" alt="Logo" width={200} height={200} />
+     <h1 className="text-2xl font-bold mb-4 text-[rgba(255,255,255,0.7]">Minha conta</h1>
+    <div  className=' h-[100vh]' style={{
+          background: 'url(/images/curva.png) no-repeat bottom center',
+          backgroundSize: 'contain',
+         
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'flex-end',
+        }}>
+          
+
+    <div className='flex justify-center'>
+    <div className="absolute top-[20%] p-20 rounded-3xl shadow-xl bg-white">
+     
       {session?.user ? (
         <>
           <p>
@@ -41,21 +55,26 @@ console.log(session)
           </p>
           <button
             onClick={() => signOut({ callbackUrl: '/' })}
-            className="mt-4 p-2 bg-blue-500 text-white rounded"
+            className="mt-4 p-2 bg-red-600 text-white rounded"
           >
-            Sair
+            Encerrar sessão
           </button>
+          <div>
+            <h5>Meu Número da Sorte</h5>
+            {/* <span>{LuckNumber}</span> */}
+          </div>
         </>
       ) : (
         <p>Nenhum usuário logado.</p>
       )}
       <h2 className="text-xl pt-4">
-        <span>Acesse:</span>
-        <Link href={stripeClient} target="_blank" rel="noopener noreferrer">
-          {' '}portal do cliente
-        </Link>
+       
       </h2>
     </div>
+    </div>
+    </div>
+    <Footer/>
+    </>
   );
 };
 

@@ -7,11 +7,11 @@ const services = [
     { id: 1, title: 'Conta Corrente', description: 'Possuímos o serviço de conta corrente para você fazer movimentações com seu dinheiro de forma segura, rápida e sem dores de cabeça.', image: '/images/pc.png', carrency: 'Sem carência' },
     { id: 2, title: 'Rede Parcerias', description: 'O nosso clube de vantagens é uma plataforma de fácil navegação construída para comunicar, de forma efetiva, os benefícios, descontos e convênios que as empresas parceiras oferecem aos nossos clientes.', image: '/images/girl.png', carrency: 'Sem carência' },
     { id: 3, title: 'Morte Acidental', description: 'Descrição detalhada para Morte Acidental.', image: '/images/def.png', carrency: 'Sem carência' },
-    { id: 4, title: 'Invalidez Permanente e Total por Acidente - IPTA', description: 'Descrição detalhada para Invalidez Permanente e Total por Acidente - IPTA.', image: '/images/aparelho.png', carrency: 'Com carência' },
-    { id: 5, title: 'Diária de Internação Hospitalar por Acidente', description: 'Descrição detalhada para Diária de Internação Hospitalar por Acidente.', image: '/images/medica.png', carrency: 'Com carência' },
-    { id: 6, title: 'Despesas Médicas Hospitalares e Odontológicas', description: 'Descrição detalhada para Despesas Médicas Hospitalares e Odontológicas.', image: '/images/med.png', carrency: 'Com carência' },
+    { id: 4, title: 'Invalidez Permanente', description: 'Descrição detalhada para Invalidez Permanente e Total por Acidente - IPTA.', image: '/images/aparelho.png', carrency: 'Com carência' },
+    { id: 5, title: 'Diária de Internação', description: 'Descrição detalhada para Diária de Internação Hospitalar por Acidente.', image: '/images/medica.png', carrency: 'Com carência' },
+    { id: 6, title: 'Despesas Médicas', description: 'Descrição detalhada para Despesas Médicas Hospitalares e Odontológicas.', image: '/images/med.png', carrency: 'Com carência' },
     { id: 7, title: 'Auxílio Funeral', description: 'Descrição detalhada para Auxílio Funeral.', image: '/images/doc.png', carrency: 'Com carência' },
-    { id: 8, title: 'Sorteios - 4 sorteios mensais, série aberta, valor líquido', description: 'Descrição detalhada para Sorteios.', image: '/images/box.png', carrency: 'Com carência' }
+    { id: 8, title: 'Sorteios - 4 ', description: 'Descrição detalhada para Sorteios.', image: '/images/box.png', carrency: 'Com carência' }
 ];
 
 const Aboult = () => {
@@ -48,17 +48,17 @@ const Aboult = () => {
                         Nossos Serviços
                     </h1>
                     <div className='md:hidden flex items-center justify-center '>
-                        <button onClick={handlePrev} className='p-2 bg-[rgb(1,24,74)] text-white rounded-full'>
+                        <button onClick={handlePrev} className='p-2 bg-[rgb(1,24,74)] text-white rounded-full w-12'>
                             &lt;
                         </button>
-                        <button onClick={() => handleSelection(services[currentIndex])} className='mx-4 text-xl p-2 px-4 rounded-3xl bg-[rgb(1,24,74)] hover:bg-white hover:bg-opacity-10 transition-all duration-500'>
+                        <button onClick={() => handleSelection(services[currentIndex])} className='mx-4 text-md p-2 w-[200px] px-4 rounded-3xl bg-[rgb(1,24,74)] hover:bg-white hover:bg-opacity-10 transition-all duration-500'>
                             {services[currentIndex].title}
                         </button>
-                        <button onClick={handleNext} className='p-2 bg-[rgb(1,24,74)] text-white rounded-full'>
+                        <button onClick={handleNext} className='p-2 bg-[rgb(1,24,74)] text-white rounded-full w-12'>
                             &gt;
                         </button>
                     </div>
-                    <ol className='hidden md:flex flex-col text-xs bg-white bg-opacity-10 p-8 rounded-3xl'>
+                    <ol className='hidden md:flex flex-col text-xs md:text-xl bg-white bg-opacity-10 p-8 rounded-3xl'>
                         {services.map((service, index) => (
                             <li
                                 key={service.id}
@@ -82,7 +82,7 @@ const Aboult = () => {
                     </div>
                     <div className='flex-1'>
                         <h1 className='text-xl font-extrabold mb-2'>{selectedService.title}</h1>
-                        <button className='p-2 rounded-full bg-gray-300 text-gray-800'>{selectedService.carrency}</button>
+                        <button className='p-2 rounded-full bg-gray-300 text-gray-800 cursor-text'>{selectedService.carrency}</button>
                         <p className='mt-4'>{selectedService.description}</p>
                     </div>
                 </div>

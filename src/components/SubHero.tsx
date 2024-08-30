@@ -3,7 +3,7 @@ import React from 'react';
 
 const SubHero = () => {
   return (
-    <div className="w-full text-[rgb(1,24,74)] bg-white py-16 px-10 lg:px-20 ">
+    <div id="target-section" className="w-full text-[rgb(1,24,74)] bg-white py-16 px-10 lg:px-20 ">
       {/* Container principal usando Flexbox */}
       <div className="container mx-auto flex flex-col-reverse lg:flex-row items-center">
         

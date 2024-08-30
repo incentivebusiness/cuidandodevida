@@ -7,6 +7,8 @@ import React from "react";
 import { useForm, type FieldValues } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
+import Footer from "@/components/Footer";
+import Image from "next/image";
 
 const LoginPage = () => {
   const router = useRouter();
@@ -46,18 +48,20 @@ const LoginPage = () => {
   return (
     <>
 
-      <div className="flex flex-col sm:flex-row-reverse h-screen">
+      <div className="flex flex-col sm:flex-row-reverse min-h-screen">
         <div className="flex items-center p-4">
           <Link href="/" className="cursor-pointer">
             <img src="/images/logo3.png" alt="Login Background" className="flex sm:hidden w-[200px] p-2 h-full object-cover" />
           </Link>
         </div>
         <div className="w-full sm:w-1/2 flex flex-col justify-center items-center">
+        <button onClick={() => router.push("/")} className='absolute top-10 right-[40px] sm:right-[60px] md:right-[100px] text-white bg-[rgb(1,24,74)] px-6 h-10 rounded-3xl'>Home</button>
 
           <h1 className="text-2xl font-extrabold mb-4 text-[rgb(1,24,74)] py-6 md:py-0">Entrar</h1>
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="max-w-lg w-[80%] rounded-lg border"
+
           >
             <div className="flex flex-col gap-4 p-4 md:p-8">
               <div>
@@ -123,15 +127,11 @@ const LoginPage = () => {
         </div>
 
         <div className="w-full sm:w-1/2 p-10 sm:p-6 xl:p-12 ">
-          <img
-            src="/images/back.png"
-            alt="Login Background"
-            className="h-full w-full object-contain"
-          />
-          <img src="/images/logoB.png" alt="logo" className="hidden sm:flex w-[200px] sm:w-[180px]  sm:mt-20 md:mt-8 md:pt-5 h-auto absolute left-[80px] top-20 md:left-[120px] md:top-[80px] lg:top-[26px]" width={"200px"} height={"200px"} />
-          <img src="/images/pc.png" alt="pc" className="w-[24rem] sm:w-[18rem] md:w-[20rem] lg:w-[30rem] xl:w-[36rem] h-auto absolute top-[520px] left-[30px] sm:left-[60px] sm:top-[280px] md:left-[120px] md:top-[230px] lg:top-[140px] lg:left-[90px] xl:left-[120px]" />
+        <Image src="/images/pc3.png" alt="Login Background" className="h-full w-full object-contain" width={500} height={200} />
+          
         </div>
       </div>
+      <Footer/>
     </>
   );
 };
