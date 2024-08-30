@@ -59,7 +59,7 @@ console.log(session)
           >
             Encerrar sessão
           </button>
-          <div>
+          <div className='p-10 '>
             <h5>Meu Número da Sorte</h5>
             {/* <span>{LuckNumber}</span> */}
           </div>
