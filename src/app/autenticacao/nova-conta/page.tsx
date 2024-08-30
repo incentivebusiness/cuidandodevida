@@ -11,14 +11,21 @@ import { format, parseISO, isBefore, subYears } from 'date-fns';
 const eighteenYearsAgo = subYears(new Date(), 18);
 
 const schema = z.object({
-  name: z.string().min(1, "Nome é obrigatório"),
+  name: z.string()
+    .min(3, "O nome deve ter no mínimo 3 caracteres")
+    .max(50, "O nome deve ter no máximo 50 caracteres")
+    .refine((val) => /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/.test(val), {
+      message: "O nome não deve conter números ou caracteres especiais",
+    }),
   socialName: z.string().optional(),
   email: z
     .string()
     .email("Digite um e-mail válido")
     .min(1, "Campo obrigatório"),
+
   password: z.string().min(6, "A senha deve ter pelo menos 6 caracteres"),
   confirmPassword: z.string().min(6, "A confirmação de senha deve ter pelo menos 6 caracteres"),
+
   cpf: z.string().length(11, "O CPF deve ter 11 caracteres").regex(/^\d{11}$/, "O CPF deve conter apenas números"),
   gender: z.enum(["M", "F"]).refine(val => ["M", "F"].includes(val), {
     message: "Selecione um gênero",
@@ -28,14 +35,21 @@ const schema = z.object({
     .refine((date) => isBefore(parseISO(date), eighteenYearsAgo), {
       message: "Você deve ter pelo menos 18 anos",
     }),
-  cel: z.string().length(11, "O celular deve ter 11 caracteres").regex(/^\d{11}$/, "O celular deve conter apenas números"),
+
+  cel: z.string()
+    .length(11, "O celular deve ter 11 caracteres")
+    .refine((val) => /^[0-9]+$/
+      .test(val), {
+      message: "O telefone deve conter apenas números",
+    }),
+
   address: z.object({
     street: z.string().min(1, "Rua é obrigatória"),
     number: z.string().min(1, "Número é obrigatório"),
     complement: z.string().optional(),
-    neighborhood: z.string().min(1, "Bairro é obrigatório"),
+    neighborhood: z.string().min(3, "Bairro é obrigatório"),
     city: z.string().min(1, "Cidade é obrigatória"),
-    state: z.string().min(1, "Estado é obrigatório"),
+    state: z.string().min(2, "Estado é obrigatório"),
     zipCode: z.string().length(8, "CEP deve ter 8 caracteres"),
   }),
 }).refine(data => data.password === data.confirmPassword, {
@@ -129,19 +143,19 @@ const CreateAccountForm: React.FC = () => {
 
   return (
     <>
-      <div className="py-10 md:py-20 w-full ">
+      <div className="py-10 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 md:py-20 w-full ">
         <img src="/images/logo3.png" alt="background" className="absolute top-10 left-10 object-cover" />
         <div>
-          <h1 className="text-4xl font-bold text-center text-[rgb(1,24,74)]">Crie sua conta</h1>
+          <h1 className="text-4xl mb-18 font-bold text-center text-[rgb(1,24,74)]">Crie sua conta</h1>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="text-[rgb(1,24,74)] max-w-md mx-auto mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="mb-4">
+        <form onSubmit={handleSubmit(onSubmit)} className=" text-[rgb(1,24,74)] max-w-md sm:max-w-lg md:max-w-xl lg:max-w-[80%] mx-auto mt-8 grid grid-cols-1 md:grid-cols-2 gap-6 gap-x-9 md:gap-x-10 xl:gap-x-16">
+          <div className="mb-4 ">
             <label
               htmlFor="name"
               className="block  text-sm font-bold mb-2"
             >
-              Nome
+              Nome completo
             </label>
             <input
               {...register("name")}
@@ -331,7 +345,7 @@ const CreateAccountForm: React.FC = () => {
             )}
           </div> */}
 
-        
+
 
           <div className="mb-4">
             <label htmlFor="birthDate" className="block text-sm font-bold mb-2">Data de Nascimento</label>
@@ -400,24 +414,25 @@ const CreateAccountForm: React.FC = () => {
               <p className="text-red-500 text-xs italic">{errors.confirmPassword.message}</p>
             )}
           </div>
-          <div className="flex items-center justify-between gap-6">
-            <button
-              type="submit"
-              className="bg-[rgb(12,155,207)] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline"
-            >
-              Criar Conta
-            </button>
-            <Link href="/login">
-              <button
-                type="button"
-                className=" gap-4 bg-[rgb(137,191,82)] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline"
-              >
-                Voltar ao Login
-              </button>
-            </Link>
-          </div>
+
 
         </form>
+        <div className="flex items-center justify-center pt-9 gap-16">
+          <button
+            type="submit"
+            className="w-[120px] h-[60px] bg-[rgb(12,155,207)] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline"
+          >
+            Criar Conta
+          </button>
+          <Link href="/autenticacao/login">
+            <button
+              type="button"
+              className=" gap-4 w-[120px] h-[60px] bg-[rgb(137,191,82)] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline"
+            >
+              Voltar
+            </button>
+          </Link>
+        </div>
       </div>
     </>
   );
