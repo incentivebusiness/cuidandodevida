@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { format, parseISO, isBefore, subYears } from 'date-fns';
 import Footer from '@/components/Footer';
+import ErrorModal from '@/components/ErrorModal';
 
 const eighteenYearsAgo = subYears(new Date(), 18);
 
@@ -29,7 +30,7 @@ const schema = z.object({
   confirmPassword: z.string().min(6, "A confirmação de senha deve ter pelo menos 6 caracteres"),
 
   cpf: z.string().length(11, "O CPF deve ter 11 caracteres").regex(/^\d{11}$/, "O CPF deve conter apenas números"),
-  
+
   gender: z.enum(["M", "F"]).refine(val => ["M", "F"].includes(val), {
     message: "Selecione um gênero",
   }),
@@ -90,6 +91,11 @@ const states = [
 
 const CreateAccountForm: React.FC = () => {
   const [addressError, setAddressError] = useState<string | null>(null);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [serverError, setServerError] = useState<string | null>(null);
+  const [showModalSucess, setShowModalSucess] = useState<boolean>(false);
+  const [modalMessage, setModalMessage] = useState<string>('');
+
   const { register, handleSubmit, formState: { errors }, setValue } = useForm<CreateAccountInputs>({
     resolver: zodResolver(schema),
   });
@@ -117,8 +123,9 @@ const CreateAccountForm: React.FC = () => {
   };
 
   const onSubmit: SubmitHandler<CreateAccountInputs> = async (data) => {
+    console.log('Dados enviados para o backend:', data);
     try {
-      console.log('Enviando dados:', data);
+      console.log('Enviando dados para o backend...');
       const response = await fetch('/api/users/', {
         method: 'POST',
         headers: {
@@ -130,18 +137,28 @@ const CreateAccountForm: React.FC = () => {
       if (!response.ok) {
         const errorData = await response.json();
         console.error('Erro no servidor:', errorData);
+        setServerError(errorData.message || 'Erro ao criar usuário. Tente novamente mais tarde.');
+        setShowModal(true); 
         throw new Error(errorData.message || 'Erro ao criar usuário. Tente novamente mais tarde.');
       }
 
       const result = await response.json();
 
       if (result.success) {
+        setModalMessage('Usuário criado com sucesso!');
+        setShowModalSucess(true);
+        setTimeout(() => {
         router.push("/");
+      }, 2000);
       } else {
+        setServerError(result.message);
+        setShowModal(true); 
         console.error(result.message);
       }
     } catch (error) {
       console.error('Erro ao criar conta:', error);
+      setServerError('Erro ao criar conta. Tente novamente mais tarde.');
+      setShowModal(true); 
     }
   };
 
@@ -158,7 +175,7 @@ const CreateAccountForm: React.FC = () => {
         </div>
         <div className='border border-gray-100 rounded-3xl p-6 shadow-lg'>
           <form onSubmit={handleSubmit(onSubmit)} className=" text-[rgb(1,24,74)] max-w-md sm:max-w-lg md:max-w-xl lg:max-w-[80%] mx-auto mt-8 grid grid-cols-1 md:grid-cols-2 gap-1 gap-x-9 md:gap-x-10 xl:gap-x-16">
-            <div className="mb-4 ">
+            <div className="mb-4">
               <label
                 htmlFor="name"
                 className="block  text-sm font-bold mb-2"
@@ -169,7 +186,7 @@ const CreateAccountForm: React.FC = () => {
                 {...register("name")}
                 type="text"
                 id="name"
-                 placeholder="Digite seu nome completo"
+                placeholder="Digite seu nome completo"
                 className={`shadow appearance-none border border-[rgb(1,24,74)] rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline ${errors.name ? "border-red-500" : ""}`}
               />
               {errors.name && (
@@ -204,7 +221,7 @@ const CreateAccountForm: React.FC = () => {
                 {...register("email")}
                 type="email"
                 id="email"
-                 placeholder="Digite seu email"
+                placeholder="Digite seu email"
                 className={`shadow appearance-none border border-[rgb(1,24,74)] rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${errors.email ? "border-red-500" : ""}`}
               />
               {errors.email && (
@@ -222,7 +239,7 @@ const CreateAccountForm: React.FC = () => {
                 {...register("cpf")}
                 type="text"
                 id="cpf"
-                 placeholder="000.000.000-00"
+                placeholder="000.000.000-00"
                 maxLength={11}
                 pattern="\d{11}"
                 className={`shadow appearance-none border border-[rgb(1,24,74)] rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${errors.cpf ? "border-red-500" : ""}`}
@@ -246,7 +263,7 @@ const CreateAccountForm: React.FC = () => {
                 id="cel"
                 maxLength={11}
                 pattern="\d{11}"
-                 placeholder="11999999999"
+                placeholder="11999999999"
                 className={`shadow appearance-none border border-[rgb(1,24,74)] rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${errors.cel ? "border-red-500" : ""}`}
               />
 
@@ -280,7 +297,7 @@ const CreateAccountForm: React.FC = () => {
               <input
                 {...register("address.zipCode")}
                 id="zipCode"
-                 placeholder="00.000.000"
+                placeholder="00.000.000"
                 maxLength={8}
                 onChange={(e) => handleCepChange(e.target.value)}
                 className={`shadow appearance-none border border-[rgb(1,24,74)] rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${errors.address?.zipCode ? "border-red-500" : ""}`}
@@ -354,7 +371,7 @@ const CreateAccountForm: React.FC = () => {
               )}
             </div>
 
-           
+
 
             <div className="mb-4">
               <label htmlFor="state" className="block text-sm font-bold mb-2">Estado</label>
@@ -400,7 +417,7 @@ const CreateAccountForm: React.FC = () => {
               )}
             </div>
 
-           
+
             <div className="mb-4">
               <label
                 htmlFor="password"
@@ -435,27 +452,33 @@ const CreateAccountForm: React.FC = () => {
                 <p className="text-red-500 text-xs italic">{errors.confirmPassword.message}</p>
               )}
             </div>
-          </form>
-        </div>
 
-        <div className="flex items-center justify-center pt-9 gap-16">
-          <button
-            type="submit"
-            className="w-[120px] h-[60px] bg-[rgb(12,155,207)] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline"
-          >
-            Criar Conta
-          </button>
-          <Link href="/">
-            <button
-              type="button"
-              className=" gap-4 w-[120px] h-[60px] bg-[rgb(137,191,82)] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline"
-            >
-              Voltar
-            </button>
-          </Link>
+            <div className="flex items-center justify-center gap-4 py-8">
+              <button
+                type="submit"
+                className="w-[120px] h-[60px] bg-[rgb(12,155,207)] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline"
+              >
+                Criar Conta
+              </button>
+              </div>
+
+              <div className="flex items-center justify-center gap-4 py-8">
+                <Link href="/">
+                  <button
+                    type="button"
+                    className=" gap-4 w-[120px] h-[60px] bg-[rgb(137,191,82)] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline"
+                  >
+                    Voltar
+                  </button>
+                </Link>
+              </div>
+          </form>
+          {showModal && serverError && (
+      <ErrorModal message={serverError} onClose={() => setShowModal(false)} />
+    )}
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 }

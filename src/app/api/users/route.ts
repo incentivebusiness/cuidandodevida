@@ -149,6 +149,20 @@ export async function POST(request: NextRequest) {
       });
     }
 
+      // Verifica se o usuário com o CPF já existe
+      const cpfExist = await prisma.user.findUnique({
+        where: {
+          cpf,
+        },
+      });
+  
+      if (cpfExist) {
+        return NextResponse.json({
+          success: false,
+          message: "Usuário com esse CPF já existe!",
+        });
+      }
+
     // Verifica se as senhas coincidem
     if (password !== confirmPassword) {
       return NextResponse.json({
