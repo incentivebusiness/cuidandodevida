@@ -5,16 +5,16 @@ import FaqItem from './FaqItem'; // Importe o componente FAQItem
 const Faq = () => {
   const faqData = [
     {
-      question: 'Como faço para abrir uma conta?',
-      answer: 'Para abrir uma conta, você precisa seguir os seguintes passos...',
+      question: 'Como faço para acessar os serviços da Mapfre Cuidando de Você?',
+      answer: 'Para participar do programa Mapfre Cuidando de Você, é necessário se cadastrar no aplicativo ou site da TEM (www.temsaude.com) e gerar seu cartão virtual.',
     },
     {
-      question: 'Quais são os métodos de pagamento aceitos?',
-      answer: 'Aceitamos os seguintes métodos de pagamento: Cartão de crédito, transferência bancária...',
+      question: 'Como faço para acessar aos benefícios da Rede de Parcerias?',
+      answer: 'Para acessar a plataforma de comunicação de benefícios é necessário em seu primeiro acesso se cadastrar no site www.clubeincentiveplus.com.br.',
     },
     {
-      question: 'Qual é o prazo de entrega dos produtos?',
-      answer: 'O prazo de entrega varia conforme a sua localização e o método de envio selecionado...',
+      question: 'Quais são os animais que entram para a assistência do Affinty PET?',
+      answer: 'Entende-se por animal assistido, somente cães e gatos indicados legalmente como domésticos, desde que convivam com o usuário em sua residência.',
     },
   ];
 

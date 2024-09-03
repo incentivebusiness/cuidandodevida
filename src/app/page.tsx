@@ -9,6 +9,7 @@ import Hero from "../components/Hero";
 import SubHero from "../components/SubHero";
 import Footer from "@/components/Footer";
 import Aboult from "@/components/Aboult";
+import Regulament from "@/components/Regulament";
 
 const HomePage: React.FC = () => {
 
@@ -18,6 +19,7 @@ const HomePage: React.FC = () => {
       <CardProducts />
       <Aboult/>
       <Faq />
+      <Regulament/>
       <Footer />
       </>
 

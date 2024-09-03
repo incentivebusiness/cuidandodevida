@@ -20,7 +20,9 @@ const FaqItem: FC<FaqItemProps> = ({ question, answer }) => {
         className="flex justify-between items-center w-full mb-2 focus:outline-none"
         onClick={toggleOpen}
       >
-        <h2 className="text-lg font-bold">{question}</h2>
+        <div className='w-full px-4'>
+        <h2 className="text-lg text-center font-bold">{question}</h2>
+        </div>
         <svg
           className={`w-4 h-4 transition-transform duration-300 transform ${
             isOpen ? 'rotate-180' : ''
@@ -38,7 +40,7 @@ const FaqItem: FC<FaqItemProps> = ({ question, answer }) => {
         </svg>
       </button>
       {isOpen && (
-        <div className="mt-2 text-gray-600">{answer}</div>
+        <div className="mt-2 text-gray-600 font-medium px-4 py-4">{answer}</div>
       )}
     </div>
     </div>

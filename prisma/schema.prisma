@@ -8,6 +8,58 @@ generator client {
   provider = "prisma-client-js"
 }
 
+// model User {
+//   id             Int                @id @default(autoincrement())
+//   code           String             @unique @default(cuid())
+//   name           String             @db.VarChar(80)
+//   cpf            String             @unique @db.VarChar(11) // CPF deve ser único e não nulo
+//   gender         String             @db.VarChar(1) 
+//   socialName     String?
+//   email          String             @unique @db.VarChar(255) // Email deve ser único e não nulo
+//   hashedPassword String
+//   birthDate      DateTime           @db.Date
+//   cel            String             @db.VarChar(20)
+//   role           String             @default("USER")
+
+//   created        DateTime           @default(now())
+//   updated        DateTime           @updatedAt
+
+//   userAssistance UserAssistance[]
+//   address        Address?           @relation(fields: [addressId], references: [id])
+//   addressId      Int?               @unique // O campo addressId deve ser único para garantir a relação 1:1
+// }
+
+// model Address {
+//   id          Int     @id @default(autoincrement())
+//   street      String  @db.VarChar(255)
+//   number      String  @db.VarChar(20)
+//   complement  String? @db.VarChar(255)
+//   neighborhood String @db.VarChar(255)
+//   city        String  @db.VarChar(255)
+//   state       String  @db.VarChar(2)  // Pode ser uma sigla como 'SP', 'RJ', etc.
+//   zipCode     String  @db.VarChar(8)  // Formato de CEP no Brasil
+
+//   user        User?   @relation
+// }
+
+// model UserAssistance {
+//   id             Int        @id @default(autoincrement())
+//   product        Int        @db.Integer // Ajuste o tipo conforme necessário
+//   actionType     Int        @db.Integer // Ajuste o tipo conforme necessário
+//   userId         Int
+
+//   user           User       @relation(fields: [userId], references: [id])
+
+//   @@index([userId]) // Adicione um índice para otimizar consultas
+// }
+
+// model LuckyNumber  {
+//   id Int @id @default(autoincrement())
+//   number String
+//   series String?
+//   loteClient String?
+//   qnty String?
+// }
 model User {
   id             Int                @id @default(autoincrement())
   code           String             @unique @default(cuid())
@@ -27,6 +79,9 @@ model User {
   userAssistance UserAssistance[]
   address        Address?           @relation(fields: [addressId], references: [id])
   addressId      Int?               @unique // O campo addressId deve ser único para garantir a relação 1:1
+  luckyNumberId  Int?               @unique // Adicionado para garantir que o número da sorte é único para o usuário
+
+  luckyNumber    LuckyNumber?       @relation(fields: [luckyNumberId], references: [id])
 }
 
 model Address {
@@ -53,10 +108,14 @@ model UserAssistance {
   @@index([userId]) // Adicione um índice para otimizar consultas
 }
 
-model LuckyNumber  {
-  id Int @id @default(autoincrement())
-  number String
-  series String?
+model LuckyNumber {
+  id        Int    @id @default(autoincrement())
+  number    String
+  series    String?
   loteClient String?
-  qnty String?
+  qnty     String?
+
+  user      User?   @relation
+
+  @@unique([number, series]) // Garantir que o número seja único dentro da série
 }

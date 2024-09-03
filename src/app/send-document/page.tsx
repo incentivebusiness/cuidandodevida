@@ -17,20 +17,23 @@ export default function SendDocument() {
     setSuccessMessage(null);
 
     try {
+      console.log('Enviando dados:', { name, email, company });
       const response = await fetch('/api/sendenvelope', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, company }),
       });
-
+      console.log('Resposta recebida:', response);
       const data = await response.json();
-
+      console.log('Dados recebidos:', data);
       if (response.ok && data.url) {
         window.location.href = data.url; // Redireciona para a URL do DocuSign
       } else {
         setError(data.error || 'Unknown error');
+        console.error('Erro na resposta:', data.error);
       }
     } catch (error) {
+      console.error('Erro ao enviar documento:', error);
       setError('Failed to send document for signature');
     } finally {
       setLoading(false);

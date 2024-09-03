@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { url } from 'inspector';
 import { useSession, signOut } from "next-auth/react";
+import Image from 'next/image';
 
 const Hero = () => {
   const { data: session } = useSession();
@@ -104,6 +105,9 @@ const Hero = () => {
          <Link href="/page2" className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition-transform transform hover:scale-105 focus:outline-none focus:shadow-outline">
            Botão 2
          </Link> */}
+          <Link href="/profile" className="bg-[rgb(1,24,74)] hover:bg-[rgb(26,55,112)] text-white font-bold py-2 px-8 rounded transition-transform transform hover:scale-105 focus:outline-none focus:shadow-outline">
+                Perfil
+              </Link>
               <Link href="/autenticacao/login" className="bg-[rgb(1,24,74)] hover:bg-[rgb(26,55,112)] text-white font-bold py-2 px-8 rounded transition-transform transform hover:scale-105 focus:outline-none focus:shadow-outline">
                 Entrar
               </Link>
@@ -116,11 +120,9 @@ const Hero = () => {
 
         )}
 
-        <div className="pt-[200px] pl-20 md:pl-[200px] text-left text-white">
-          <h1 className="text-xl sm:text-3xl md:text-3xl font-bold mb-2">
-            @MAPFRE
-          </h1>
-          <h2 className='text-2xl md:text-4xl lg:text-6xl font-extrabold pb-2'>Cuidando de Vida</h2>
+        <div className="pt-[200px] pl-20 md:pl-[200px] text-left text-white px-8">
+          <Image src="/images/logoMapfre.png" alt="Logo MAPFRE" width={200} height={200} className='h-14 sm:h-[60px] sm:w-[60px] md:w-[200px]'/>
+          <h2 className='text-4xl lg:text-6xl font-extrabold pb-2'>Cuidando de Vida</h2>
           <p className="text-md sm:text-lg md:text-xl lg:text-3xl pb-4 sm:pb-6">
             Incentivando uma vida saudável e sustentável<br />
             com planos que abrangem diversos serviços<br />
