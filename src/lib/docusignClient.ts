@@ -6,7 +6,7 @@ export const getDocusignClient = async () => {
   const apiClient = new docusign.ApiClient();
   apiClient.setBasePath(process.env.DOCUSIGN_BASE_PATH!);
 
-  const privateKey = fs.readFileSync(path.resolve(process.env.DOCUSIGN_PRIVATE_KEY_PATH!));
+  const privateKey = fs.readFileSync(path.resolve(process.env.DOCUSIGN_PK!));
   const scopes = ["signature"];
 
   try {

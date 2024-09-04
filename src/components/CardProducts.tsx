@@ -98,6 +98,7 @@ const MockData: CardProductsProps[] = [
   {
     title: 'Plano Básico',
     descriptions: [
+      { text: 'Conta Corrente', icon: '/images/check.png', hasWaitingPeriod: false },
       { text: 'Rede de Parcerias', icon: '/images/check.png', hasWaitingPeriod: false },
       { text: 'Morte Acidental', icon: '/images/check.png', maxInsurancePrice: 'R$10.000,00', hasWaitingPeriod: false },
       { text: 'Invalidez Permanente e Total por Acidente - IPTA', icon: '/images/check.png', maxInsurancePrice: 'R$10.000,00', hasWaitingPeriod: false },
@@ -117,6 +118,7 @@ const MockData: CardProductsProps[] = [
   {
     title: 'Plano Médio',
     descriptions: [
+      { text: 'Conta Corrente', icon: '/images/check.png', hasWaitingPeriod: false },
       { text: 'Rede de Parcerias', icon: '/images/check.png', hasWaitingPeriod: false },
       { text: 'Morte Acidental', icon: '/images/check.png', maxInsurancePrice: 'R$10.000,00', hasWaitingPeriod: false },
       { text: 'Invalidez Permanente e Total por Acidente - IPTA', icon: '/images/check.png', maxInsurancePrice: 'R$10.000,00', hasWaitingPeriod: false },
@@ -136,6 +138,7 @@ const MockData: CardProductsProps[] = [
   {
     title: 'Plano Plus',
     descriptions: [
+      { text: 'Conta Corrente', icon: '/images/checkwh.png', hasWaitingPeriod: false },
       { text: 'Rede de Parcerias', icon: '/images/checkwh.png', hasWaitingPeriod: false },
       { text: 'Morte Acidental', icon: '/images/checkwh.png', maxInsurancePrice: 'R$10.000,00', hasWaitingPeriod: false },
       { text: 'Invalidez Permanente e Total por Acidente - IPTA', icon: '/images/checkwh.png', maxInsurancePrice: 'R$10.000,00', hasWaitingPeriod: false },
@@ -174,7 +177,7 @@ const ProductsList: React.FC = () => {
 const App: React.FC = () => {
   return (
     <div id='target-services' className="px-10 md:px-20 bg-gray-100 py-5 pb-14">
-      <h1 className="text-4xl text-center text-[rgb(1,24,74)] font-bold py-10">Nossos Planos</h1>
+      <h1 className="text-4xl text-center text-[rgb(1,24,74)] font-extrabold py-10">Nossos Planos</h1>
       <ProductsList />
     </div>
   );

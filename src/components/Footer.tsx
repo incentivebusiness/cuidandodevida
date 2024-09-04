@@ -5,7 +5,7 @@ import Image from 'next/image';
 const Footer = () => {
   return (
     <>
-      <div className='w-full bg-[rgb(1,24,74)] '>
+      <div className='w-full bg-[rgb(1,24,74)] px-[10rem] '>
         <div className="flex justify-center pt-10">
           <a href="#" className="bg-white rounded-full p-2 w-10 h-10">
             <img src="/images/setaUp.png" className="text-2xl" />

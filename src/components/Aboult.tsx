@@ -53,7 +53,11 @@ const visibleItem = services[startIndex];
 
     return (
         <div className='w-full px-4 py-8 md:px-10 md:py-10 text-white' style={{background: 'url(/images/base.png) no-repeat center center', backgroundSize: 'cover'}}>
-            <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+             <h1 className='hidden md:flex items-center justify-center pb-6 text-4xl font-extrabold text-white '>
+                        Nossos Serviços
+                    </h1>
+                    <div className='w-full px-8 sm:px-10 md:px-0 xl:px-[10rem]'>
+            <div className='grid grid-cols-1 md:grid-cols-3 gap-4 '>
                 {/* Lista de Serviços */}
                 <div className='md:col-span-1 flex flex-col md:flex-row md:space-x-4 space-y-2 md:space-y-0'>
                     <h1 className='text-3xl font-extrabold text-white mb-4 md:mb-0 md:hidden'>
@@ -70,7 +74,7 @@ const visibleItem = services[startIndex];
                             &gt;
                         </button>
                     </div>
-                    {/* <ol className='hidden md:flex flex-col text-xs md:text-xl bg-white bg-opacity-10 p-8 rounded-3xl'>
+                    <ol className='hidden md:flex flex-col text-xs sm:text-sm md:text-md xl:text-xl bg-white bg-opacity-10 p-5 rounded-3xl'>
                         {services.map((service, index) => (
                             <li
                                 key={service.id}
@@ -80,8 +84,8 @@ const visibleItem = services[startIndex];
                                 {service.title}
                             </li>
                         ))}
-                    </ol> */}
-                     <div className='hidden md:flex flex-col'>
+                    </ol>
+                     {/* <div className='hidden md:flex flex-col'>
                         <ul className='text-xs md:text-xl bg-white bg-opacity-10 p-8 rounded-3xl overflow-y-auto max-h-[calc(100vh-200px)] custom-scrollbar'>
                             {services.slice(0, visibleCount).map((service, index) => (
                                 <li
@@ -105,24 +109,25 @@ const visibleItem = services[startIndex];
                             />
                         </div>
                         )}
-                    </div>
+                    </div> */}
                 </div>
 
                 {/* Imagem e Descrição */}
-                <div className='md:col-span-2 flex flex-col md:flex-row gap-4  bg-white bg-opacity-10 p-8 rounded-3xl'>
-                    <div className='flex flex-shrink-0 w-full md:w-1/2 '>
+                <div className='md:col-span-2 flex flex-col md:flex-row gap-4 bg-white bg-opacity-10 p-8 rounded-3xl'>
+                    <div className='flex flex-shrink-0 md:w-1/2 '>
                         <img
                             src={selectedService.image}
                             alt={selectedService.title}
                             className='min-w-[200px] max-w-[400px] min-h-[200px] max-h-[360px] object-contain rounded items-end'
                         />
                     </div>
-                    <div className='flex-1'>
-                        <h1 className='text-xl font-extrabold mb-2'>{selectedService.title}</h1>
-                        <button className='p-2 rounded-full bg-gray-300 text-gray-800 cursor-text'>{selectedService.carrency}</button>
-                        <p className='mt-4'>{selectedService.description}</p>
+                    <div className='flex-1 py-4'>
+                        <h1 className='text-xl font-extrabold mb-2 py-4 text-md md:text-xl'>{selectedService.title}</h1>
+                        <button className='p-2 rounded-full bg-gray-300 text-gray-800 cursor-text '>{selectedService.carrency}</button>
+                        <p className='mt-4 py-6 text-sm sm:text-md  xl:text-xl'>{selectedService.description}</p>
                     </div>
                 </div>
+            </div>
             </div>
         </div>
     );
