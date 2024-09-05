@@ -8,7 +8,9 @@ type CreateEnvelopeParams = {
 };
 
 export const createEnvelope = async ({ name, email, company }: CreateEnvelopeParams) => {
+  console.log("sharingan");
   const dsApiClient = await getDocusignClient();
+  console.log("ideal",dsApiClient);
   const envelopesApi = new docusign.EnvelopesApi(dsApiClient);
 
   const envelopeDefinition: docusign.EnvelopeDefinition = {
