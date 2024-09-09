@@ -86,6 +86,7 @@ async function checkToken(request) {
       console.log("generating a new access token");
       let dsApiClient = new docusign.ApiClient();
       dsApiClient.setBasePath(process.env.BASE_PATH);
+      
       const results = await dsApiClient.requestJWTUserToken(
           process.env.INTEGRATION_KEY,
           process.env.USER_ID,
