@@ -1,18 +1,22 @@
-import Link from 'next/link'
-import React from 'react'
+// src/components/Button.tsx
+import { useRouter } from 'next/navigation';
+import React from 'react';
 
-const Button = () => {
+const Button: React.FC = () => {
+  const router = useRouter();
+
+  const handleHomeClick = () => {
+    router.push('/');
+  };
+
   return (
-    <div>
-      <Link href="/">
-        <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-tr-3xl transition-transform transform hover:scale-105 du focus:outline-none focus:shadow-outline">
-          Clique aquifsdfdsf
-          sdfsdfsdfsdf
-          SDFSDFSDFSdf
-        </button>
-      </Link>
-    </div>
-  )
-}
+    <button 
+      className="text-white bg-[#01184a] p-4 rounded-xl absolute top-10 right-14" 
+      onClick={handleHomeClick}
+    >
+      Home
+    </button>
+  );
+};
 
-export default Button
+export default Button;

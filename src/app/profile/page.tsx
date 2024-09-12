@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Footer from '@/components/Footer';
 import Image from 'next/image';
 import Cards from '@/components/Cards';
+import Button from '@/components/Button';
 
 // Tipagem para o usuário da sessão
 interface User {
@@ -31,7 +32,9 @@ const Profile: React.FC = () => {
       <div className='p-8 pl-20'>
         <Image src="/images/logo3.png" alt="Logo" width={200} height={200}/>
         <h1 className="hidden lg:flex text-2xl font-bold mb-4 text-[#01184a]">Minha conta</h1>
+       
       </div>
+      <Button/>
       <div className=' h-[100vh]' style={{
         background: 'url(/images/curva.png) no-repeat bottom center',
         backgroundSize: 'contain',
@@ -75,7 +78,7 @@ const Profile: React.FC = () => {
                   {/* <span>{LuckNumber}</span> */}
                 </div>
 
-                <Cards/>
+                {/* <Cards/> */}
               </>
             ) : (
               <p>Nenhum usuário logado.</p>
