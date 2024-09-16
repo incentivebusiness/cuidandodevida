@@ -134,7 +134,7 @@
 //       { text: 'Assistência Domiciliar Completa', icon: '/images/cancel.png', maxInsurancePrice: "Não há", hasWaitingPeriod: '72hrs' },
 //       { text: 'Programa - MAPFRE Cuidando de Você', icon: '/images/check.png', maxInsurancePrice: 'Rede TEM + Descontos em Farmácias + Telemedicina Familiar(com pagamento de consulta)', hasWaitingPeriod: '72hrs' },
 //       { text: 'Assistência Affinity PET', icon: '/images/cancel.png', maxInsurancePrice: "Não há", hasWaitingPeriod: '72hrs' },
-      
+
 //     ],
 //     link: 'https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=2c9380849146ff1601914dc5f9a902c5',
 //     value: 'R$49,90',
@@ -156,7 +156,7 @@
 //       { text: 'Assistência Domiciliar Completa', icon: '/images/cancel.png', hasWaitingPeriod: '72hrs' },
 //       { text: 'Programa - MAPFRE Cuidando de Você', icon: '/images/check.png', maxInsurancePrice: 'Rede TEM + Descontos em Farmácias + Telemedicina Familiar(com pagamento de consulta)', hasWaitingPeriod: '72hrs' },
 //       { text: 'Assistência Affinity PET', icon: '/images/cancel.png', hasWaitingPeriod: '72hrs' },
-    
+
 //     ],
 //       link: 'https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=2c9380849146ff3d01914dc691e902eb',
 //     value: 'R$69,90',
@@ -177,7 +177,7 @@
 //       { text: 'Assistência Domiciliar Completa', icon: '/images/checkwh.png', hasWaitingPeriod: '72hrs' },
 //       { text: 'Programa - MAPFRE Cuidando de Você', icon: '/images/checkwh.png', maxInsurancePrice: 'Rede TEM + Descontos em Farmácias + Telemedicina Familiar(com pagamento de consulta)', hasWaitingPeriod: '72hrs' },
 //       { text: 'Assistência Affinity PET', icon: '/images/checkwh.png', hasWaitingPeriod: '72hrs' },
-      
+
 //     ],
 //     link: 'https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=2c9380849146ff3d01914dc6c86102ec',
 //     value: 'R$89,90',
@@ -238,13 +238,13 @@
 
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
-import { useSession } from 'next-auth/react'; 
+import { useSession } from 'next-auth/react';
 
 
 
 type Description = {
   text: string;
-  icon?: string; 
+  icon?: string;
   iconColor?: string;
   maxInsurancePrice?: string;
   hasWaitingPeriod: boolean | string;
@@ -263,7 +263,7 @@ type CardProductsProps = {
 const CardProducts: React.FC<CardProductsProps> = ({ title, descriptions, value, type, link, onSelect, plan }) => {
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
   const { data: session } = useSession();
-  
+
 
   const isAuthenticated = !!session;
   const isHighlighted = type === 'Type C';
@@ -292,7 +292,7 @@ const CardProducts: React.FC<CardProductsProps> = ({ title, descriptions, value,
 
   return (
     <div
-      className={`border text-xs rounded-2xl p-4 mb-4 hover:border-gray-300 hover:shadow-xl ${isHighlighted ? 'bg-[rgb(1,24,74)] text-white' : 'bg-white text-[rgb(1,24,74)]'}`}
+      className={`border text-xs xl:text-sm rounded-2xl p-4 mb-4 hover:border-gray-300 hover:shadow-xl ${isHighlighted ? 'bg-[rgb(1,24,74)] text-white' : 'bg-white text-[rgb(1,24,74)]'}`}
     >
       <h2 className={`text-md font-extrabold text-left pt-4 ${isHighlighted ? 'text-white' : 'text-[rgb(1,24,74)]'}`}>
         {title}
@@ -324,7 +324,7 @@ const CardProducts: React.FC<CardProductsProps> = ({ title, descriptions, value,
           </button>
         </div>
       </div>
-      <div className="mt-4">
+      <div className="mt-4 p-6">
         <div className={`grid grid-cols-3 gap-4 font-semibold ${isHighlighted ? 'text-white' : 'text-[rgb(1,24,74)]'}`}>
           <div>Serviço</div>
           <div className="text-center">Preço Máximo de Seguro</div>
@@ -436,12 +436,12 @@ const ProductsList: React.FC = () => {
       if (!response.ok) {
         throw new Error('Erro ao atualizar o plano selecionado');
       }
-    
-     
+
+
       const data = await response.json();
       const dados = data ? JSON.parse(data) : null;
       console.log('plano selecionado:', dados);
-      
+
       console.log('plano selecionado:', data);
     } catch (error) {
       console.error('Erro ao enviar a solicitação de plano selecionado:', error);
@@ -469,7 +469,7 @@ const ProductsList: React.FC = () => {
 const App: React.FC = () => {
   return (
     <div id='target-services' className="px-10 md:px-20 bg-gray-100 py-5 pb-14">
-      <h1 className="text-4xl text-center text-[rgb(1,24,74)] font-extrabold py-10">Nossos Planos</h1>
+      <h1 className="text-4xl md:text-5xl xl:text-6xl text-center text-[rgb(1,24,74)] font-extrabold py-20">Nossos Planos</h1>
       <ProductsList />
     </div>
   );
