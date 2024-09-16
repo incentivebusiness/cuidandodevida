@@ -8,124 +8,101 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// model User {
-//   id             Int                @id @default(autoincrement())
-//   code           String             @unique @default(cuid())
-//   name           String             @db.VarChar(80)
-//   cpf            String             @unique @db.VarChar(11) // CPF deve ser único e não nulo
-//   gender         String             @db.VarChar(1) 
-//   socialName     String?
-//   email          String             @unique @db.VarChar(255) // Email deve ser único e não nulo
-//   hashedPassword String
-//   birthDate      DateTime           @db.Date
-//   cel            String             @db.VarChar(20)
-//   role           String             @default("USER")
-
-//   created        DateTime           @default(now())
-//   updated        DateTime           @updatedAt
-
-//   userAssistance UserAssistance[]
-//   address        Address?           @relation(fields: [addressId], references: [id])
-//   addressId      Int?               @unique // O campo addressId deve ser único para garantir a relação 1:1
-// }
-
-// model Address {
-//   id          Int     @id @default(autoincrement())
-//   street      String  @db.VarChar(255)
-//   number      String  @db.VarChar(20)
-//   complement  String? @db.VarChar(255)
-//   neighborhood String @db.VarChar(255)
-//   city        String  @db.VarChar(255)
-//   state       String  @db.VarChar(2)  // Pode ser uma sigla como 'SP', 'RJ', etc.
-//   zipCode     String  @db.VarChar(8)  // Formato de CEP no Brasil
-
-//   user        User?   @relation
-// }
-
-// model UserAssistance {
-//   id             Int        @id @default(autoincrement())
-//   product        Int        @db.Integer // Ajuste o tipo conforme necessário
-//   actionType     Int        @db.Integer // Ajuste o tipo conforme necessário
-//   userId         Int
-
-//   user           User       @relation(fields: [userId], references: [id])
-
-//   @@index([userId]) // Adicione um índice para otimizar consultas
-// }
-
-// model LuckyNumber  {
-//   id Int @id @default(autoincrement())
-//   number String
-//   series String?
-//   loteClient String?
-//   qnty String?
-// }
-
 enum PlanType {
   BASICO
   MEDIO
   PLUS
 }
+
+enum ContratedPlan {
+  BASIC
+  MEDIUM
+  PLUS
+}
+
+enum Role {
+  USER
+  EMPLOYEE
+  MANAGER
+  ADMIN
+}
+
+model Company {
+  id           Int           @id @default(autoincrement())
+  cnpj         String        @unique
+  name         String        @unique
+  preRegisters PreRegister[]
+  employees    User[]
+}
+
+model PreRegister {
+  id           Int       @id @default(autoincrement())
+  name         String
+  cpf          String    @unique
+  email        String    @unique
+  role         UserRole
+  registeredAt DateTime?
+  companyId    Int // Relacionamento com a empresa
+  company      Company   @relation(fields: [companyId], references: [id])
+  completed    Boolean   @default(false)
+}
+
+enum UserRole {
+  EMPLOYEE
+  MANAGER
+}
+
 model User {
-  id             Int                @id @default(autoincrement())
-  code           String             @unique @default(cuid())
-  name           String             @db.VarChar(80)
-  cpf            String             @unique @db.VarChar(11) // CPF deve ser único e não nulo
-  gender         String             @db.VarChar(1) 
+  id             Int      @id @default(autoincrement())
+  code           String   @unique @default(cuid())
+  name           String   @db.VarChar(80)
+  cpf            String   @unique @db.VarChar(11)
+  gender         String   @db.VarChar(1)
   socialName     String?
-  email          String             @unique @db.VarChar(255) // Email deve ser único e não nulo
+  email          String   @unique @db.VarChar(255)
   hashedPassword String
-  birthDate      DateTime           @db.Date
-  cel            String             @db.VarChar(20)
-  role           String             @default("USER")
+  birthDate      DateTime @db.Date
+  cel            String   @db.VarChar(20)
+  role           Role     @default(USER)
 
-  created        DateTime           @default(now())
-  updated        DateTime           @updatedAt
+  created DateTime @default(now())
+  updated DateTime @updatedAt
 
-  document_signed   Boolean             @default(false) 
-  payment_completed Boolean             @default(false) 
-  plan_selected  PlanType?            
+  document_signed   Boolean        @default(false)
+  payment_completed Boolean        @default(false)
+  plan_selected     PlanType?
+  contrated_plan    ContratedPlan?
+  company           Company?       @relation(fields: [companyId], references: [id])
+  companyId         Int?
 
-  userAssistance UserAssistance[]
-  address        Address?           @relation(fields: [addressId], references: [id])
-  addressId      Int?               @unique // O campo addressId deve ser único para garantir a relação 1:1
-  luckyNumberId  Int?               @unique // Adicionado para garantir que o número da sorte é único para o usuário
+  address       Address? @relation(fields: [addressId], references: [id])
+  addressId     Int?     @unique // O campo addressId deve ser único para garantir a relação 1:1
+  luckyNumberId Int?     @unique // Adicionado para garantir que o número da sorte é único para o usuário
 
-  luckyNumber    LuckyNumber?       @relation(fields: [luckyNumberId], references: [id])
+  luckyNumber LuckyNumber? @relation(fields: [luckyNumberId], references: [id])
 }
 
 model Address {
-  id          Int     @id @default(autoincrement())
-  street      String  @db.VarChar(255)
-  number      String  @db.VarChar(20)
-  complement  String? @db.VarChar(255)
-  neighborhood String @db.VarChar(255)
-  city        String  @db.VarChar(255)
-  state       String  @db.VarChar(2)  // Pode ser uma sigla como 'SP', 'RJ', etc.
-  zipCode     String  @db.VarChar(8)  // Formato de CEP no Brasil
+  id           Int     @id @default(autoincrement())
+  street       String  @db.VarChar(255)
+  number       String  @db.VarChar(20)
+  complement   String? @db.VarChar(255)
+  neighborhood String  @db.VarChar(255)
+  city         String  @db.VarChar(255)
+  state        String  @db.VarChar(2) // Pode ser uma sigla como 'SP', 'RJ', etc.
+  zipCode      String  @db.VarChar(8) // Formato de CEP no Brasil
 
-  user        User?   @relation
-}
-
-model UserAssistance {
-  id             Int        @id @default(autoincrement())
-  product        Int        @db.Integer // Ajuste o tipo conforme necessário
-  actionType     Int        @db.Integer // Ajuste o tipo conforme necessário
-  userId         Int
-
-  user           User       @relation(fields: [userId], references: [id])
-
-  @@index([userId]) // Adicione um índice para otimizar consultas
+  user User? @relation
 }
 
 model LuckyNumber {
-  id        Int    @id @default(autoincrement())
-  number    String
-  series    String?
+  id         Int     @id @default(autoincrement())
+  number     String
+  series     String?
   loteClient String?
-  qnty     String?
+  qnty       String?
 
-  user      User?   @relation
+  user User? @relation
 
   @@unique([number, series]) // Garantir que o número seja único dentro da série
 }
