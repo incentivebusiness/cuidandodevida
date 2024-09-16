@@ -34,7 +34,7 @@ const Hero = () => {
       <div className="relative w-full h-screen bg-cover bg-center sm:bg-left bg-no-repeat" style={{ backgroundImage: "url('/images/hero.png')" }}>
         {/* Logo */}
         <div className="absolute p-10 bg-white rounded-r-full sm:bg-transparent md:left-10 sm:p-2 md:p-2 md:top-0 lg:p-1 ">
-          <img src="./images/logo3.png" alt="Logo" className="sm:pt-10 sm:pl-10 md:pt-10 md:pl-20 h-auto sm:h-[80px] sm:w-[260px] md:h-auto md:w-[290px] lg:h-auto lg:w-[300px]" />
+          <img src="./images/logo3.png" alt="Logo" className="sm:pt-10 sm:pl-10 md:pt-5 md:pl-20 xl:pt-5 h-auto sm:h-[80px] sm:w-[260px] md:h-auto md:w-[290px] lg:h-auto lg:w-[300px]" />
         </div>
 
         <button className="block lg:hidden absolute top-10 right-10" onClick={toggleMenu}>
@@ -123,19 +123,19 @@ const Hero = () => {
 
         )}
 
-        <div className="pt-[300px] md:pt-[300px] xl:pt-[300px] flex justify-center">
+        <div className="pt-[300px] md:pt-[300px] xl:pt-[200px] flex justify-center">
           <div className="text-left text-white px-8">
-            <Image src="/images/logoMapfre.png" alt="Logo MAPFRE" width={200} height={200} className='h-auto w-auto sm:w-[180px] md:w-[220px] xl:w-[300px]' />
-            <h2 className='text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-extrabold pb-4 md:pb-6'>
+            <Image src="/images/logoMapfre.png" alt="Logo MAPFRE" width={160} height={160} className='h-auto w-auto sm:w-[120px] md:w-[220px] xl:w-[200px]' />
+            <h2 className='text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-extrabold pb-4 md:pb-6'>
               Cuidando de Vida
             </h2>
-            <p className="text-md sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl xl:pb-9 pb-6 sm:pb-6 md:pb-8">
+            <p className="text-md sm:text-lg md:text-xl lg:text-2xl xl:text-3xl xl:pb-9 pb-6 sm:pb-6 md:pb-8">
               Incentivando uma vida saudável e sustentável<br />
               com planos que abrangem diversos serviços<br />
               visando fazer da sua vida a ideal.
             </p>
             <button
-              className='bg-[rgb(1,24,74)] sm:text-xl xl:text-3xl xl:p-4 hover:bg-[rgb(26,55,112)] text-white font-bold py-2 px-4 rounded-3xl transition-transform transform hover:scale-105 focus:outline-none focus:shadow-outline'
+              className='bg-[rgb(1,24,74)] sm:text-md xl:text-2xl xl:p-4 hover:bg-[rgb(26,55,112)] text-white font-bold py-2 px-4 rounded-3xl transition-transform transform hover:scale-105 focus:outline-none focus:shadow-outline'
               onClick={handleClick}
             >Saiba mais!</button>
           </div>
