@@ -9,8 +9,7 @@ function isValidEmail(email: string) {
 }
 
 export async function POST(request: NextRequest) {
-  try {
-    // Obtém os dados do corpo da requisição
+  try {  
     const { 
       name, 
       email, 

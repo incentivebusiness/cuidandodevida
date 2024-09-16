@@ -25,14 +25,19 @@ enum Role {
   EMPLOYEE
   MANAGER
   ADMIN
+  COMPANY_ADMIN
 }
 
 model Company {
   id           Int           @id @default(autoincrement())
   cnpj         String        @unique
-  name         String        @unique
+  name         String      
+  email        String   @unique
+  hashedPassword String
+  
   preRegisters PreRegister[]
   employees    User[]
+  
 }
 
 model PreRegister {
@@ -40,16 +45,11 @@ model PreRegister {
   name         String
   cpf          String    @unique
   email        String    @unique
-  role         UserRole
+  role         Role
   registeredAt DateTime?
   companyId    Int // Relacionamento com a empresa
   company      Company   @relation(fields: [companyId], references: [id])
   completed    Boolean   @default(false)
-}
-
-enum UserRole {
-  EMPLOYEE
-  MANAGER
 }
 
 model User {
