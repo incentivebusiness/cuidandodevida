@@ -1,37 +1,11 @@
 -- CreateEnum
-CREATE TYPE "PlanType" AS ENUM ('BASICO', 'MEDIO', 'PLUS');
+CREATE TYPE "PlanType" AS ENUM ('BASICO', 'MEDIO', 'SUPER');
 
 -- CreateEnum
 CREATE TYPE "ContratedPlan" AS ENUM ('BASIC', 'MEDIUM', 'PLUS');
 
 -- CreateEnum
 CREATE TYPE "Role" AS ENUM ('USER', 'EMPLOYEE', 'MANAGER', 'ADMIN');
-
--- CreateEnum
-CREATE TYPE "UserRole" AS ENUM ('EMPLOYEE', 'MANAGER');
-
--- CreateTable
-CREATE TABLE "Company" (
-    "id" SERIAL NOT NULL,
-    "cnpj" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
-
-    CONSTRAINT "Company_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "PreRegister" (
-    "id" SERIAL NOT NULL,
-    "name" TEXT NOT NULL,
-    "cpf" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
-    "role" "UserRole" NOT NULL,
-    "registeredAt" TIMESTAMP(3),
-    "companyId" INTEGER NOT NULL,
-    "completed" BOOLEAN NOT NULL DEFAULT false,
-
-    CONSTRAINT "PreRegister_pkey" PRIMARY KEY ("id")
-);
 
 -- CreateTable
 CREATE TABLE "User" (
@@ -52,7 +26,6 @@ CREATE TABLE "User" (
     "payment_completed" BOOLEAN NOT NULL DEFAULT false,
     "plan_selected" "PlanType",
     "contrated_plan" "ContratedPlan",
-    "companyId" INTEGER,
     "addressId" INTEGER,
     "luckyNumberId" INTEGER,
 
@@ -85,18 +58,6 @@ CREATE TABLE "LuckyNumber" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Company_cnpj_key" ON "Company"("cnpj");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Company_name_key" ON "Company"("name");
-
--- CreateIndex
-CREATE UNIQUE INDEX "PreRegister_cpf_key" ON "PreRegister"("cpf");
-
--- CreateIndex
-CREATE UNIQUE INDEX "PreRegister_email_key" ON "PreRegister"("email");
-
--- CreateIndex
 CREATE UNIQUE INDEX "User_code_key" ON "User"("code");
 
 -- CreateIndex
@@ -113,12 +74,6 @@ CREATE UNIQUE INDEX "User_luckyNumberId_key" ON "User"("luckyNumberId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "LuckyNumber_number_series_key" ON "LuckyNumber"("number", "series");
-
--- AddForeignKey
-ALTER TABLE "PreRegister" ADD CONSTRAINT "PreRegister_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "Company"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "User" ADD CONSTRAINT "User_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "Company"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "User" ADD CONSTRAINT "User_addressId_fkey" FOREIGN KEY ("addressId") REFERENCES "Address"("id") ON DELETE SET NULL ON UPDATE CASCADE;

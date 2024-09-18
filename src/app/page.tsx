@@ -6,7 +6,7 @@ import Faq from "../components/Faq";
 import Hero from "../components/Hero";
 import SubHero from "../components/SubHero";
 import Footer from "@/components/Footer";
-import Aboult from "@/components/Aboult";
+import Cards from "@/components/Cards";
 import Regulament from "@/components/Regulament";
 import ConsentModal from "@/components/ConsentModal";
 
@@ -18,7 +18,7 @@ const HomePage: React.FC = () => {
       <ConsentModal/>
       <SubHero />
       <CardProducts />
-      <Aboult />
+      <Cards/>
       <Faq />
       <Regulament />
       <Footer />

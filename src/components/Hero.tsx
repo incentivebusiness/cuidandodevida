@@ -6,7 +6,6 @@ import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { url } from 'inspector';
 import { useSession, signOut } from "next-auth/react";
 import Image from 'next/image';
-import ButtonCompany from './ButtonCompany';
 
 const Hero = () => {
   const { data: session } = useSession();
@@ -43,7 +42,7 @@ const Hero = () => {
 
         {/* Menu */}
         <div className="hidden md:absolute top-10  lg:flex  right-10 space-x-4 lg:right-17 xl:space-x-8 ">
-          <ButtonCompany />
+        
 
           <Link href="/" onClick={handleServices} className="relative group text-white transition-transform transform hover:scale-105 focus:outline-none focus:shadow-outline">
             Nossos Serviços
