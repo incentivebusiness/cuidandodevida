@@ -1,9 +1,14 @@
-// pages/success.tsx
-import { useRouter } from 'next/router';
+// app/success/page.tsx
+'use client';
+import { useEffect, useState } from 'react';
 
 const Success = () => {
-  const router = useRouter();
-  const { luckyNumber } = router.query;
+  const [luckyNumber, setLuckyNumber] = useState<string | null>(null);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setLuckyNumber(params.get('luckyNumber'));
+  }, []);
 
   return (
     <div>

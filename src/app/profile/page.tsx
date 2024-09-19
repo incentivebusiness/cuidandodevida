@@ -5,10 +5,11 @@ import Image from 'next/image';
 import Cards from '@/components/Cards'; 
 import Footer from '@/components/Footer';
 import Button from '@/components/Button';
+import { ContratedPlan } from '@prisma/client';
 
 const Profile: React.FC = () => {
   const { data: session, status } = useSession();
-  const [contratedPlan, setContratedPlan] = useState<string | null>(null);
+  const [contratedPlan, setContratedPlan] = useState<ContratedPlan | null>(null);
 
   useEffect(() => {
     const fetchPlan = async () => {
