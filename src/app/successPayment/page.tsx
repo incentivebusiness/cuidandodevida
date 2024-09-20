@@ -8,6 +8,7 @@ const Success = () => {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     setLuckyNumber(params.get('luckyNumber'));
+    console.log(luckyNumber);
   }, []);
 
   return (

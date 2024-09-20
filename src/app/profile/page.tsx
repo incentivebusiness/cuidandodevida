@@ -15,8 +15,9 @@ const Profile: React.FC = () => {
     const fetchPlan = async () => {
       if (session?.user) {
         try {
-          const response = await fetch('/api/user/contrated-plan');
+          const response = await fetch('/api/contrated');
           const data = await response.json();
+          console.log('Plano recuperado:', data);
           setContratedPlan(data.plan);
         } catch (error) {
           console.error('Erro ao buscar o plano contratado:', error);
