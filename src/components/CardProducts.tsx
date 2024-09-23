@@ -372,7 +372,7 @@ const MockData: CardProductsProps[] = [
       { text: 'Programa - MAPFRE Cuidando de Você', icon: '/images/check.png', maxInsurancePrice: 'Rede TEM + Descontos em Farmácias + Telemedicina Familiar(com pagamento de consulta)', hasWaitingPeriod: '72hrs' },
       { text: 'Assistência Affinity PET', icon: '/images/cancel.png', maxInsurancePrice: "Não há", hasWaitingPeriod: '72hrs' },
     ],
-    link: 'https://mpago.la/1LP4feA',
+    link: 'https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=2c93808491eb5f570192206300a3109b',
     value: 'R$49,90',
     type: 'Type A',
     plan: 'BASICO',

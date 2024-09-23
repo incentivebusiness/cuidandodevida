@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import AuthProvider from "@/providers/auth";
 import ToastProvider from "@/providers/toast";
+import SessionTimeout from "@/components/SessionTimeout";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,7 +25,10 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <AuthProvider>
-          <ToastProvider>{children}</ToastProvider>
+          <ToastProvider>
+          <SessionTimeout />
+            {children}
+            </ToastProvider>
         </AuthProvider>
       </body>
     </html>
