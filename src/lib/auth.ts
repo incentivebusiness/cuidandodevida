@@ -67,12 +67,16 @@ export const authOptions: AuthOptions = {
     // Include the role in the JWT token
     async jwt({ token, user }) {
       if (user) {
+        token.id = user.id; 
         token.role = user.role;
       }
       return token;
     },
     // Make the role available in the session
     async session({ session, token }: { session: any; token: any }) {
+      if (token?.id) {
+        session.user.id = token.id; // Adiciona o ID do usuário à sessão
+      }
       if (token?.role) {
         session.user.role = token.role;
       }
