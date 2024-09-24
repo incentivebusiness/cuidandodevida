@@ -1,20 +1,38 @@
-// pages/api/user/[id].js
-import { getUserById } from '@/lib/user'; 
+// app/api/user/[id]/route.ts
+import { NextResponse } from 'next/server';
+import { prisma } from '@/lib/prisma'; // Assumindo que você está usando Prisma como ORM
 
-export default async function handler(req: any, res : any) {
-  const {
-    query: { id },
-  } = req;
+// Função para buscar o usuário pelo ID
+async function getUserById(id: number) {
+  return await prisma.user.findUnique({
+    where: { id },
+  });
+}
 
-  if (req.method === 'GET') {
-    try {
-      const user = await getUserById(id); 
-      res.status(200).json(user);
-    } catch (error) {
-      res.status(500).json({ error: 'Erro ao buscar usuário' });
+// Handler para requisições GET
+export async function GET(request: Request, { params }: { params: { id: string } }) {
+  const { id } = params; // Extrai o ID dos parâmetros da URL
+
+  // Verifica se o 'id' pode ser convertido para número
+  const userId = parseInt(id, 10);
+  if (isNaN(userId)) {
+    return NextResponse.json({ error: 'ID inválido' }, { status: 400 });
+  }
+
+  try {
+    // Busca o usuário pelo ID
+    const user = await getUserById(userId);
+
+    // Se o usuário não for encontrado
+    if (!user) {
+      return NextResponse.json({ error: 'Usuário não encontrado' }, { status: 404 });
     }
-  } else {
-    res.setHeader('Allow', ['GET']);
-    res.status(405).end(`Método ${req.method} não permitido`);
+
+    // Retorna os dados do usuário
+    return NextResponse.json(user, { status: 200 });
+
+  } catch (error) {
+    console.error('Erro ao buscar usuário:', error);
+    return NextResponse.json({ error: 'Erro ao buscar usuário' }, { status: 500 });
   }
 }
