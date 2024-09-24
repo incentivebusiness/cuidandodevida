@@ -33,7 +33,7 @@ const SessionTimeout = () => {
       }, 30000); // 5 minutos de inatividade
     };
 
-    window.addEventListener("beforeunload", handleBeforeUnload);
+    // window.addEventListener("beforeunload", handleBeforeUnload);
     window.addEventListener("mousemove", resetTimeout);
     window.addEventListener("keydown", resetTimeout);
     
@@ -42,7 +42,7 @@ const SessionTimeout = () => {
     return () => {
       clearTimeout(timeoutId);
       clearTimeout(alertId);
-      window.removeEventListener("beforeunload", handleBeforeUnload);
+      // window.removeEventListener("beforeunload", handleBeforeUnload);
       window.removeEventListener("mousemove", resetTimeout);
       window.removeEventListener("keydown", resetTimeout);
     };
