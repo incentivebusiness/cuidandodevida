@@ -1,15 +1,20 @@
-// pages/pagamento.js
+'use client';
 import { useEffect, useState } from 'react';
-import { useSession } from 'next-auth/react'; // Ou qualquer outra solução de autenticação que você estiver usando
-import { fetchUser } from '../lib/api'; // Função para buscar dados do usuário
+import { useSession } from 'next-auth/react';
+import { fetchUser } from '@/lib/api';
+
+interface User {
+  document_signed: boolean;
+  plan_selected: string | null;
+}
 
 const Pagamento = () => {
   const { data: session, status } = useSession();
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(null); 
 
   useEffect(() => {
     const getUser = async () => {
-      if (session) {
+      if (session && session.user) { 
         const userData = await fetchUser(session.user.id);
         setUser(userData);
       }
@@ -25,7 +30,7 @@ const Pagamento = () => {
     return <div>Acesso negado. Complete a assinatura do documento ou selecione um plano.</div>;
   }
 
-  const paymentLink = getPaymentLink(user.plan_selected);
+  const paymentLink = user.plan_selected ? getPaymentLink(user.plan_selected) : '#';
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
@@ -41,14 +46,14 @@ const Pagamento = () => {
   );
 };
 
-const getPaymentLink = (planType) => {
+const getPaymentLink = (planType: string) => { 
   switch (planType) {
     case 'BASICO':
-      return 'https://link-para-pagamento-basico.com';
+      return 'https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=2c93808491eb5f570192206300a3109b';
     case 'MEDIO':
-      return 'https://link-para-pagamento-medio.com';
+      return 'https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=2c9380849146ff3d01914dc691e902eb';
     case 'SUPER':
-      return 'https://link-para-pagamento-super.com';
+      return 'https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=2c9380849146ff3d01914dc6c86102ec';
     default:
       return '#';
   }

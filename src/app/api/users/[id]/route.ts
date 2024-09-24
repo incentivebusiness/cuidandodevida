@@ -1,14 +1,14 @@
 // pages/api/user/[id].js
-import { getUserById } from '../../../lib/db'; // Função que busca o usuário no banco de dados
+import { getUserById } from '@/lib/user'; 
 
-export default async function handler(req, res) {
+export default async function handler(req: any, res : any) {
   const {
     query: { id },
   } = req;
 
   if (req.method === 'GET') {
     try {
-      const user = await getUserById(id); // Implemente essa função de acordo com seu ORM
+      const user = await getUserById(id); 
       res.status(200).json(user);
     } catch (error) {
       res.status(500).json({ error: 'Erro ao buscar usuário' });
