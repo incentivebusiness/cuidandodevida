@@ -101,9 +101,9 @@ const CardProducts: React.FC<CardProductsProps> = ({ title, descriptions, value,
               {desc.icon && (
                 <img src={desc.icon} alt={desc.text} className="mr-2" style={{ color: desc.iconColor }} />
               )}
-              <p>{desc.text}</p>
+              <p className='text-[10px]'>{desc.text}</p>
             </div>
-            <div className="text-center">{desc.maxInsurancePrice || 'N/A'}</div>
+            <div className="text-center text-[10px]">{desc.maxInsurancePrice || 'N/A'}</div>
             <div className="text-center">
               {typeof desc.hasWaitingPeriod === 'boolean'
                 ? desc.hasWaitingPeriod

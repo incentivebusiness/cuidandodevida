@@ -55,6 +55,12 @@ model User {
   luckyNumber LuckyNumber? @relation(fields: [luckyNumberId], references: [id])
 }
 
+model Sequenciais {
+  id        Int  @id @default(autoincrement())
+  ano       Int  @unique
+  sequencial Int @default(1)
+}
+
 model Address {
   id           Int     @id @default(autoincrement())
   street       String  @db.VarChar(255)
