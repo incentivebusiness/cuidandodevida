@@ -18,11 +18,12 @@ type CardProductsProps = {
   value: string;
   type: string;
   link: string;
+  signLink: string;
   onSelect: (type: string) => void;
   plan: string;
 };
 
-const CardProducts: React.FC<CardProductsProps> = ({ title, descriptions, value, type, link, onSelect, plan }) => {
+const CardProducts: React.FC<CardProductsProps> = ({ title, descriptions, value, type, signLink, link, onSelect, plan }) => {
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
   const { data: session } = useSession();
 
@@ -38,7 +39,7 @@ const CardProducts: React.FC<CardProductsProps> = ({ title, descriptions, value,
     } else {
       onSelect(plan);
       // Redireciona para o formulário do DocuSign
-      window.location.href = 'https://demo.services.docusign.net/webforms-ux/v1.0/forms/8e8ff24fcc9f18493e3f3460c073bb01';
+      window.location.href = signLink ;
     }
   };
 
@@ -49,7 +50,7 @@ const CardProducts: React.FC<CardProductsProps> = ({ title, descriptions, value,
   //   } else {
   //     onSelect(plan);
   //     window.location.href = 'https://demo.services.docusign.net/webforms-ux/v1.0/forms/8e8ff24fcc9f18493e3f3460c073bb01';
-  //   }
+  //   }https://demo.services.docusign.net/webforms-ux/v1.0/forms/8e8ff24fcc9f18493e3f3460c073bb01
   // };
 
   return (
@@ -134,6 +135,7 @@ const MockData: CardProductsProps[] = [
       { text: 'Programa - MAPFRE Cuidando de Você', icon: '/images/check.png', maxInsurancePrice: 'Rede TEM + Descontos em Farmácias + Telemedicina Familiar(com pagamento de consulta)', hasWaitingPeriod: '72hrs' },
       { text: 'Assistência Affinity PET', icon: '/images/cancel.png', maxInsurancePrice: "Não há", hasWaitingPeriod: '72hrs' },
     ],
+    signLink:'https://demo.services.docusign.net/webforms-ux/v1.0/forms/fe091d472e85721d7f30b7726e741b3a',
     link: 'https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=2c93808491eb5f570192206300a3109b',
     value: 'R$49,90',
     type: 'Type A',
@@ -155,6 +157,7 @@ const MockData: CardProductsProps[] = [
       { text: 'Programa - MAPFRE Cuidando de Você', icon: '/images/check.png', maxInsurancePrice: 'Rede TEM + Descontos em Farmácias + Telemedicina Familiar(com pagamento de consulta)', hasWaitingPeriod: '72hrs' },
       { text: 'Assistência Affinity PET', icon: '/images/cancel.png', hasWaitingPeriod: '72hrs' },
     ],
+    signLink:'https://demo.services.docusign.net/webforms-ux/v1.0/forms/8e8ff24fcc9f18493e3f3460c073bb01',
     link: 'https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=2c9380849146ff3d01914dc691e902eb',
     value: 'R$69,90',
     type: 'Type B',
@@ -176,6 +179,7 @@ const MockData: CardProductsProps[] = [
       { text: 'Programa - MAPFRE Cuidando de Você', icon: '/images/checkwh.png', maxInsurancePrice: 'Rede TEM + Descontos em Farmácias + Telemedicina Familiar(com pagamento de consulta)', hasWaitingPeriod: '72hrs' },
       { text: 'Assistência Affinity PET', icon: '/images/checkwh.png', hasWaitingPeriod: '72hrs' },
     ],
+    signLink:'https://demo.services.docusign.net/webforms-ux/v1.0/forms/fe091d472e85721d7f30b7726e741b3a',
     link: 'https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=2c9380849146ff3d01914dc6c86102ec',
     value: 'R$89,90',
     type: 'Type C',
@@ -220,6 +224,7 @@ const ProductsList: React.FC = () => {
           descriptions={product.descriptions}
           value={product.value}
           type={product.type}
+          signLink={product.signLink}
           link={product.link}
           plan={product.plan}
         />
