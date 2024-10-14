@@ -28,8 +28,8 @@ enum Role {
 }
 
 model Sequenciais {
-  id        Int  @id @default(autoincrement())
-  ano       Int  @unique
+  id         Int @id @default(autoincrement())
+  ano        Int @unique
   sequencial Int @default(1)
 }
 
@@ -58,8 +58,6 @@ model LuckyNumber {
   @@unique([number, series]) // Garantir que o número seja único dentro da série
 }
 
-
-
 model User {
   id             Int      @id @default(autoincrement())
   code           String   @unique @default(cuid())
@@ -81,33 +79,34 @@ model User {
   plan_selected     PlanType?
   contrated_plan    ContratedPlan?
 
-  address       Address? @relation(fields: [addressId], references: [id])
-  addressId     Int?     @unique
+  address   Address? @relation(fields: [addressId], references: [id])
+  addressId Int?     @unique
 
-  luckyNumberId Int?     @unique
-  luckyNumber LuckyNumber? @relation(fields: [luckyNumberId], references: [id])
+  luckyNumberId Int?         @unique
+  luckyNumber   LuckyNumber? @relation(fields: [luckyNumberId], references: [id])
 
-  payments          Payment[]          // Relaciona os pagamentos
-  planChanges       PlanChange[]       // Relaciona as alterações de plano
-  cancellations     Cancellation[]     // Relaciona os cancelamentos
-   adesao        Adesao?  @relation
-  adesaoId      Int?     @unique // Certifique-se que este campo é único.
+  payments      Payment[] // Relaciona os pagamentos
+  planChanges   PlanChange[] // Relaciona as alterações de plano
+  cancellations Cancellation[] // Relaciona os cancelamentos
+  adesao        Adesao?        @relation
+  adesaoId      Int?           @unique // Certifique-se que este campo é único.
 
-   generatedFiles GeneratedFiles?  @relation
-  generatedFilesId Int?     @unique
+  generatedFiles   GeneratedFiles? @relation
+  generatedFilesId Int?            @unique
+
   @@index([cpf])
 }
 
 model Payment {
-  id             Int      @id @default(autoincrement())
-  user           User     @relation(fields: [userId], references: [id])
-  userId         Int
-  amount         Decimal    @db.Decimal(10, 2) // Valor do pagamento
-  dueDate        DateTime // Data de vencimento
-  paymentDate    DateTime? // Data de pagamento, caso concluído
-  status         PaymentStatus @default(PENDING) // Status do pagamento
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  id          Int           @id @default(autoincrement())
+  user        User          @relation(fields: [userId], references: [id])
+  userId      Int
+  amount      Decimal       @db.Decimal(10, 2) // Valor do pagamento
+  dueDate     DateTime // Data de vencimento
+  paymentDate DateTime? // Data de pagamento, caso concluído
+  status      PaymentStatus @default(PENDING) // Status do pagamento
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
 }
 
 enum PaymentStatus {
@@ -120,31 +119,31 @@ model Cancellation {
   id        Int      @id @default(autoincrement())
   user      User     @relation(fields: [userId], references: [id])
   userId    Int
-  reason    String   @db.VarChar(255)  // Motivo do cancelamento
+  reason    String   @db.VarChar(255) // Motivo do cancelamento
   createdAt DateTime @default(now())
 }
 
 model PlanChange {
-  id             Int      @id @default(autoincrement())
-  user           User     @relation(fields: [userId], references: [id])
-  userId         Int
-  oldPlan        PlanType // Plano anterior
-  newPlan        PlanType // Novo plano
-  createdAt      DateTime @default(now())
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  oldPlan   PlanType // Plano anterior
+  newPlan   PlanType // Novo plano
+  createdAt DateTime @default(now())
 }
 
 model Adesao {
-  id             Int      @id @default(autoincrement())
-   user           User     @relation(fields: [userId], references: [id])
-  userId         Int      @unique
-  actionType     String   @db.VarChar(1)  // TIPO DE AÇÃO
-  cnpj           String   @db.VarChar(14)
-  productCode    String   @db.VarChar(4)  // Código do produto
-  completeName   String   @db.VarChar(255)
-  birthDate      DateTime // Data de nascimento
-  cel            String   @db.VarChar(20)
-  gender         String   @db.VarChar(1)
-  email          String   @db.VarChar(255)
+  id           Int      @id @default(autoincrement())
+  user         User     @relation(fields: [userId], references: [id])
+  userId       Int      @unique
+  actionType   String   @db.VarChar(1) // TIPO DE AÇÃO
+  cnpj         String   @db.VarChar(14)
+  productCode  String   @db.VarChar(4) // Código do produto
+  completeName String   @db.VarChar(255)
+  birthDate    DateTime // Data de nascimento
+  cel          String   @db.VarChar(20)
+  gender       String   @db.VarChar(1)
+  email        String   @db.VarChar(255)
 }
 
 model GeneratedFiles {

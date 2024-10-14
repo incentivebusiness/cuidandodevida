@@ -1,5 +1,7 @@
 'use client';
 import { useState } from 'react';
+import AdesaoButton from '../../components/AdesaoButton'
+import AssistenciaButton from '../../components/AssistenciaButton'
 
 const GerarArquivoButton = () => {
   const [loading, setLoading] = useState(false);
@@ -30,6 +32,9 @@ const GerarArquivoButton = () => {
         {loading ? 'Gerando...' : 'Gerar Arquivo'}
       </button>
       {message && <p>{message}</p>}
+
+      <AdesaoButton/>
+      <AssistenciaButton/>
     </div>
   );
 };
