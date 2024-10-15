@@ -10,7 +10,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Usuário não autenticado' }, { status: 401 }); // Se não houver sessão, retorna erro
   }
 
-  const { status } = await request.json(); // Assume que você está enviando status no corpo da requisição
+  const { status, plan } = await request.json(); // Assume que você está enviando status no corpo da requisição
   const userEmail = session?.user?.email; // Obtém o e-mail do usuário na sessão
 
   if (status === 'approved') {
@@ -32,6 +32,16 @@ export async function POST(request: Request) {
       if (!luckyNumber) {
         return NextResponse.json({ error: 'Nenhum número da sorte disponível' }, { status: 404 });
       }
+
+      // Cria um registro na tabela adesao
+      await prisma.adesao.create({
+        data: {
+          userId: user.id,
+          planSelected: plan,
+          documentSigned: false, // Defina conforme sua lógica
+          paymentCompleted: true,
+        },
+      });
 
       // Atualiza o usuário com o luckyNumber no banco de dados
       await prisma.user.update({

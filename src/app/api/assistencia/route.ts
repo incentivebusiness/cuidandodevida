@@ -1,4 +1,7 @@
-// import { PrismaClient } from '@prisma/client';
+
+
+// // app/api/assistencia/route.ts
+// import { PrismaClient, User } from '@prisma/client';
 // import { NextResponse } from 'next/server';
 // import fs from 'fs';
 // import path from 'path';
@@ -7,49 +10,43 @@
 
 // export async function GET() {
 //   try {
-//     const today = new Date();
-//     const startOfDay = new Date(today.setHours(0, 0, 0, 0));
-//     const endOfDay = new Date(today.setHours(23, 59, 59, 999));
-
-//     // Buscar usuários criados hoje
-//     const users = await prisma.user.findMany({
+//     // Buscar usuários com um plano específico
+//     const assistencias: User[] = await prisma.user.findMany({
 //       where: {
-//         created: {
-//           gte: startOfDay,
-//           lte: endOfDay,
-//         },
+//         plan_selected: 'BASICO', // Altere conforme o plano desejado
 //       },
 //       include: {
 //         adesao: true,
+//         address: true,
 //       },
 //     });
 
-//     if (users.length === 0) {
-//       return NextResponse.json({ message: 'Nenhum usuário encontrado hoje' }, { status: 404 });
+//     if (assistencias.length === 0) {
+//       return NextResponse.json({ message: 'Nenhum usuário encontrado com o plano especificado.' }, { status: 404 });
 //     }
 
 //     // Formatar os dados
-//     const formattedData = users.map((user) => {
-//       const adesao = user.adesao || {};
-
+//     const formattedData = assistencias.map((user) => {
+//       const adesao = user.adesao;
+    
 //       return [
-//         user.contractNumber.padEnd(18), // Número do contrato (1-18)
-//         adesao.versionNumber?.toString().padEnd(15), // Número da versão do contrato (19-33)
-//         adesao.mainKey?.padEnd(30), // Chave principal (34-63)
-//         adesao.subKey?.padEnd(15), // Sub-chave principal (64-78)
-//         'I', // Tipo de movimento (79)
-//         user.name.padEnd(80), // Nome completo do usuário (80-159)
-//         user.startDate.toISOString().split('T')[0].replace(/-/g, ''), // Data de início (160-167)
-//         user.endDate.toISOString().split('T')[0].replace(/-/g, ''), // Data de fim (168-175)
-//         user.cnpj.padStart(14, '0'), // CNPJ (176-189)
-//         user.cpf.padStart(11, '0'), // CPF (190-200)
-//         user.address.padEnd(80), // Endereço (201-280)
-//         user.uf.padEnd(2), // UF (281-282)
-//         user.city.padEnd(35), // Cidade (283-317)
-//         user.district.padEnd(35), // Bairro (318-352)
-//         user.cep.padEnd(10), // CEP (353-362)
-//         user.phone.padEnd(20), // Telefone (363-382)
-//         user.email.padEnd(60), // E-mail (1066-1125)
+//         'FIXED_CONTRACT_12345'.padEnd(18), // Número do contrato
+//         adesao?.versionNumber?.padEnd(15) || ''.padEnd(15), // Número da versão
+//         adesao?.mainKey?.padEnd(30) || ''.padEnd(30), // Chave principal
+//         adesao?.subKey?.padEnd(15) || ''.padEnd(15), // Sub-chave
+//         'I', // Tipo de movimento
+//         user.name.padEnd(80), // Nome completo
+//         user.created.toISOString().split('T')[0].replace(/-/g, ''), // Data de início
+//         user.updated.toISOString().split('T')[0].replace(/-/g, ''), // Data de fim
+//         adesao?.cnpj?.padStart(14, '0'), // CNPJ
+//         user.cpf.padStart(11, '0'), // CPF
+//         (user.address?.street || '').padEnd(80), // Endereço
+//         (user.address?.state || '').padEnd(2), // UF
+//         (user.address?.city || '').padEnd(35), // Cidade
+//         (user.address?.neighborhood || '').padEnd(35), // Bairro
+//         (user.address?.zipCode || '').padEnd(10), // CEP
+//         user.cel.padEnd(20), // Telefone
+//         user.email.padEnd(60), // E-mail
 //       ].join(''); // Unir todos os campos em uma única string
 //     });
 
@@ -57,12 +54,13 @@
 //     const fileContent = formattedData.join('\n');
 
 //     // Caminho para salvar o arquivo
-//     const adesaoDir = path.join(process.cwd(), 'adesaoArquivos');
-//     const filePath = path.join(adesaoDir, `adesao_report_${today.toISOString().split('T')[0]}.csv`);
+//     const today = new Date();
+//     const assistenciaDir = path.join(process.cwd(), 'assistenciaArquivos');
+//     const filePath = path.join(assistenciaDir, `assistencia_report_${today.toISOString().split('T')[0]}.csv`);
 
-//     // Garantir que a pasta adesaoArquivos exista
-//     if (!fs.existsSync(adesaoDir)) {
-//       await fs.promises.mkdir(adesaoDir, { recursive: true });
+//     // Garantir que a pasta assistenciaArquivos exista
+//     if (!fs.existsSync(assistenciaDir)) {
+//       await fs.promises.mkdir(assistenciaDir, { recursive: true });
 //     }
 
 //     // Salvar o arquivo de forma assíncrona
@@ -85,70 +83,67 @@ const prisma = new PrismaClient();
 
 export async function GET() {
   try {
-    const today = new Date();
-    const startOfDay = new Date(today.setHours(0, 0, 0, 0));
-    const endOfDay = new Date(today.setHours(23, 59, 59, 999));
-
-    // Buscar usuários criados hoje
-    const users = await prisma.user.findMany({
+    // Buscar usuários com um plano específico
+    const assistencias = await prisma.user.findMany({
       where: {
-        created: {
-          gte: startOfDay,
-          lte: endOfDay,
-        },
+        plan_selected: 'BASICO', // Altere conforme o plano desejado
       },
       include: {
         adesao: true,
+        address: true,
       },
     });
 
-    if (users.length === 0) {
-      return NextResponse.json({ message: 'Nenhum usuário encontrado hoje' }, { status: 404 });
+    if (assistencias.length === 0) {
+      return new NextResponse('Nenhum usuário encontrado com o plano especificado.', { status: 404 });
     }
 
     // Formatar os dados
-    const formattedData = users.map((user) => {
-      const adesao = user.adesao || {};
+    const formattedData = assistencias.map((user) => {
+      const adesao = user.adesao || {}; // Garante que adesao não seja null
 
       return [
-        'FIXED_CONTRACT_12345'.padEnd(18), // Valor fixo para Número do contrato (1-18)
-        adesao.versionNumber?.toString().padEnd(15), // Número da versão do contrato (19-33)
-        adesao.mainKey?.padEnd(30), // Chave principal (34-63)
-        adesao.subKey?.padEnd(15), // Sub-chave principal (64-78)
-        'I', // Tipo de movimento (79)
-        user.name.padEnd(80), // Nome completo do usuário (80-159)
-        user.startDate.toISOString().split('T')[0].replace(/-/g, ''), // Data de início (160-167)
-        user.endDate.toISOString().split('T')[0].replace(/-/g, ''), // Data de fim (168-175)
-        user.cnpj.padStart(14, '0'), // CNPJ (176-189)
-        user.cpf.padStart(11, '0'), // CPF (190-200)
-        user.address.padEnd(80), // Endereço (201-280)
-        user.uf.padEnd(2), // UF (281-282)
-        user.city.padEnd(35), // Cidade (283-317)
-        user.district.padEnd(35), // Bairro (318-352)
-        user.cep.padEnd(10), // CEP (353-362)
-        user.phone.padEnd(20), // Telefone (363-382)
-        user.email.padEnd(60), // E-mail (1066-1125)
+        'FIXED_CONTRACT_12345'.padEnd(18), // Número do contrato
+        adesao?.versionNumber?.padEnd(15) || ''.padEnd(15), // Número da versão
+        adesao?.mainKey?.padEnd(30) || ''.padEnd(30), // Chave principal
+        adesao?.subKey?.padEnd(15) || ''.padEnd(15), // Sub-chave
+        'I', // Tipo de movimento
+        user.name.padEnd(80), // Nome completo
+        user.created.toISOString().split('T')[0].replace(/-/g, ''), // Data de início
+        user.updated.toISOString().split('T')[0].replace(/-/g, ''), // Data de fim
+        adesao?.cnpj?.padStart(14, '0') || ''.padStart(14, '0'), // CNPJ
+        user.cpf.padStart(11, '0'), // CPF
+        (user.address?.street || '').padEnd(80), // Endereço
+        (user.address?.state || '').padEnd(2), // UF
+        (user.address?.city || '').padEnd(35), // Cidade
+        (user.address?.neighborhood || '').padEnd(35), // Bairro
+        (user.address?.zipCode || '').padEnd(10), // CEP
+        user.cel.padEnd(20), // Telefone
+        user.email.padEnd(60), // E-mail
       ].join(''); // Unir todos os campos em uma única string
     });
 
     // Gerar o conteúdo do arquivo
-    const fileContent = formattedData.join('\n');
+    let fileContent = formattedData.join('\n');
 
     // Caminho para salvar o arquivo
-    const adesaoDir = path.join(process.cwd(), 'adesaoArquivos');
-    const filePath = path.join(adesaoDir, `adesao_report_${today.toISOString().split('T')[0]}.csv`);
+    const today = new Date();
+    const assistenciaDir = path.join(process.cwd(), 'assistenciaArquivos');
+    const filePath = path.join(assistenciaDir, `assistencia_report_${today.toISOString().split('T')[0]}.csv`);
 
-    // Garantir que a pasta adesaoArquivos exista
-    if (!fs.existsSync(adesaoDir)) {
-      await fs.promises.mkdir(adesaoDir, { recursive: true });
+    // Garantir que a pasta assistenciaArquivos exista
+    if (!fs.existsSync(assistenciaDir)) {
+      await fs.promises.mkdir(assistenciaDir, { recursive: true });
     }
 
-    // Salvar o arquivo de forma assíncrona
+    // Salvar o arquivo CSV de forma assíncrona
     await fs.promises.writeFile(filePath, fileContent);
 
-    return NextResponse.json({ message: `Arquivo gerado com sucesso: ${filePath}` }, { status: 200 });
+    // Retorna uma resposta confirmando o sucesso da operação
+    return new NextResponse(`Arquivo gerado com sucesso em: ${filePath}`, { status: 200 });
+
   } catch (error) {
     console.error('Erro ao gerar arquivo:', error);
-    return NextResponse.json({ error: 'Erro ao gerar o arquivo' }, { status: 500 });
+    return new NextResponse('Erro ao gerar o arquivo', { status: 500 });
   }
 }
