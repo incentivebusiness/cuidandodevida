@@ -8,7 +8,7 @@ export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   // Exclui as rotas de autenticação do NextAuth
-  if (pathname.startsWith("/api/auth")) {
+  if (pathname.startsWith("/api/auth") || pathname.startsWith("/api/public"))  {
     return NextResponse.next();
   }
 
@@ -26,12 +26,12 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL("/", req.url));
   }
 
-  //   const master = token.master;
+    const admin = token.role;
 
-  //   // Apenas usuários master podem acessar a lista de empresas
-  //   if (!master && pathname.startsWith("/dashboard/empresas")) {
-  //     return NextResponse.redirect(new URL("/dashboard", req.url));
-  //   }
+    // Apenas usuários master podem acessar a lista de empresas
+    if (admin !== "ADMIN" && pathname.startsWith("/admin")) {
+      return NextResponse.redirect(new URL("/", req.url));
+    }
 
   // Permite a continuação da requisição
   return NextResponse.next();
@@ -41,6 +41,8 @@ export async function middleware(req: NextRequest) {
 export const config = {
   matcher: [
     "/dashboard/:path*", // Rotas de dashboard
-    "/api/:path*", // Rotas de API
+    "/api/:path*", 
+    "/admin/:path*",
+    "/conta/:path*"// Rotas de API
   ],
 };

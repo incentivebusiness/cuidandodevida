@@ -126,7 +126,7 @@ const CreateAccountForm: React.FC = () => {
     console.log('Dados enviados para o backend:', data);
     try {
       console.log('Enviando dados para o backend...');
-      const response = await fetch('/api/users/', {
+      const response = await fetch('/api/public/users', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -138,7 +138,7 @@ const CreateAccountForm: React.FC = () => {
         const errorData = await response.json();
         console.error('Erro no servidor:', errorData);
         setServerError(errorData.message || 'Erro ao criar usuário. Tente novamente mais tarde.');
-        setShowModal(true); 
+        setShowModal(true);
         throw new Error(errorData.message || 'Erro ao criar usuário. Tente novamente mais tarde.');
       }
 
@@ -148,17 +148,17 @@ const CreateAccountForm: React.FC = () => {
         setModalMessage('Usuário criado com sucesso!');
         setShowModalSucess(true);
         setTimeout(() => {
-        router.push("/");
-      }, 2000);
+          router.push("/");
+        }, 2000);
       } else {
         setServerError(result.message);
-        setShowModal(true); 
+        setShowModal(true);
         console.error(result.message);
       }
     } catch (error) {
       console.error('Erro ao criar conta:', error);
       setServerError('Erro ao criar conta. Tente novamente mais tarde.');
-      setShowModal(true); 
+      setShowModal(true);
     }
   };
 
@@ -460,22 +460,22 @@ const CreateAccountForm: React.FC = () => {
               >
                 Criar Conta
               </button>
-              </div>
+            </div>
 
-              <div className="flex items-center justify-center gap-4 py-8">
-                <Link href="/">
-                  <button
-                    type="button"
-                    className=" gap-4 w-[120px] h-[60px] bg-[rgb(137,191,82)] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline"
-                  >
-                    Voltar
-                  </button>
-                </Link>
-              </div>
+            <div className="flex items-center justify-center gap-4 py-8">
+              <Link href="/">
+                <button
+                  type="button"
+                  className=" gap-4 w-[120px] h-[60px] bg-[rgb(137,191,82)] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline"
+                >
+                  Voltar
+                </button>
+              </Link>
+            </div>
           </form>
           {showModal && serverError && (
-      <ErrorModal message={serverError} onClose={() => setShowModal(false)} />
-    )}
+            <ErrorModal message={serverError} onClose={() => setShowModal(false)} />
+          )}
         </div>
       </div>
       <Footer />
