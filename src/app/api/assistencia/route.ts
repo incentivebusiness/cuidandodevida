@@ -104,9 +104,9 @@ export async function GET() {
 
       return [
         'FIXED_CONTRACT_12345'.padEnd(18), // Número do contrato
-        adesao?.versionNumber?.padEnd(15) || ''.padEnd(15), // Número da versão
-        adesao?.mainKey?.padEnd(30) || ''.padEnd(30), // Chave principal
-        adesao?.subKey?.padEnd(15) || ''.padEnd(15), // Sub-chave
+        '1'.padEnd(15), // Número da versão (fixo)
+        '2'.padEnd(30), // Chave principal (fixa)
+        '3'.padEnd(15), // S
         'I', // Tipo de movimento
         user.name.padEnd(80), // Nome completo
         user.created.toISOString().split('T')[0].replace(/-/g, ''), // Data de início

@@ -135,8 +135,8 @@ const MockData: CardProductsProps[] = [
       { text: 'Programa - MAPFRE Cuidando de Você', icon: '/images/check.png', maxInsurancePrice: 'Rede TEM + Descontos em Farmácias + Telemedicina Familiar(com pagamento de consulta)', hasWaitingPeriod: '72hrs' },
       { text: 'Assistência Affinity PET', icon: '/images/cancel.png', maxInsurancePrice: "Não há", hasWaitingPeriod: '72hrs' },
     ],
-    signLink:'https://demo.services.docusign.net/webforms-ux/v1.0/forms/55ca83a27aa1bc369eb81e72b3907016',
-    link: 'https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=2c93808491eb5f570192206300a3109b',
+    signLink:'https://demo.services.docusign.net/webforms-ux/v1.0/forms/4f7441ece276d73043b77573ba22bb27',
+    link: 'https://demo.services.docusign.net/webforms-ux/v1.0/forms/55ca83a27aa1bc369eb81e72b3907016',
     value: 'R$49,90',
     type: 'Type A',
     plan: 'BASICO',
@@ -157,8 +157,8 @@ const MockData: CardProductsProps[] = [
       { text: 'Programa - MAPFRE Cuidando de Você', icon: '/images/check.png', maxInsurancePrice: 'Rede TEM + Descontos em Farmácias + Telemedicina Familiar(com pagamento de consulta)', hasWaitingPeriod: '72hrs' },
       { text: 'Assistência Affinity PET', icon: '/images/cancel.png', hasWaitingPeriod: '72hrs' },
     ],
-    signLink:'https://demo.services.docusign.net/webforms-ux/v1.0/forms/7a10bf3a088a2d8384f0ea4a6d258c58',
-    link: 'https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=2c9380849146ff3d01914dc691e902eb',
+    signLink:'https://demo.services.docusign.net/webforms-ux/v1.0/forms/45da9173666816f8b7e2a406fa989538',
+    link: 'https://demo.services.docusign.net/webforms-ux/v1.0/forms/d4029350e5d705ff5b9182cc3e05e193',
     value: 'R$69,90',
     type: 'Type B',
     plan: 'MEDIO',
@@ -180,7 +180,7 @@ const MockData: CardProductsProps[] = [
       { text: 'Assistência Affinity PET', icon: '/images/checkwh.png', hasWaitingPeriod: '72hrs' },
     ],
     signLink:'',
-    link: 'https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=2c9380849146ff3d01914dc6c86102ec',
+    link: 'https://demo.services.docusign.net/webforms-ux/v1.0/forms/dfce9aa2b47c8ae9545adc8888a997bf',
     value: 'R$89,90',
     type: 'Type C',
     plan: 'SUPER',
@@ -215,7 +215,7 @@ const ProductsList: React.FC = () => {
   };
 
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 max-w-[1400px] mx-auto justify-items-center">
       {MockData.map((product, index) => (
         <CardProducts
           key={index}
@@ -231,6 +231,7 @@ const ProductsList: React.FC = () => {
       ))}
     </div>
   );
+  
 };
 
 const App: React.FC = () => {
