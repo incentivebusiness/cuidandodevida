@@ -137,13 +137,10 @@ model Adesao {
   user         User     @relation(fields: [userId], references: [id])
   userId       Int      @unique
   actionType   String   @db.VarChar(1) // TIPO DE AÇÃO
-  cnpj         String   @db.VarChar(14)
   productCode  String   @db.VarChar(4) // Código do produto
-  completeName String   @db.VarChar(255)
-  birthDate    DateTime // Data de nascimento
-  cel          String   @db.VarChar(20)
-  gender       String   @db.VarChar(1)
-  email        String   @db.VarChar(255)
+  contrated_plan String 
+ 
+ 
 }
 
 model GeneratedFiles {
