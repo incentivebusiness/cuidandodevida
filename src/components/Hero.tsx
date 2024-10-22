@@ -30,7 +30,7 @@ const Hero = () => {
 
   return (
     <>
-      <div className="relative w-full h-screen bg-cover bg-center sm:bg-left bg-no-repeat" style={{ backgroundImage: "url('/images/hero.png')" }}>
+      <div className="relative w-full h-screen bg-cover bg-center sm:bg-left bg-no-repeat" style={{ backgroundImage: "url('/images/hero2.png')" }}>
         {/* Logo */}
         <div className="absolute p-10 bg-white rounded-r-full sm:bg-transparent md:left-10 sm:p-2 md:p-2 md:top-0 lg:p-1 ">
           <img src="./images/logo3.png" alt="Logo" className="sm:pt-10 sm:pl-10 md:pt-5 md:pl-20 xl:pt-5 h-auto sm:h-[80px] sm:w-[260px] md:h-auto md:w-[290px] lg:h-auto lg:w-[300px]" />
