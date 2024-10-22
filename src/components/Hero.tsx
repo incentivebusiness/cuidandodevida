@@ -43,6 +43,10 @@ const Hero = () => {
         {/* Menu */}
         <div className="hidden md:absolute top-10  lg:flex  right-10 space-x-4 lg:right-17 xl:space-x-8 ">
         
+<Link href="/" className="relative group text-white transition-transform transform hover:scale-105 focus:outline-none focus:shadow-outline">
+ Incentive Plus Bank
+ <span className="block absolute bottom-[-2px] left-0 w-full h-[2px] bg-[rgb(1,24,74)] scale-x-0 group-hover:scale-x-100 transition-transform transform origin-left duration-700"></span>
+</Link>
 
           <Link href="/" onClick={handleServices} className="relative group text-white transition-transform transform hover:scale-105 focus:outline-none focus:shadow-outline">
             Nossos Serviços
@@ -95,7 +99,9 @@ const Hero = () => {
         {isMenuOpen && (
           <div className="fixed inset-0 z-20 flex flex-col items-center justify-center bg-white" >
             <div className='bg-white w-full py-4 absolute top-0  '>
+              <Link href='/'>
               <img src="./images/logo3.png" alt="Logo" className="pt-12 pl-14 h-auto sm:w-60 md:w-[300px]" />
+              </Link>
             </div>
             <button className="absolute top-4 right-4 text-red-700 text-2xl" onClick={toggleMenu}>
               <FontAwesomeIcon icon={faTimes} />
@@ -107,7 +113,7 @@ const Hero = () => {
          <Link href="/page2" className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition-transform transform hover:scale-105 focus:outline-none focus:shadow-outline">
            Botão 2
          </Link> */}
-              <Link href="/profile" className="bg-[rgb(1,24,74)] hover:bg-[rgb(26,55,112)] text-white font-bold py-2 px-8 rounded transition-transform transform hover:scale-105 focus:outline-none focus:shadow-outline">
+              <Link href="/conta" className="bg-[rgb(1,24,74)] hover:bg-[rgb(26,55,112)] text-white font-bold py-2 px-8 rounded transition-transform transform hover:scale-105 focus:outline-none focus:shadow-outline">
                 Perfil
               </Link>
               <Link href="/autenticacao/login" className="bg-[rgb(1,24,74)] hover:bg-[rgb(26,55,112)] text-white font-bold py-2 px-8 rounded transition-transform transform hover:scale-105 focus:outline-none focus:shadow-outline">

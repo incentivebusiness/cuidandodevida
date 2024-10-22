@@ -101,17 +101,18 @@ export async function GET() {
     // Formatar os dados
     const formattedData = assistencias.map((user) => {
       const adesao = user.adesao || {}; // Garante que adesao não seja null
+      const fixedCNPJ = '12345678000195'; // Substitua pelo seu CNPJ fixo
 
       return [
         'FIXED_CONTRACT_12345'.padEnd(18), // Número do contrato
-        adesao?.versionNumber?.padEnd(15) || ''.padEnd(15), // Número da versão
-        adesao?.mainKey?.padEnd(30) || ''.padEnd(30), // Chave principal
-        adesao?.subKey?.padEnd(15) || ''.padEnd(15), // Sub-chave
+        '1'.padEnd(15), // Número da versão (fixo)
+        '2'.padEnd(30), // Chave principal (fixa)
+        '3'.padEnd(15), // S
         'I', // Tipo de movimento
         user.name.padEnd(80), // Nome completo
         user.created.toISOString().split('T')[0].replace(/-/g, ''), // Data de início
         user.updated.toISOString().split('T')[0].replace(/-/g, ''), // Data de fim
-        adesao?.cnpj?.padStart(14, '0') || ''.padStart(14, '0'), // CNPJ
+        fixedCNPJ.padStart(14, '0'), // CNPJ fixo
         user.cpf.padStart(11, '0'), // CPF
         (user.address?.street || '').padEnd(80), // Endereço
         (user.address?.state || '').padEnd(2), // UF

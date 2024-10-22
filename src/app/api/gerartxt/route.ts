@@ -73,7 +73,7 @@ async function gerarArquivoPAG() {
   });
 }
 
-async function obterSequencial(anoAtual) {
+async function obterSequencial(anoAtual:any) {
   const registro = await prisma.sequenciais.findUnique({
     where: { ano: anoAtual },
   });
