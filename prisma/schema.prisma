@@ -138,7 +138,10 @@ model Adesao {
   userId       Int      @unique
   actionType   String   @db.VarChar(1) // TIPO DE AÇÃO
   productCode  String   @db.VarChar(4) // Código do produto
-  contrated_plan String 
+  contrated_plan String?
+  plan_selected String? 
+  document_signed Boolean?  @default(false)
+  payment_completed Boolean?  @default(false)
  
  
 }

@@ -36,10 +36,13 @@ export async function POST(request: Request) {
       // Cria um registro na tabela adesao
       await prisma.adesao.create({
         data: {
-          userId: user.id,
-          planSelected: plan,
-          documentSigned: false, // Defina conforme sua lógica
-          paymentCompleted: true,
+          userId: user.id, // O ID do usuário
+          actionType: 'A', // Substitua pelo tipo de ação apropriado
+          productCode: 'PC', // Substitua pelo código de produto apropriado
+          contrated_plan: user.contrated_plan, // Usando o plano contratado do usuário
+          plan_selected: user.plan_selected, // Usando o plano selecionado do usuário
+          document_signed: user.document_signed, // Usando o valor do campo document_signed do usuário
+          payment_completed: false, 
         },
       });
 

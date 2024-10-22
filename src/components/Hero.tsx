@@ -43,6 +43,10 @@ const Hero = () => {
         {/* Menu */}
         <div className="hidden md:absolute top-10  lg:flex  right-10 space-x-4 lg:right-17 xl:space-x-8 ">
         
+<Link href="/" className="relative group text-white transition-transform transform hover:scale-105 focus:outline-none focus:shadow-outline">
+ Incentive Plus Bank
+ <span className="block absolute bottom-[-2px] left-0 w-full h-[2px] bg-[rgb(1,24,74)] scale-x-0 group-hover:scale-x-100 transition-transform transform origin-left duration-700"></span>
+</Link>
 
           <Link href="/" onClick={handleServices} className="relative group text-white transition-transform transform hover:scale-105 focus:outline-none focus:shadow-outline">
             Nossos Serviços
