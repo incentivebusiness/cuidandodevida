@@ -5,7 +5,6 @@ import { useState } from 'react';
 const FormDocusign = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [company, setCompany] = useState('');
   const [message, setMessage] = useState('');
 
   const handleSubmit = async (e) => {
@@ -17,18 +16,20 @@ const FormDocusign = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name, email, company }),
+        body: JSON.stringify({ name, email }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
+        // Redirecionar para a URL de visualização do DocuSign
+        window.location.href = data.url;
         setMessage(`Envelope criado com sucesso! Acesse aqui: ${data.url}`);
       } else {
         setMessage(`Erro: ${data.error}`);
       }
     } catch (error) {
-      setMessage(`Erro ao enviar: ${error.message}`);
+      setMessage(`Erro ao enviar: ${error}`);
     }
   };
 
@@ -48,13 +49,7 @@ const FormDocusign = () => {
         onChange={(e) => setEmail(e.target.value)}
         required
       />
-      <input
-        type="text"
-        placeholder="Empresa"
-        value={company}
-        onChange={(e) => setCompany(e.target.value)}
-        required
-      />
+
       <button type="submit">Enviar</button>
       {message && <p>{message}</p>}
     </form>

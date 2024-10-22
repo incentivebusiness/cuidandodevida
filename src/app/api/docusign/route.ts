@@ -184,10 +184,9 @@ function getEnvelopesApi(token: any) {
 async function makeEnvelope(
   name: string,
   email: string,
-  company: string,
   envelopesApi: any
 ) {
-  console.log("Criando envelope para:", { name, email, company });
+  console.log("Criando envelope para:", { name, email });
 
   const envelopeDefinition = {
     status: "sent",
@@ -206,10 +205,6 @@ async function makeEnvelope(
             },
             {
               tabLabel: "email",
-              value: email,
-            },
-            {
-              tabLabel: "assinatura",
               value: email,
             },
           ],
@@ -241,11 +236,11 @@ export async function POST(req: any, res: any) {
   try {
     const token = await checkToken(req, res);
 
-    const { name, email, company } = await req.json();
-    console.log("Dados recebidos da requisição:", { name, email, company });
+    const { name, email } = await req.json();
+    console.log("Dados recebidos da requisição:", { name, email });
 
     let envelopesApi = getEnvelopesApi(token);
-    let envelope = await makeEnvelope(name, email, company, envelopesApi);
+    let envelope = await makeEnvelope(name, email, envelopesApi);
     
     let viewRequest = makeRecipientViewRequest(name, email);
     
@@ -265,6 +260,6 @@ export async function POST(req: any, res: any) {
     });
   } catch (error) {
     console.error("Erro ao criar envelope:", error);
-    return res.status(500).json({ error: error.message || "Erro desconhecido" });
+    return res.status(500).json({ error: error || "Erro desconhecido" });
   }
 }
