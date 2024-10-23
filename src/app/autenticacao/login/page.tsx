@@ -55,12 +55,12 @@ const LoginPage = () => {
           </Link>
         </div>
         <div className=" w-full sm:w-1/2 flex flex-col justify-center items-center">
-          <button onClick={() => router.push("/")} className='absolute top-10 right-[40px] sm:right-[60px] md:right-[100px] text-white bg-[rgb(1,24,74)] px-6 h-10 rounded-3xl'>Home</button>
-          <button onClick={() => router.push("/autenticacao/nova-conta")} className='absolute top-10 right-[40px] sm:right-[60px] md:right-[200px] text-white bg-[rgb(1,24,74)] px-6 h-10 rounded-3xl'>Criar Conta</button>
+          {/* <button onClick={() => router.push("/")} className='absolute top-20 left-[20px] sm:right-[60px] md:right-[100px] text-white bg-[rgb(1,24,74)] px-6 h-10 rounded-3xl'>Home</button> */}
+          <button onClick={() => router.push("/autenticacao/nova-conta")} className='absolute top-20 right-[40px] sm:right-[60px] md:right-[200px] text-white bg-[rgb(1,24,74)] px-6 h-10 rounded-3xl'>Criar Conta</button>
           <h1 className="text-2xl font-extrabold mb-4 text-[rgb(1,24,74)] py-6 md:py-0">Entrar</h1>
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="max-w-lg w-[80%] rounded-lg border"
+            className="max-w-lg w-[100%] rounded-lg border"
 
           >
             <div className="flex flex-col gap-4 p-4 md:p-8">
@@ -131,7 +131,7 @@ const LoginPage = () => {
 
         </div>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

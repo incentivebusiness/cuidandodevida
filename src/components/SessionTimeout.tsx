@@ -29,8 +29,8 @@ const SessionTimeout = () => {
         alertId = setTimeout(() => {
           console.log("No response after 2 minutes. Signing out...");
           signOut({ callbackUrl: "/", redirect: false });
-        }, 12000); // 2 minutos
-      }, 30000); // 5 minutos de inatividade
+        }, 30000); // 2 minutos
+      }, 300000); // 5 minutos de inatividade
     };
 
     // window.addEventListener("beforeunload", handleBeforeUnload);
