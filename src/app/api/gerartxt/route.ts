@@ -20,7 +20,14 @@ async function gerarArquivoPAG() {
   const sequencialEnvio = await obterSequencial(anoAtual); // Função para obter o sequencial
   const nomeArquivo = `MCAP_PAG_${codigoPlano}_${dataAtual}_${sequencialEnvio}.TXT`;
 
-  const filePath = path.join(process.cwd(), 'public', nomeArquivo); // Local de armazenamento do arquivo gerado
+  const pastaPagArquivos = path.join(process.cwd(), 'pagArquivos'); // Caminho para a pasta "pagArquivos"
+
+  // Cria a pasta se não existir
+  if (!fs.existsSync(pastaPagArquivos)) {
+    fs.mkdirSync(pastaPagArquivos);
+  }
+
+  const filePath = path.join(pastaPagArquivos, nomeArquivo); // Local de armazenamento do arquivo gerado
   const writeStream = fs.createWriteStream(filePath);
 
   // 1. Header
@@ -62,10 +69,20 @@ async function gerarArquivoPAG() {
     writeStream.write(detalhe + '\n');
   }
 
+  // // 4. Trailer - Sempre iniciando com "T"
+  // const totalRegistros = usuarios.length.toString().padStart(9, '0'); // Total de registros
+  // const trailer = `T0001${totalRegistros}0000000000000000000000\n`; // Trailer com soma dos valores (ajustável)
+  // writeStream.write(trailer);
+
   // 4. Trailer - Sempre iniciando com "T"
-  const totalRegistros = usuarios.length.toString().padStart(9, '0'); // Total de registros
-  const trailer = `T0001${totalRegistros}0000000000000000000000\n`; // Trailer com soma dos valores (ajustável)
-  writeStream.write(trailer);
+const totalRegistros = usuarios.length.toString().padStart(9, '0'); // Total de registros (9 caracteres)
+
+// O valor total dos títulos é a quantidade de registros vezes o custo unitário (0,266666)
+const valorTotalTitulos = (usuarios.length * 0.266666).toFixed(6).replace('.', '').padStart(17, '0');
+
+// Trailer com total de registros e valor total dos títulos
+const trailer = `T${totalRegistros}${valorTotalTitulos}\n`;
+writeStream.write(trailer);
 
   // Finalizando o arquivo
   writeStream.end(() => {

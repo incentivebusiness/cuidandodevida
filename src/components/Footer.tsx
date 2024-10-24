@@ -45,7 +45,7 @@ const Footer = () => {
               <li>INCENTIVE PLUS</li>
               <li>Serviços</li>
               <li>Criação de Site</li>
-              <li>Criação de Loja Virtual</li>
+              <li >Criação de Loja Virtual</li>
             </ul>
           </div>
 
