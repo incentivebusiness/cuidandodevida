@@ -16,7 +16,7 @@ const SubHero = () => {
         <div className="lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left px-4 lg:px-0">
           <h1 className='text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-semibold mb-4'>Sobre</h1>
           <p className="leading-relaxed mb-4  sm:text-md md:text-xl lg:text-2xl xl:text-3xl">
-            Pensada para trazer benefícios únicos que melhorem a vida e a saúde das pessoas, nós desenvolvemos o projeto Cuidando de Vida, que é um programa de incentivo a uma vida saudável e sustentável com planos que abrangem diversos serviços que visam fazer da sua vida a ideal.
+            Pensada para trazer <b>benefícios únicos que melhorem a vida e a saúde das pessoas,</b> nós desenvolvemos o projeto <b>Cuidando de Vida</b>, que é um programa de incentivo a uma vida saudável e sustentável com planos que abrangem diversos serviços que visam fazer da sua vida a ideal.
           </p>
         </div>
 

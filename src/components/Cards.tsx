@@ -119,7 +119,7 @@ const CardGrid: React.FC<CardGridProps> = ({ contrated_plan }) => {
   const filteredServices = contrated_plan ? filterServices(contrated_plan) : services;
 
   return (
-    <div className=" pt-20 px-6 md:px-12 xl:px-20">
+    <div className=" pt-20 px-6 md:px-12 xl:px-[10rem]">
        <h1 className="pb-14 py-6 text-2xl md:text-4xl xl:text-5xl text-[rgb(1,24,74)] font-extrabold text-center">Nossos Serviços</h1>
       <div className="flex itens-center justify-center">
        

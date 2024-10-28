@@ -137,7 +137,7 @@ const MockData: CardProductsProps[] = [
     ],
     signLink:'https://demo.services.docusign.net/webforms-ux/v1.0/forms/4f7441ece276d73043b77573ba22bb27',
     link: 'https://demo.services.docusign.net/webforms-ux/v1.0/forms/55ca83a27aa1bc369eb81e72b3907016',
-    value: 'R$49,90',
+    value: 'R$49,90 /mês',
     type: 'Type A',
     plan: 'BASICO',
     onSelect: () => console.log('Plano basico selecionado')
@@ -159,7 +159,7 @@ const MockData: CardProductsProps[] = [
     ],
     signLink:'https://demo.services.docusign.net/webforms-ux/v1.0/forms/45da9173666816f8b7e2a406fa989538',
     link: 'https://demo.services.docusign.net/webforms-ux/v1.0/forms/d4029350e5d705ff5b9182cc3e05e193',
-    value: 'R$69,90',
+    value: 'R$69,90 /mês',
     type: 'Type B',
     plan: 'MEDIO',
     onSelect: () => console.log('Plano Médio selecionado')
@@ -181,7 +181,7 @@ const MockData: CardProductsProps[] = [
     ],
     signLink:'',
     link: 'https://demo.services.docusign.net/webforms-ux/v1.0/forms/dfce9aa2b47c8ae9545adc8888a997bf',
-    value: 'R$89,90',
+    value: 'R$89,90 /mês',
     type: 'Type C',
     plan: 'SUPER',
     onSelect: () => console.log('Plano plus selecionado')

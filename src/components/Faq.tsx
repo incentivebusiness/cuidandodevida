@@ -19,7 +19,7 @@ const Faq = () => {
   ];
 
   return (
-    <div className='py-10 md:pt-20 px-10 md:px-20'>
+    <div className='py-10 md:pt-20 px-10 md:px-20 xl:px-[10rem]'>
       <h1 className='text-4xl md:text-5xl xl:text-6xl text-center text-[rgb(1,24,74)] font-extrabold py-20'>Dúvidas Frequentes</h1>
       {faqData.map((item, index) => (
         <FaqItem key={index} question={item.question} answer={item.answer} />
