@@ -21,7 +21,8 @@ const Header = () => {
 
                 {/* Menu Desktop */}
                 <nav className="hidden md:flex space-x-6 text-2xl mt-8 pr-10">
-                    <Link href="/" className="hover:text-gray-400">Home</Link>
+                    <Link href="/" className="relative group text-white transition-transform transform hover:scale-105 focus:outline-none focus:shadow-outline">Home
+                    <span className="block absolute bottom-[-2px] left-0 w-full h-[2px] bg-[rgb(1,24,74)] scale-x-0 group-hover:scale-x-100 transition-transform transform origin-left duration-700"></span></Link>
                     <Link href="/about" className="hover:text-gray-400">Sobre</Link>
                     <Link href="/services" className="hover:text-gray-400">Serviços</Link>
                     <Link href="/contact" className="hover:text-gray-400">Contato</Link>

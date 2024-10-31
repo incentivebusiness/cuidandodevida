@@ -3,23 +3,26 @@ import React from 'react'
 import Image from 'next/image'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
+import Regulament from '../../components/Regulament'
+import Link from 'next/link'
 
 const page = () => {
     return (
         <>
             <div className='pt-[50px] md:pt-0' >
-                <div className="w-full h-screen bg-cover bg-right bg-[url('/images/cuidandodevc2.png')] 
-                                md:bg-[url('/images/cuidandodevc.png')] md:bg-right z-0" >
+                <div className="w-full h-screen bg-cover bg-right bg-[url('/images/cuidavccell.png')] 
+                                md:bg-[url('/images/cuidavc.png')] md:bg-right z-0" >
                     <Header />
                     <div className="flex flex-col items-center justify-items-center pt-[10rem] xl:pt-[14rem] h-full px-8">
-                        <h1 className="text-white text-5xl text-center font-bold pb-[20px]">Mapfre Cuidando de você</h1>
+                        <Image src="/images/logoMapfre.png" alt="Logo" width={200} height={100} />
+                        <h1 className="text-white text-5xl text-center font-bold pb-[20px]">Mapfre Cuidando de Você + Rede TEM</h1>
                         <p className="text-white bg-black bg-opacity-10 rounded-3xl p-2 text-xl text-center font-bold">Os benefícios que você procura em um só lugar!</p>
                     </div>
                 </div>
                 <div className="flex items-center justify-center py-8 px-8 xl:py-[100px]"> {/* Centraliza a div no centro da tela */}
-                    <div className="flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-8 max-w-6xl">
+                    <div className="flex flex-col md:flex-row items-center md:items-center justify-center space-y-4 md:space-y-0 md:space-x-8 max-w-6xl">
                         {/* Imagem à esquerda */}
-                        <Image src="/images/medicacuida.png" alt="Rede Parcerias" width={500} height={500} className="hidden md:block w-[500px] h-[400px] md:w-1/2" />
+                        <Image src="/images/medicacuida.png" alt="Rede Parcerias" width={500} height={500} className="hidden md:block w-[400px] h-[400px] md:w-[400px]" />
 
                         {/* Texto à direita */}
                         <div className="md:w-1/2 text-left text-[rgb(1,24,74)] px-6 pt-8">
@@ -87,15 +90,17 @@ const page = () => {
                     </div>
                 </div>
 
-                <div className='text-[rgb(1,24,74)] flex flex-col items-left justify-center px-[10rem] '>
+                <div className='text-[rgb(1,24,74)] flex flex-col items-left justify-center px-8 xl:px-[10rem] '>
 
-                    <h1 className="text-xl xl:text-5xl font-extrabold pb-10 text-left">Não perca<br /> essa chance!</h1>
+                    <h1 className="text-xl xl:text-5xl font-extrabold pb-10 text-left">Tudo isso<br /> e muito mais!</h1>
                 </div>
-                <div className='text-[rgb(1,24,74)] flex flex-col items-center justify-center px-[10rem] pb-20'>
-                    <p className='text-md md:text-xl'>Para se cadastrar é muito fácil, após a aquisição de qualquer plano da Incentive Cuidando de Vida, basta acessar o site www.clubeincentiveplus.com.br e clicar em cadastre- se, com seu cpf, preencha os campos com suas informações e desfrute de inúmeros benefícios exclusivos para você.</p>
+                <div className='text-[rgb(1,24,74)] flex flex-col items-center justify-center px-8 xl:px-[10rem] pb-20'>
+                    <p className='text-md md:text-xl'>Em caso de dúvida sobre cobertura e acionamento, confira nosso regulamento ou entre em contato no whatsapp +55 11 91071-8727.</p>
                     <div className='flex gap-4 pt-10  justify-center '>
-                        <Image src="/images/play.jpeg" alt="Rede Parcerias" width={200} height={200} className="xl:px-10" />
+                        <Regulament/>
+                        <Link href="https://cuidandodevoce.mapfre.com.br//">
                         <button className='px-4 text-white bg-[rgb(1,24,74)] rounded-3xl'>Acesse o site</button>
+                        </Link>
                     </div>
                 </div>
 
