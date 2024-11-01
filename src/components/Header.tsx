@@ -23,9 +23,12 @@ const Header = () => {
                 <nav className="hidden md:flex space-x-6 text-2xl mt-8 pr-10">
                     <Link href="/" className="relative group text-white transition-transform transform hover:scale-105 focus:outline-none focus:shadow-outline">Home
                     <span className="block absolute bottom-[-2px] left-0 w-full h-[2px] bg-[rgb(1,24,74)] scale-x-0 group-hover:scale-x-100 transition-transform transform origin-left duration-700"></span></Link>
-                    <Link href="/about" className="hover:text-gray-400">Sobre</Link>
-                    <Link href="/services" className="hover:text-gray-400">Serviços</Link>
-                    <Link href="/contact" className="hover:text-gray-400">Contato</Link>
+                    <Link href="/about" className="relative group text-white transition-transform transform hover:scale-105 focus:outline-none focus:shadow-outline">Incentive Plus Bank
+                    <span className="block absolute bottom-[-2px] left-0 w-full h-[2px] bg-[rgb(1,24,74)] scale-x-0 group-hover:scale-x-100 transition-transform transform origin-left duration-700"></span></Link>
+                    <Link href="/services" className="relative group text-white transition-transform transform hover:scale-105 focus:outline-none focus:shadow-outline">Criar Conta
+                    <span className="block absolute bottom-[-2px] left-0 w-full h-[2px] bg-[rgb(1,24,74)] scale-x-0 group-hover:scale-x-100 transition-transform transform origin-left duration-700"></span></Link>
+                    <Link href="/contact" className="relative group text-white transition-transform transform hover:scale-105 focus:outline-none focus:shadow-outline">Entrar
+                    <span className="block absolute bottom-[-2px] left-0 w-full h-[2px] bg-[rgb(1,24,74)] scale-x-0 group-hover:scale-x-100 transition-transform transform origin-left duration-700"></span></Link>
                 </nav>
 
                 {/* Botão de menu para mobile */}
@@ -43,9 +46,9 @@ const Header = () => {
                 <div className="md:hidden bg-white text-[rgb(1,24,74)]">
                     <nav className="flex flex-col items-center space-y-4 p-4">
                         <Link href="/" className="hover:text-gray-400">Home</Link>
-                        <Link href="/about"className="hover:text-gray-400">Sobre</Link>
-                        <Link href="/services" className="hover:text-gray-400">Serviços</Link>
-                        <Link href="/contact" className="hover:text-gray-400">Contato</Link>
+                        <Link href="/about"className="hover:text-gray-400">Incentive Plus Bank</Link>
+                        <Link href="/services" className="hover:text-gray-400">Criar Conta</Link>
+                        <Link href="/contact" className="hover:text-gray-400">Entrar</Link>
                     </nav>
                 </div>
             )}

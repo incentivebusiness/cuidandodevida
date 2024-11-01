@@ -22,24 +22,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br">
+
       <head>
-
-        <script async src="https://js.stripe.com/v3/pricing-table.js"></script>
-        <link rel="icon" href="/favicon.png" />
-
-        {/* Google Tag Manager */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-G3VYX43SJJ"></script>
-        <script>
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-
-            gtag('config', 'G-G3VYX43SJJ');
-          `}
-        </script>
-
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-G3VYX43SJJ');
+      `,
+          }}
+        />
       </head>
+
+
       <body className={inter.className}>
         <AuthProvider>
           <ToastProvider>
