@@ -189,7 +189,7 @@ export const services: Service[] = [
     description: "Movimente seu dinheiro com segurança e rapidez",
     spanContent: "Sem carência",
     buttonText: "Ver mais",
-    buttonLink: "/servico-1",
+    buttonLink: "/contaCorrente",
     detailsImage: "/images/pc.png",
     detailsText: "O nosso clube de vantagens é uma plataforma de fácil navegação construída para comunicar, de forma efetiva, os benefícios, descontos e convênios que as empresas parceiras oferecem aos nossos clientes.Mais de 200 parceiros espalhados por todo BrasilBenefícios com até 60% de descontoAplicativos para Android e Apple(Em desenvolvimento) Concorra de forma gratuita a diversos prêmios Para se cadastrar e muito fácil, após a aquisição de qualquer plano da Incentive Cuidando de Vida, basta acessar o site www.clubeincentiveplus.com.br e clicar em cadastre- se, com seu cpf, preencha os campos com suas informações e desfrute de inúmeros exclusivos para você.",
 
@@ -201,7 +201,7 @@ export const services: Service[] = [
     description: "Benefícios, descontos e convênios",
     spanContent: "Sem carência",
     buttonText: "Conheça o serviço",
-    buttonLink: "/details/[id]",
+    buttonLink: "/redeParcerias",
     detailsImage: "/images/pc.png",
     detailsText: "O nosso clube de vantagens é uma plataforma de fácil navegação construída para comunicar, de forma efetiva, os benefícios, descontos e convênios que as empresas parceiras oferecem aos nossos clientes.Mais de 200 parceiros espalhados por todo BrasilBenefícios com até 60% de descontoAplicativos para Android e Apple(Em desenvolvimento) Concorra de forma gratuita a diversos prêmios Para se cadastrar e muito fácil, após a aquisição de qualquer plano da Incentive Cuidando de Vida, basta acessar o site www.clubeincentiveplus.com.br e clicar em cadastre- se, com seu cpf, preencha os campos com suas informações e desfrute de inúmeros exclusivos para você.",
   },
@@ -214,7 +214,7 @@ export const services: Service[] = [
     spanContent:
       "Preço máximo de seguro: * R$ 10.000,00 ** R$ 5.000,00 (familiar) e 30 dias de carência",
     buttonText: "Mais detalhes",
-    buttonLink: "/servico-3",
+    buttonLink: "/segurodeVida",
     detailsImage: "/images/pc.png",
     detailsText: "O nosso clube de vantagens é uma plataforma de fácil navegação construída para comunicar, de forma efetiva, os benefícios, descontos e convênios que as empresas parceiras oferecem aos nossos clientes.Mais de 200 parceiros espalhados por todo BrasilBenefícios com até 60% de descontoAplicativos para Android e Apple(Em desenvolvimento) Concorra de forma gratuita a diversos prêmios Para se cadastrar e muito fácil, após a aquisição de qualquer plano da Incentive Cuidando de Vida, basta acessar o site www.clubeincentiveplus.com.br e clicar em cadastre- se, com seu cpf, preencha os campos com suas informações e desfrute de inúmeros exclusivos para você.",
   },
@@ -238,7 +238,7 @@ export const services: Service[] = [
     description: "4 sorteios mensais, série aberta e valor líquido",
     spanContent: "Preço máximo: R$ 5.000,00",
     buttonText: "Ver serviço",
-    buttonLink: "/servico-5",
+    buttonLink: "/sorteios",
     detailsImage: "/images/pc.png",
     detailsText: "O nosso clube de vantagens é uma plataforma de fácil navegação construída para comunicar, de forma efetiva, os benefícios, descontos e convênios que as empresas parceiras oferecem aos nossos clientes.Mais de 200 parceiros espalhados por todo BrasilBenefícios com até 60% de descontoAplicativos para Android e Apple(Em desenvolvimento) Concorra de forma gratuita a diversos prêmios Para se cadastrar e muito fácil, após a aquisição de qualquer plano da Incentive Cuidando de Vida, basta acessar o site www.clubeincentiveplus.com.br e clicar em cadastre- se, com seu cpf, preencha os campos com suas informações e desfrute de inúmeros exclusivos para você.",
   },
@@ -250,7 +250,7 @@ export const services: Service[] = [
       "Serviços de manutenção com pronto atendimento de profissionais, como: chaveiro, eletricista, encanador, etc",
     spanContent: "Carência de 72 horas",
     buttonText: "Descubra mais",
-    buttonLink: "/servico-6",
+    buttonLink: "/assistenciaDomiciliar",
     detailsImage: "/images/pc.png",
     detailsText: "O nosso clube de vantagens é uma plataforma de fácil navegação construída para comunicar, de forma efetiva, os benefícios, descontos e convênios que as empresas parceiras oferecem aos nossos clientes.Mais de 200 parceiros espalhados por todo BrasilBenefícios com até 60% de descontoAplicativos para Android e Apple(Em desenvolvimento) Concorra de forma gratuita a diversos prêmios Para se cadastrar e muito fácil, após a aquisição de qualquer plano da Incentive Cuidando de Vida, basta acessar o site www.clubeincentiveplus.com.br e clicar em cadastre- se, com seu cpf, preencha os campos com suas informações e desfrute de inúmeros exclusivos para você.",
   },
@@ -272,7 +272,7 @@ export const services: Service[] = [
     description: "Assistência veterinária com especialistas para o seu pet",
     spanContent: "Carência de 72 horas",
     buttonText: "Mais informações",
-    buttonLink: "/servico-8",
+    buttonLink: "/affinityPet",
     detailsImage: "/images/pc.png",
     detailsText: "O nosso clube de vantagens é uma plataforma de fácil navegação construída para comunicar, de forma efetiva, os benefícios, descontos e convênios que as empresas parceiras oferecem aos nossos clientes.Mais de 200 parceiros espalhados por todo BrasilBenefícios com até 60% de descontoAplicativos para Android e Apple(Em desenvolvimento) Concorra de forma gratuita a diversos prêmios Para se cadastrar e muito fácil, após a aquisição de qualquer plano da Incentive Cuidando de Vida, basta acessar o site www.clubeincentiveplus.com.br e clicar em cadastre- se, com seu cpf, preencha os campos com suas informações e desfrute de inúmeros exclusivos para você.",
   },
@@ -316,7 +316,7 @@ const CardGrid: React.FC<CardGridProps> = ({ contrated_plan }) => {
               <h3 className="text-[rgb(1,24,74)] text-lg font-semibold mt-4">{service.title}</h3>
               <p className="mt-2 text-[rgb(1,24,74)] text-sm">{service.description}</p>
 
-              <Link href={`/details/${service.id}`} passHref>
+              <Link href={service.buttonLink} >
                 <button className="mt-4 text-sm bg-[rgb(1,24,74)] text-white px-4 py-2 rounded-3xl hover:bg-blue-600 transition">
                   {service.buttonText}
                 </button>
