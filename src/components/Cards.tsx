@@ -261,7 +261,7 @@ export const services: Service[] = [
     description: "Rede Tem, descontos em farmácias, telemedicina, etc.",
     spanContent: "Carência de 72 horas",
     buttonText: "Ver mais",
-    buttonLink: "/servico-7",
+    buttonLink: "/cuidandodevoce",
     detailsImage: "/images/pc.png",
     detailsText: "O nosso clube de vantagens é uma plataforma de fácil navegação construída para comunicar, de forma efetiva, os benefícios, descontos e convênios que as empresas parceiras oferecem aos nossos clientes.Mais de 200 parceiros espalhados por todo BrasilBenefícios com até 60% de descontoAplicativos para Android e Apple(Em desenvolvimento) Concorra de forma gratuita a diversos prêmios Para se cadastrar e muito fácil, após a aquisição de qualquer plano da Incentive Cuidando de Vida, basta acessar o site www.clubeincentiveplus.com.br e clicar em cadastre- se, com seu cpf, preencha os campos com suas informações e desfrute de inúmeros exclusivos para você.",
   },

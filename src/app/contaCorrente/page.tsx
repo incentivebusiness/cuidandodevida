@@ -7,6 +7,7 @@ import Regulament from '../../components/Regulament'
 import Link from 'next/link'
 
 const page = () => {
+    const phoneNumber = '+5511910718727';
     return (
         <>
             <div className='pt-[50px] md:pt-0' >
@@ -47,7 +48,7 @@ const page = () => {
 
                     </div>
                 </div>
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 px-[10rem] text-[rgb(1,24,74)]">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 px-8 md:px-20 lg:px-[10rem] text-[rgb(1,24,74)]">
                     <div className="bg-[rgb(242,243,245)] bg-opacity-50 rounded-3xl p-4 flex flex-col items-center">
                         <Image src="/images/doccircle.png" alt="Conta Corrente" width={200} height={200} className="w-[100px] h-auto mb-2" />
                         <h3 className="text-lg font-normal text-center">Conta de água, luz, telefone, gás, taxa de condomínio entre outras</h3>
@@ -69,11 +70,11 @@ const page = () => {
                     </div>
                 </div>
 
-                <div className="container flex itens-center justify-center mx-auto py-20 px-4 text-[rgb(1,24,74)]">
+                <div className="container flex itens-center justify-center mx-auto py-20 px-8 md:px-20 lg:px-[5rem] text-[rgb(1,24,74)]">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {/* Coluna Esquerda */}
                         <div className="flex flex-col">
-                            <h1 className="text-5xl font-bold mb-4">Outras<br></br> Vantagens</h1>
+                            <h1 className="text-5xl font-bold mb-8">Outras<br></br> Vantagens</h1>
 
                             <div className="flex items-center mb-4">
                                 <img src="/images/vezes.png" alt="Descrição 1" className="w-[100px] h-auto mr-4" />
@@ -81,7 +82,7 @@ const page = () => {
                             </div>
 
                             <div className="flex items-center">
-                                <img src="/images/dindin.png" alt="Descrição 2" className="w-[100px] h-auto mr-4" />
+                                <img src="/images/dindin.png" alt="Descrição 2" className="w-[100px] h-auto mr-4 pb-8" />
                                 <p className="text-lg">Utilização de até 3 cartões simultâneos em uma única transação.</p>
                             </div>
                         </div>
@@ -101,61 +102,69 @@ const page = () => {
                             </ul>
                         </div>
                     </div>
+                </div>
+
+                <div className="flex justify-center ">
+                    <button className="bg-[rgb(1,24,74)] text-white px-6 py-2 rounded-lg hover:bg-blue-500 transition">
+                        Solicite uma solução
+                    </button>
+                </div>
+
+                <div className="container mx-auto p-4 text-[rgb(1,24,74)]">
+                    <div>
+                        <h1 className="text-3xl lg:text-5xl font-bold mb-4 text-center py-20">Aplicativo Incentive Plus Bank</h1>
                     </div>
-                   
-                    <div className="flex justify-center mt-6">
-                        <button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-500 transition">
-                            Solicite uma solução
-                        </button>
+
+                    <div className="flex flex-col lg:flex-row">
+                        {/* Imagem à esquerda */}
+                        <div className="flex items-center justify-center lg:w-1/3 mb-4 lg:mb-0">
+                            <img src="/images/cellphone.png" alt="Descrição da imagem" className="w-[200px] h-auto" />
+                        </div>
+
+                        {/* Cartões à direita */}
+                        <div className="hidden lg:w-2/3 lg:grid grid-cols-2 text-[rgb(1,24,74)]">
+                            <div className="bg-white  relative">
+                                <img src="/images/cardd.png" alt="Card 1" className="w-full h-auto mb-2" />
+                                <p className="font-bold text-xl absolute top-10 right-10">Depósitos <br></br>e Transferências</p>
+                                <div className="absolute inset-10 flex flex-col justify-center items-center pt-6">
+                                    <p className="text-lg">Transferências seguras e rápidas sem limites de valores.</p>
+                                </div>
+                            </div>
+                            <div className="bg-white relative">
+                                <img src="/images/cardq.png" alt="Card 2" className="w-full h-auto mb-2" />
+                                <p className="font-bold text-xl absolute top-10 right-10">QR Codes</p>
+                                <div className="absolute inset-10 flex flex-col justify-center items-center pt-6">
+                                    <p className="text-lg">Gerar QR Codes para recebimento de pagamentos.</p>
+                                </div>
+                            </div>
+                            <div className="bg-white relative">
+                                <img src="/images/Carteira.png" alt="Card 3" className="w-full h-auto mb-2" />
+                                <p className="font-bold text-xl absolute top-10 right-10">Saldo e Extrato</p>
+                                <div className="absolute inset-10 flex flex-col justify-center items-center pt-6">
+                                    <p className="text-lg">Consulta simplificada de saldo e extratos.</p>
+                                </div>
+                            </div>
+                            <div className="bg-white relative">
+                                <img src="/images/cardp.png" alt="Card 4" className="w-full h-auto mb-2" />
+                                <p className="font-bold text-xl absolute top-10 right-10">Contas para<br></br> PJ e CNPJ</p>
+                                <div className="absolute inset-10 flex flex-col justify-center items-center pt-6">
+                                    <p className="text-lg">Modelos de conta para pessoas físicas e jurídicas.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div className="container mx-auto p-4">
-  <div>
-    <h1 className="text-2xl font-bold mb-4">Aplicativo Incentive Plus Bank</h1>
-  </div>
-
-  <div className="flex flex-col lg:flex-row">
-    {/* Imagem à esquerda */}
-    <div className="lg:w-1/3 mb-4 lg:mb-0">
-      <img src="/path/to/your/image.jpg" alt="Descrição da imagem" className="w-full h-auto" />
-    </div>
-
-    {/* Cartões à direita */}
-    <div className="grid grid-cols-2 gap-4 lg:w-2/3">
-      <div className="bg-white border rounded shadow p-4">
-        <img src="/path/to/card1/image.jpg" alt="Card 1" className="w-full h-auto mb-2" />
-        <p>Texto do Cartão 1</p>
-      </div>
-      <div className="bg-white border rounded shadow p-4">
-        <img src="/path/to/card2/image.jpg" alt="Card 2" className="w-full h-auto mb-2" />
-        <p>Texto do Cartão 2</p>
-      </div>
-      <div className="bg-white border rounded shadow p-4">
-        <img src="/path/to/card3/image.jpg" alt="Card 3" className="w-full h-auto mb-2" />
-        <p>Texto do Cartão 3</p>
-      </div>
-      <div className="bg-white border rounded shadow p-4">
-        <img src="/path/to/card4/image.jpg" alt="Card 4" className="w-full h-auto mb-2" />
-        <p>Texto do Cartão 4</p>
-      </div>
-    </div>
-  </div>
-
-  {/* Botões abaixo */}
-  <div className="flex flex-col lg:flex-row mt-4">
-    <button className="bg-blue-600 text-white rounded px-4 py-2 mr-2 mb-2 lg:mb-0">Botão 1</button>
-    <button className="bg-green-600 text-white rounded px-4 py-2">Botão 2</button>
-  </div>
-</div>
-
-               
-
-
+                    <div className="flex justify-center py-16">
+                        <Link href={`https://wa.me/${phoneNumber}`} className="font-bold text-lg text-[rgb(1,24,74)] pr-4" >
+                            <Image src="/images/wp.png" alt="google play" width={50} height={50} />Saiba mais
+                        </Link>
+                        <Image src="/images/play.jpeg" alt="google play" width={140} height={100} />
+                    </div>
+                </div>
 
 
                 <div className='text-[rgb(1,24,74)] flex flex-col items-left justify-center px-8 xl:px-[10rem] '>
-
-                    <h1 className="text-xl xl:text-5xl font-extrabold pb-10 text-left">Tudo isso<br /> e muito mais!</h1>
+                    <h1 className="text-xl xl:text-5xl font-extrabold pb-10 text-left ">Tudo isso<br /> e muito mais!</h1>
                 </div>
                 <div className='text-[rgb(1,24,74)] flex flex-col items-center justify-center px-8 xl:px-[10rem] pb-20'>
                     <p className='text-md md:text-xl'>Em caso de dúvida sobre cobertura e acionamento, confira nosso regulamento ou entre em contato no whatsapp +55 11 91071-8727.</p>

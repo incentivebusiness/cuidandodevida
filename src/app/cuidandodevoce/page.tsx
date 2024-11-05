@@ -77,20 +77,20 @@ const page = () => {
                             {/* Primeira lista */}
                             <ul className="space-y-2 text-left list-disc pr-20">
                                 <motion.li initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.1 }}>
-                                    <b>Rede de Consultas e Exames presenciais</b>
+                                    <b>Rede de Consultas e Exames presenciais</b><br/>
                                     Consultas presenciais com mais de 50 especialidades por apenas R$ 50;
                                     Mais de 1500 tipos de exames laboratoriais e de imagem com até 70% de desconto;
                                     Rede de dentistas para consultas, exames e tratamentos odontológicos e ortodônticos com preços reduzidos.
                                 </motion.li>
 
                                 <motion.li initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.2 }}>
-                                    <b>Consultas por Vídeo</b>
+                                    <b>Consultas por Vídeo</b><br/>
                                     Consultas por vídeo com clínico geral: Sem Custo
                                     Consultas por vídeo com demais especialidades: Com Custo
                                 </motion.li>
 
                                 <motion.li initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.3 }}>
-                                    <b>Pronto Atendimento 24/7 por vídeo sem custo</b>
+                                    <b>Pronto Atendimento 24/7 por vídeo sem custo</b><br/>
                                     Consulta online por vídeo disponível 24 horas por dia, 7 dias por semana;
                                     Consultas quando precisar, como em caso de dor de garganta, estômago, náusea, cólica, etc.;
                                     Poderá receber receitas e encaminhamentos para exames diretamente em seu e-mail ou SMS, de acordo com avaliação
@@ -101,18 +101,18 @@ const page = () => {
                             {/* Segunda lista */}
                             <ul className="space-y-2 text-left list-disc">
                                 <motion.li initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.1 }}>
-                                    <b>Descontos em medicamentos</b>
+                                    <b>Descontos em medicamentos</b><br/>
                                     Garanta de 15% a 30% de desconto nas farmácias das Redes Raia e Drogasil.
                                     Após a realização do primeiro acesso, aguarde 48h para a liberação do benefício.
                                 </motion.li>
 
                                 <motion.li initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.2 }}>
-                                    <b>Conta saúde digital para pagamentos</b>
+                                    <b>Conta saúde digital para pagamentos</b><br/>
                                     O meio de pagamentos dos clientes MAPFRE Cuidando de Você.
                                 </motion.li>
 
                                 <motion.li initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.3 }}>
-                                    <b>Orientação médica por telefone 24/7</b>
+                                    <b>Orientação médica por telefone 24/7</b><br/>
                                     Orientação médica por telefone, disponível 24h por dia, 7 dias da semana.
                                 </motion.li>
                             </ul>

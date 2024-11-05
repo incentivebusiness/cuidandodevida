@@ -87,16 +87,16 @@ const CardProducts: React.FC<CardProductsProps> = ({ title, descriptions, value,
           </button>
         </div>
       </div>
-      <div className="mt-4 p-6">
-        <div className={`grid grid-cols-3 gap-4 font-semibold ${isHighlighted ? 'text-white' : 'text-[rgb(1,24,74)]'}`}>
+      <div className="mt-4 py-2">
+        <div className={`grid grid-cols-3 gap-1 font-semibold ${isHighlighted ? 'text-white' : 'text-[rgb(1,24,74)]'}`}>
           <div>Serviço</div>
           <div className="text-center">Preço Máximo de Seguro</div>
-          <div className="text-center">Carência</div>
+          <div className="text-right">Carência</div>
         </div>
         {descriptions.map((desc, index) => (
           <div
             key={index}
-            className={`grid grid-cols-3 gap-4 items-center border-t pt-2 ${isHighlighted ? 'text-white' : 'text-[rgb(1,24,74)]'}`}
+            className={`grid grid-cols-3 gap-0 items-center border-t pt-2 ${isHighlighted ? 'text-white' : 'text-[rgb(1,24,74)]'}`}
           >
             <div className="flex items-center">
               {desc.icon && (
@@ -105,7 +105,7 @@ const CardProducts: React.FC<CardProductsProps> = ({ title, descriptions, value,
               <p className='text-[10px]'>{desc.text}</p>
             </div>
             <div className="text-center text-[10px]">{desc.maxInsurancePrice || 'N/A'}</div>
-            <div className="text-center">
+            <div className="text-right">
               {typeof desc.hasWaitingPeriod === 'boolean'
                 ? desc.hasWaitingPeriod
                   ? 'Sim'

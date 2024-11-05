@@ -27,7 +27,7 @@ export async function GET() {
 
   // Formatando os dados
   const formattedData = newUsers.map(user => ({
-    actionType: user.adesao?.actionType || '',
+    actionType: 1,
     cnpj: '12345678000195', 
     productCode: user.adesao?.productCode || '',
     cpf: user.cpf,
