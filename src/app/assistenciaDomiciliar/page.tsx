@@ -71,37 +71,65 @@ const page = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1 }}
                 >
-                    <div className="text-center space-y-6 max-w-4xl">
+                    <div className="text-center space-y-6 max-w-4xl text-[rgb(1,24,74)]">
                         <h2 className="xl:text-5xl font-semibold pb-10">Conosco Você tem acesso a:</h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {/* Primeira lista */}
                             <ul className="space-y-2 text-left list-disc pr-20">
                                 <li className='pb-8'>
-                                    <b>Em todas as cidades em Território Nacional para os serviços de:</b>
+                                    <h5 className='text-xl lg:text-2xl'><b>Em todas as cidades em Território Nacional para os serviços de:</b></h5>
                                 </li>
                                 {/* Adicione animação aos itens */}
-                                <motion.li initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.1 }}>Chaveiro (Até R$ 200,00 por evento, limitado a 2 intervenções por ano)</motion.li>
-                                <motion.li initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.2 }}>Eletricista (Até R$ 150,00 por evento, limitado a 2 intervenções por ano)</motion.li>
-                                {/* Continue adicionando outros itens */}
+                                <li >Chaveiro (Até R$ 200,00 por evento, limitado a 2 intervenções por ano)</li>
+                                <li >Eletricista (Até R$ 150,00 por evento, limitado a 2 intervenções por ano)</li>
+                                <li >	Chaveiro (Até R$ 200,00 por evento, limitado a 2 intervenções por ano)</li>
+                                <li >	Eletricista (Até R$ 150,00 por evento, limitado a 2 intervenções por ano)</li>
+                                <li >	Encanador (Até R$ 150,00 por evento, limitado a 2 intervenções por ano)</li>
+                                <li >	Desentupimento (Até R$ 200,00 por evento, limitado a 2 intervenções por ano)</li>
+                                <li >	Limpeza de caixa de gordura (Até R$ 500,00 por evento, limitado a 2 intervenções por ano)</li>
+                                <li >	Serviço de Limpeza (Até R$ 1.000,00 por evento, limitado a 1 intervenção por ano)</li>
+                                <li >	Hospedagem (Limite de 4 diárias sendo de até R$ 200,00 por dia, limitado a 2 intervenção por ano dentro de um raio de 50 km a contar da Residência Assistida)</li>
+                                <li >	Transmissões de Mensagens Urgentes (24 horas de atendimento) Sem limite monetário e de intervenção por ano durante a vigência do contrato de seguro.</li>
+                                <li ><b>Indicação de profissionais:</b>	</li>
+                                <div>
+                                    <p>o	Encanador;</p>
+                                    <p>  o	Eletricista;</p>
+                                    <p>  o	Chaveiro;</p>
+                                    <p> o	Vidraceiro;</p>
+                                    <p> o	Pintor;</p>
+                                    <p> o	Marceneiro e Serralheiro;</p>
+                                    <p> o	Pedreiro;</p>
+                                    <p> o	Desentupidor;</p>
+                                    <p> o	Dedetizadoras;</p>
+                                    <p> o	Serviços Gerais.</p>
+                                </div>
                             </ul>
 
                             {/* Segunda lista */}
-                            <ul className="space-y-2 text-left list-disc">
-                                <li className='pb-8'>
-                                    <b>Assistência para aplicação de vacinas em domicilio</b>
+                            <motion.ul className="space-y-2 text-left list-disc">
+                                <li className='pb-8 gap-4'>
+                                    <h5 className='text-xl lg:text-2xl'><b>Somente em cidades com população acima de 200.000 habitantes em Território Nacional:</b></h5>
                                     <br />
-                                    Quando solicitado pelo Usuário...
+                                    <p>•	Hospedagem de animal de estimação (Até R$ 100,00 por evento, limitado a 2 intervenções por ano ou 2 animais domesticos)</p>
+                                    <p>•	Limpeza de ar-condicionado (Limite de 4 aparelhos por intervenção (compactos ou “Mini Split”) até R$ 300,00 por evento, limitado a 1 intervenção por ano)</p>
+                                    <p>•	Transferência de móveis (Até R$ 400,00 por evento, limitado a 1 intervenção por ano dentro de um raio de 50 km a contar da Residência Assistida)</p>
+                                    <p>•	Guarda de móveis (Até R$ 400,00 por evento, limitado a 1 intervenção por ano com 7 dias de armazenamento)</p>
                                 </li>
-                                {/* Adicione animação aos itens */}
-                                <motion.li initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.1 }}>Inclusão Automática de Cônjuge ou Companheiro(a)</motion.li>
-                                <motion.li initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.2 }}>Inclusão Automática de Filhos</motion.li>
-                                {/* Continue adicionando outros itens */}
-                            </ul>
+                              
+                     
+                                <h5 className='text-xl lg:text-2xl pb-4'><b>Somente em cidades com população acima de 300.000 habitantes em Território Nacional:</b></h5>
+
+                                <p> •	Vidraceiro (Até R$ 150,00 por evento, limitado a 2 intervenções por ano)</p>
+                                <p>  •	Vigia (Até R$ 500,00 por evento, limitado a 2 intervenções por ano)</p>
+                                <p> •	Dedetização, Desratização e Descupinização (Até R$ 600,00 por evento, limitado a 2 intervenções por ano)</p>
+
+                                <p> *Serão de responsabilidade da Pessoa Usuária, o pagamento de possíveis custos com peças trocadas/compradas pelo prestador de serviços, desde que devidamente autorizado pela Pessoa Usuária, bem como os custos de execução que excederem os limites descritos.</p>
+                            </motion.ul>
                         </div>
                     </div>
                 </motion.div>
 
-                {/* Sessão final */}
+
                 <motion.div
                     className='text-[rgb(1,24,74)] flex flex-col items-left justify-center px-8 xl:px-[10rem]'
                     initial={{ opacity: 0, x: -100 }}

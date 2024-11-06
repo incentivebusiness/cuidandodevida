@@ -153,7 +153,7 @@ const MockData: CardProductsProps[] = [
       { text: 'Despesas Médicas Hospitalares e Odontológicas', icon: '/images/check.png', maxInsurancePrice: "R$3.000,00", hasWaitingPeriod: true },
       { text: 'Decessos', icon: '/images/check.png', maxInsurancePrice: '(familiar, Titular, Cônjuge ou Filhos - R$5.000,00)', hasWaitingPeriod: '30 dias' },
       { text: 'Sorteios - 4 sorteios mensais, série aberta, valor líquido', icon: '/images/check.png', maxInsurancePrice: 'R$5.000,00', hasWaitingPeriod: false },
-      { text: 'Assistência Domiciliar Completa', icon: '/images/cancel.png', hasWaitingPeriod: '72hrs' },
+      { text: 'Assistência Domiciliar Completa', icon: '/images/check.png', hasWaitingPeriod: '72hrs' },
       { text: 'Programa - MAPFRE Cuidando de Você', icon: '/images/check.png', maxInsurancePrice: 'Rede TEM + Descontos em Farmácias + Telemedicina Familiar(com pagamento de consulta)', hasWaitingPeriod: '72hrs' },
       { text: 'Assistência Affinity PET', icon: '/images/cancel.png', hasWaitingPeriod: '72hrs' },
     ],
