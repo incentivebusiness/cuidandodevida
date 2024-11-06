@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import Cards from "@/components/Cards";
 import Regulament from "@/components/Regulament";
 import ConsentModal from "@/components/ConsentModal";
+import Video from "../components/Video";
 
 const HomePage: React.FC = () => {
 
@@ -18,6 +19,7 @@ const HomePage: React.FC = () => {
       <ConsentModal/>
       <SubHero />
       <CardProducts />
+      <Video/>
       <Cards/>
       <Faq />
       <Regulament />

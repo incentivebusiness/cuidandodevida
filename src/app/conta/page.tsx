@@ -6,6 +6,7 @@ import Cards from '@/components/Cards';
 import Footer from '@/components/Footer';
 import Button from '@/components/Button';
 import { ContratedPlan } from '@prisma/client';
+import ClienteProfile from '@/components/BaixarDoc';
 
 const Profile: React.FC = () => {
   const { data: session, status } = useSession();
@@ -55,6 +56,7 @@ const Profile: React.FC = () => {
               <>
                 <div className="flex py-8">
                   <div>
+                    <ClienteProfile/>
                     <p>
                       <strong>Nome:</strong> {session.user.name ?? 'Nome não disponível'}
                     </p>

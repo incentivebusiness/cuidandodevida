@@ -3,7 +3,7 @@ import Image from 'next/image';
 import React from 'react';
 
 const WhatsAppIcon = () => {
-  const phoneNumber = '+551191071-8727'; // Substitua pelo número da empresa
+  const phoneNumber = '+5511910718727'; // Substitua pelo número da empresa
 
   return (
     <a

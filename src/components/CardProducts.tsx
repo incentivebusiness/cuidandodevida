@@ -87,16 +87,16 @@ const CardProducts: React.FC<CardProductsProps> = ({ title, descriptions, value,
           </button>
         </div>
       </div>
-      <div className="mt-4 p-6">
-        <div className={`grid grid-cols-3 gap-4 font-semibold ${isHighlighted ? 'text-white' : 'text-[rgb(1,24,74)]'}`}>
+      <div className="mt-4 py-2">
+        <div className={`grid grid-cols-3 gap-1 font-semibold ${isHighlighted ? 'text-white' : 'text-[rgb(1,24,74)]'}`}>
           <div>Serviço</div>
           <div className="text-center">Preço Máximo de Seguro</div>
-          <div className="text-center">Carência</div>
+          <div className="text-right">Carência</div>
         </div>
         {descriptions.map((desc, index) => (
           <div
             key={index}
-            className={`grid grid-cols-3 gap-4 items-center border-t pt-2 ${isHighlighted ? 'text-white' : 'text-[rgb(1,24,74)]'}`}
+            className={`grid grid-cols-3 gap-0 items-center border-t pt-2 ${isHighlighted ? 'text-white' : 'text-[rgb(1,24,74)]'}`}
           >
             <div className="flex items-center">
               {desc.icon && (
@@ -105,7 +105,7 @@ const CardProducts: React.FC<CardProductsProps> = ({ title, descriptions, value,
               <p className='text-[10px]'>{desc.text}</p>
             </div>
             <div className="text-center text-[10px]">{desc.maxInsurancePrice || 'N/A'}</div>
-            <div className="text-center">
+            <div className="text-right">
               {typeof desc.hasWaitingPeriod === 'boolean'
                 ? desc.hasWaitingPeriod
                   ? 'Sim'
@@ -137,7 +137,7 @@ const MockData: CardProductsProps[] = [
     ],
     signLink:'https://demo.services.docusign.net/webforms-ux/v1.0/forms/4f7441ece276d73043b77573ba22bb27',
     link: 'https://demo.services.docusign.net/webforms-ux/v1.0/forms/55ca83a27aa1bc369eb81e72b3907016',
-    value: 'R$49,90',
+    value: 'R$49,90 /mês',
     type: 'Type A',
     plan: 'BASICO',
     onSelect: () => console.log('Plano basico selecionado')
@@ -159,7 +159,7 @@ const MockData: CardProductsProps[] = [
     ],
     signLink:'https://demo.services.docusign.net/webforms-ux/v1.0/forms/45da9173666816f8b7e2a406fa989538',
     link: 'https://demo.services.docusign.net/webforms-ux/v1.0/forms/d4029350e5d705ff5b9182cc3e05e193',
-    value: 'R$69,90',
+    value: 'R$69,90 /mês',
     type: 'Type B',
     plan: 'MEDIO',
     onSelect: () => console.log('Plano Médio selecionado')
@@ -181,7 +181,7 @@ const MockData: CardProductsProps[] = [
     ],
     signLink:'',
     link: 'https://demo.services.docusign.net/webforms-ux/v1.0/forms/dfce9aa2b47c8ae9545adc8888a997bf',
-    value: 'R$89,90',
+    value: 'R$89,90 /mês',
     type: 'Type C',
     plan: 'SUPER',
     onSelect: () => console.log('Plano plus selecionado')

@@ -51,11 +51,7 @@ function getEnvelopesApi(token: any) {
   return new EnvelopesApi(dsApiClient);
 }
 
-async function makeEnvelope(
-  name: string,
-  email: string,
-  envelopesApi: any
-) {
+async function makeEnvelope(name: string, email: string, envelopesApi: any) {
   console.log("Criando envelope para:", { name, email });
 
   const envelopeDefinition = {
@@ -102,6 +98,33 @@ function makeRecipientViewRequest(name: string, email: string) {
   };
 }
 
+// Função para pegar o documento assinado
+async function getSignedDocument(envelopeId: string, envelopesApi: any) {
+  try {
+    // Buscar os documentos do envelope
+    const documentResults = await envelopesApi.listDocuments(
+      process.env.ACCOUNT_ID!, // Conta DocuSign
+      envelopeId // Envelope ID
+    );
+
+    // Pegar o documento assinado (aqui estou assumindo que o primeiro documento é o assinado)
+    const documentId = documentResults.envelopeDocuments[0].documentId;
+
+    // Baixar o documento em formato PDF
+    const document = await envelopesApi.getDocument(
+      process.env.ACCOUNT_ID!, // Conta DocuSign
+      envelopeId, // Envelope ID
+      documentId // ID do documento
+    );
+
+    // Retorna o conteúdo do documento assinado (como um buffer)
+    return document;
+  } catch (error) {
+    console.error('Erro ao buscar o documento assinado:', error);
+    throw error;
+  }
+}
+
 export async function POST(req: any, res: any) {
   try {
     const token = await checkToken(req, res);
@@ -111,9 +134,9 @@ export async function POST(req: any, res: any) {
 
     let envelopesApi = getEnvelopesApi(token);
     let envelope = await makeEnvelope(name, email, envelopesApi);
-    
+
     let viewRequest = makeRecipientViewRequest(name, email);
-    
+
     // Criar a visualização do destinatário
     let viewResults = await envelopesApi.createRecipientView(
       process.env.ACCOUNT_ID!,
@@ -123,10 +146,19 @@ export async function POST(req: any, res: any) {
 
     console.log("URL da visualização do destinatário:", viewResults.url);
 
+    // Aqui, após o cliente assinar, buscamos o documento assinado
+    const signedDocument = await getSignedDocument(envelope.envelopeId, envelopesApi);
+
+    // Salva o documento no servidor ou envia a URL para o frontend diretamente
+    // No caso de envio direto de link, vamos fazer da seguinte forma:
+
+    const documentUrl = `https://www.docusign.net/delegate?envelopeId=${envelope.envelopeId}`;
+
     return NextResponse.json({
       message: "Envelope criado com sucesso!",
-      url: viewResults.url,
+      url: viewResults.url, // URL para visualização
       envelopeId: envelope.envelopeId,
+      documentUrl: documentUrl, // URL para o documento assinado
     });
   } catch (error) {
     console.error("Erro ao criar envelope:", error);
@@ -135,7 +167,144 @@ export async function POST(req: any, res: any) {
 }
 
 
+//1 FORM
+// import path from "path";
+// import fs from "fs";
+// import { promisify } from "util";
+// import { ApiClient, EnvelopesApi } from "docusign-esign";
+// import { cookies } from "next/headers";
+// import { NextResponse } from "next/server";
 
+// const readFileAsync = promisify(fs.readFile);
+
+// async function checkToken(req: any, res: any) {
+//   const { access_token, expires_at } = req.cookies;
+
+//   if (access_token && Date.now() < expires_at) {
+//     console.log("Token de acesso existente:", access_token);
+//     return access_token;
+//   } else {
+//     let dsApiClient = new ApiClient();
+//     dsApiClient.setBasePath(process.env.BASE_PATH!);
+
+//     const privateKeyPath = path.join(process.cwd(), "private.key");
+//     const privateKeyBuffer = await readFileAsync(privateKeyPath);
+//     const privateKey = privateKeyBuffer.toString("utf8");
+
+//     console.log("Solicitando novo token de acesso...");
+//     const results = await dsApiClient.requestJWTUserToken(
+//       process.env.DOCUSIGN_INTEGRATION_KEY!,
+//       process.env.DOCUSIGN_USER_ID!,
+//       ["signature"],
+//       privateKey as any,
+//       3600
+//     );
+
+//     const newAccessToken = results.body.access_token;
+//     const expiresAt = Date.now() + (results.body.expires_in - 60) * 1000;
+
+//     console.log("Novo Token de Acesso:", newAccessToken);
+//     console.log("Expira em:", new Date(expiresAt));
+
+//     cookies().set("access_token", newAccessToken);
+//     cookies().set("expires_at", expiresAt.toString());
+
+//     return newAccessToken;
+//   }
+// }
+
+// function getEnvelopesApi(token: any) {
+//   let dsApiClient = new ApiClient();
+//   dsApiClient.setBasePath(process.env.BASE_PATH!);
+//   dsApiClient.addDefaultHeader("Authorization", "Bearer " + token);
+//   return new EnvelopesApi(dsApiClient);
+// }
+
+// async function makeEnvelope(
+//   name: string,
+//   email: string,
+//   envelopesApi: any
+// ) {
+//   console.log("Criando envelope para:", { name, email });
+
+//   const envelopeDefinition = {
+//     status: "sent",
+//     templateId: process.env.TEMPLATE_ID!,
+//     templateRoles: [
+//       {
+//         email: email,
+//         name: name,
+//         roleName: "Applicant",
+//         clientUserId: process.env.CLIENT_USER_ID!,
+//         tabs: {
+//           textTabs: [
+//             {
+//               tabLabel: "nome",
+//               value: name,
+//             },
+//             {
+//               tabLabel: "email",
+//               value: email,
+//             },
+//           ],
+//         },
+//       },
+//     ],
+//   };
+
+//   const envelopeResults = await envelopesApi.createEnvelope(
+//     process.env.ACCOUNT_ID!,
+//     { envelopeDefinition }
+//   );
+
+//   console.log("Envelope criado com sucesso:", envelopeResults);
+//   return envelopeResults;
+// }
+
+// function makeRecipientViewRequest(name: string, email: string) {
+//   return {
+//     returnUrl: "http://localhost:3000/success",
+//     authenticationMethod: "none",
+//     email: email,
+//     userName: name,
+//     clientUserId: process.env.CLIENT_USER_ID!,
+//   };
+// }
+
+// export async function POST(req: any, res: any) {
+//   try {
+//     const token = await checkToken(req, res);
+
+//     const { name, email } = await req.json();
+//     console.log("Dados recebidos da requisição:", { name, email });
+
+//     let envelopesApi = getEnvelopesApi(token);
+//     let envelope = await makeEnvelope(name, email, envelopesApi);
+    
+//     let viewRequest = makeRecipientViewRequest(name, email);
+    
+//     // Criar a visualização do destinatário
+//     let viewResults = await envelopesApi.createRecipientView(
+//       process.env.ACCOUNT_ID!,
+//       envelope.envelopeId,
+//       { recipientViewRequest: viewRequest }
+//     );
+
+//     console.log("URL da visualização do destinatário:", viewResults.url);
+
+//     return NextResponse.json({
+//       message: "Envelope criado com sucesso!",
+//       url: viewResults.url,
+//       envelopeId: envelope.envelopeId,
+//     });
+//   } catch (error) {
+//     console.error("Erro ao criar envelope:", error);
+//     return res.status(500).json({ error: error || "Erro desconhecido" });
+//   }
+// }
+
+
+//FORM TESTE
 //----------------------------------------------------------------------
 // import path from "path";
 // import fs from "fs";
