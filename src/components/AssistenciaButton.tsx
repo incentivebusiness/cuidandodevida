@@ -35,7 +35,7 @@ const GenerateFile = () => {
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         disabled={loading}
       >
-        {loading ? 'Gerando...' : 'Gerar Arquivo'}
+        {loading ? 'Gerando...' : 'Gerar Arquivo de Assistencia'}
       </button>
 
       {error && <p className="text-red-500 mt-4">{error}</p>}
