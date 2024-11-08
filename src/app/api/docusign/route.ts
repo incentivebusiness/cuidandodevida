@@ -107,6 +107,12 @@ async function getSignedDocument(envelopeId: string, envelopesApi: any) {
       envelopeId // Envelope ID
     );
 
+      // Verifique se a resposta contém documentos antes de tentar acessá-los
+      if (!documentResults.envelopeDocuments || documentResults.envelopeDocuments.length === 0) {
+        console.error('Nenhum documento encontrado no envelope');
+        return null; // Retorna null se não houver documentos
+      }
+
     // Pegar o documento assinado (aqui estou assumindo que o primeiro documento é o assinado)
     const documentId = documentResults.envelopeDocuments[0].documentId;
 

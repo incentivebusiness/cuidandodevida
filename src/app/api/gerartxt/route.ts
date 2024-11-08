@@ -31,7 +31,7 @@ async function gerarArquivoPAG() {
   const writeStream = fs.createWriteStream(filePath);
 
   // 1. Header
-  const header = `H${codigoCliente}${codigoPlano}${codEstipulante}${format(new Date(), 'yyyyMMdd')}${anoAtual.toString().slice(-2)}${sequencialEnvio.toString().padStart(6, '0')}333\n`;
+  const header = `H${codigoCliente}${codigoPlano}${codEstipulante}${format(new Date(), 'yyyyMMdd')}${anoAtual.toString()}${sequencialEnvio.toString().padStart(6, '0')}333\n`;
   writeStream.write(header);
 
   // 2. Buscar os dados necessários do banco de dados
