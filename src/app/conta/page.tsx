@@ -4,9 +4,9 @@ import { useSession, signOut } from 'next-auth/react';
 import Image from 'next/image';
 import Cards from '@/components/Cards';
 import Footer from '@/components/Footer';
-import Button from '@/components/Button';
 import { ContratedPlan } from '@prisma/client';
 import ClienteProfile from '@/components/BaixarDoc';
+import Link from 'next/link';
 
 const Profile: React.FC = () => {
   const { data: session, status } = useSession();
@@ -36,15 +36,17 @@ const Profile: React.FC = () => {
   return (
     <>
       <div className="p-8 pl-20">
-        <Image src="/images/logo3.png" alt="Logo" width={200} height={200} />
+        <Link href="/">
+          <Image src="/images/logo3.png" alt="Logo" width={200} height={200} />
+        </Link>
         <h1 className="hidden lg:flex text-2xl font-bold mb-4 text-[#01184a]">Minha conta</h1>
       </div>
-      <Button />
+
       <div
         className="h-[100vh]"
         style={{
           background: 'url(/images/curva.png) no-repeat bottom center',
-          backgroundSize: 'contain',
+          backgroundSize: 'contain', 
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'flex-end',
@@ -56,7 +58,7 @@ const Profile: React.FC = () => {
               <>
                 <div className="flex py-8">
                   <div>
-                    <ClienteProfile/>
+                    <ClienteProfile />
                     <p>
                       <strong>Nome:</strong> {session.user.name ?? 'Nome não disponível'}
                     </p>
@@ -66,9 +68,9 @@ const Profile: React.FC = () => {
                   </div>
                   <button
                     onClick={() => signOut({ callbackUrl: '/' })}
-                    className="p-2 bg-red-600 text-white rounded-xl"
+                    className="px-6 bg-red-600 text-white rounded-xl absolute top-0 right-20"
                   >
-                    Encerrar sessão
+                    Sair
                   </button>
                 </div>
 
@@ -100,3 +102,68 @@ const Profile: React.FC = () => {
 };
 
 export default Profile;
+
+
+// app/profile/page.tsx
+// 'use client';
+
+// import { useSession } from 'next-auth/react';
+// import { useEffect, useState } from 'react';
+
+// const Profile = () => {
+//   const { data: session, status } = useSession();
+//   const [luckyNumber, setLuckyNumber] = useState<string | null>(null);
+
+//   useEffect(() => {
+//     const fetchLuckyNumber = async () => {
+//       if (session?.user?.id) {
+//         try {
+//           // Fazer uma requisição para a API que retorna o número da sorte
+//           const response = await fetch(`/api/luckyNumber?userId=${session.user.id}`);
+//           const data = await response.json();
+
+//           if (data?.number) {
+//             setLuckyNumber(data.number); // Armazena o número da sorte
+//           } else {
+//             setLuckyNumber(null); // Caso não tenha número da sorte atribuído
+//           }
+//         } catch (error) {
+//           console.error('Erro ao buscar número da sorte:', error);
+//         }
+//       }
+//     };
+
+//     if (session?.user) {
+//       fetchLuckyNumber();
+//     }
+//   }, [session]);
+
+//   if (status === 'loading') {
+//     return <p>Carregando...</p>;
+//   }
+
+//   return (
+//     <div className="p-8">
+//       {session?.user ? (
+//         <div>
+//           <h1>Bem-vindo, {session.user.name}</h1>
+//           <p><strong>Email:</strong> {session.user.email}</p>
+
+//           {/* Exibir o número da sorte, se disponível */}
+//           {luckyNumber ? (
+//             <div>
+//               <h2>Seu número da sorte é:</h2>
+//               <p className="text-xl font-bold">{luckyNumber}</p>
+//             </div>
+//           ) : (
+//             <p>Você ainda não tem um número da sorte atribuído.</p>
+//           )}
+//         </div>
+//       ) : (
+//         <p>Usuário não autenticado</p>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default Profile;

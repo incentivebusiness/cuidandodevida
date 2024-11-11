@@ -15,7 +15,7 @@ const Header = () => {
     // Define the navigation links for reuse
     const navLinks = [
         { href: '/', label: 'Home' },
-        { href: '/about', label: 'Incentive Plus Bank' },
+        { href: '/contaCorrente', label: 'Incentive Plus Bank' },
         { href: '/autenticacao/nova-conta', label: 'Criar Conta' },
         { href: '/autenticacao/login', label: 'Entrar' },
     ];

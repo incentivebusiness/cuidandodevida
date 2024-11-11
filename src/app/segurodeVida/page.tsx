@@ -136,20 +136,7 @@ const page = () => {
                     </div>
                 </motion.div>
 
-                <motion.div
-                    className='text-[rgb(1,24,74)] flex flex-col items-center justify-center px-8 xl:px-[10rem] pb-20'
-                    initial={{ opacity: 0, y: 50 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1 }}
-                >
-                    <p className='text-md md:text-xl'>Em caso de dúvida sobre cobertura e acionamento, confira nosso regulamento ou entre em contato no whatsapp +55 11 91071-8727.</p>
-                    <div className='flex gap-4 pt-10 justify-center'>
-                        <Regulament />
-                        <Link href="https://cuidandodevoce.mapfre.com.br//">
-                            <button className='px-4 text-white bg-[rgb(1,24,74)] rounded-3xl'>Acesse o site</button>
-                        </Link>
-                    </div>
-                </motion.div>
+                
             </div>
             <Footer />
         </>
