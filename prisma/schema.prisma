@@ -136,7 +136,7 @@ model Adesao {
   id           Int      @id @default(autoincrement())
   user         User     @relation(fields: [userId], references: [id])
   userId       Int      @unique
-  actionType   String   @db.VarChar(1) // TIPO DE AÇÃO
+  actionType   Int   // TIPO DE AÇÃO
   productCode  String   @db.VarChar(4) // Código do produto
   contrated_plan String?
   plan_selected String? 
